@@ -564,7 +564,7 @@ def calculate_analytics(
             time_stats = calculate_daily_stats(
                 impressions_qs, sales_qs, period_start, period_end
             )
-    elif granularity == "hourly":
+    elif granularity == "hourly": # Currently unused; enable this in the view when ready
         period_start_time = filters.get("period_start__gte")
         period_end_time = filters.get("period_end__lte")
         if period_start_time and period_end_time:
