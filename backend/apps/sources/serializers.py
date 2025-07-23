@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from apps.product.models import Product
+
 from .models import Source
 
 
@@ -10,6 +12,7 @@ class SourceSerializer(serializers.ModelSerializer):
     refresh_token = serializers.CharField(
         write_only=True, required=False, allow_null=True
     )
+    imported_video_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Source
@@ -28,6 +31,9 @@ class SourceSerializer(serializers.ModelSerializer):
             instance.refresh_token = refresh_token
         instance.save()
         return instance
+
+    def get_imported_video_count(self, obj):
+        return Product.objects.filter(source=obj).count()
 
     def to_representation(self, instance):
         # You can choose to include decrypted tokens here if needed (not recommended)
