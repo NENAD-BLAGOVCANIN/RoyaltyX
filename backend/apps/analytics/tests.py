@@ -173,3 +173,54 @@ class AnalyticsViewTests(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIsInstance(response.data, dict)
+
+    def test_analytics_get_with_daily_granularity(self):
+        """Test analytics GET endpoint with daily granularity (7 days range)"""
+        start_date = date.today() - timedelta(days=7)
+        end_date = date.today()
+
+        response = self.client.get(
+            self.analytics_url,
+            {
+                "period_start": start_date.strftime("%Y-%m-%d"),
+                "period_end": end_date.strftime("%Y-%m-%d"),
+            },
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsInstance(response.data, dict)
+        self.assertEqual(response.data.get("granularity"), "daily")
+
+    def test_analytics_get_with_monthly_granularity(self):
+        """Test analytics GET endpoint with monthly granularity (6 months range)"""
+        start_date = date.today() - timedelta(days=180)  # ~6 months
+        end_date = date.today()
+
+        response = self.client.get(
+            self.analytics_url,
+            {
+                "period_start": start_date.strftime("%Y-%m-%d"),
+                "period_end": end_date.strftime("%Y-%m-%d"),
+            },
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsInstance(response.data, dict)
+        self.assertEqual(response.data.get("granularity"), "monthly")
+
+    def test_analytics_get_with_yearly_granularity(self):
+        """Test analytics GET endpoint with yearly granularity (2 years range)"""
+        start_date = date.today() - timedelta(days=730)  # ~2 years
+        end_date = date.today()
+
+        response = self.client.get(
+            self.analytics_url,
+            {
+                "period_start": start_date.strftime("%Y-%m-%d"),
+                "period_end": end_date.strftime("%Y-%m-%d"),
+            },
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsInstance(response.data, dict)
+        self.assertEqual(response.data.get("granularity"), "yearly")

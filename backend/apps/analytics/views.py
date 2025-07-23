@@ -20,7 +20,7 @@ class AnalyticsView(APIView):
         delta = period_end - period_start
 
         if delta.days <= 1:
-            return "hourly"
+            return "daily" # TODO: Change to "hourly" after switching Date fields to DateTime
         elif delta.days <= 31:  # Approximately 1 month
             return "daily"
         elif delta.days <= 365:
