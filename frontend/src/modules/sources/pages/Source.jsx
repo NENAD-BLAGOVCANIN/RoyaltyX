@@ -88,6 +88,12 @@ export const Source = () => {
                   {source.account_name || "Unknown"}
                 </Typography>
                 <Typography variant="subtitle1" fontWeight={500} sx={{ mt: 2 }}>
+                 Imported videos
+                </Typography>
+                <Typography variant="body1">
+                  {source.imported_video_count || "0"}
+                </Typography>
+                <Typography variant="subtitle1" fontWeight={500} sx={{ mt: 2 }}>
                   Created At
                 </Typography>
                 <Typography variant="body1">
