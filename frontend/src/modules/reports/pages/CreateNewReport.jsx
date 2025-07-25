@@ -88,8 +88,15 @@ const CreateNewReport = () => {
             onChange={(e) => setSelectedTemplate(e.target.value)}
             label="Select Report Template"
           >
-            <MenuItem value="">
-              <em>None</em>
+            <MenuItem
+              onClick={() => navigate("/report-templates/create")}
+              sx={{
+                borderTop: '1px solid #eee',
+                color: 'primary.main',
+                fontWeight: 500,
+              }}
+            >
+              Create new template
             </MenuItem>
             {templates.map((template) => (
               <MenuItem key={template.id} value={template.id}>
