@@ -30,7 +30,15 @@ const ProductCard = ({ product }) => {
 
   return (
     <Grid size={{ md: 4, xs: 12 }} key={product.id}>
-      <Card variant="outlined" xs={{ borderRadius: 3 }}>
+      <Card 
+        variant="outlined" 
+        xs={{ borderRadius: 3 }}
+        sx={{ 
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
         {product.thumbnail ? (
           <CardMedia
             component="img"
@@ -68,7 +76,8 @@ const ProductCard = ({ product }) => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            height: "100%",
+            flexGrow: 1,
+            justifyContent: "space-between",
           }}
         >
           <Box
@@ -138,8 +147,19 @@ const ProductCard = ({ product }) => {
             </div>
           </Box>
 
-          <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
-            {product.description}
+          <Typography 
+            variant="body2" 
+            color="textSecondary" 
+            sx={{ 
+              mt: 2,
+              minHeight: '2.5em', // Reserve space for at least 2 lines
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
+            {product.description || "No description available"}
           </Typography>
         </CardContent>
       </Card>
