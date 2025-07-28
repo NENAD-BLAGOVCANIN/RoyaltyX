@@ -11,7 +11,7 @@ import {
   Grid,
 } from "@mui/material";
 import { Inventory2 } from "@mui/icons-material";
-import { Edit3, BarChart2, EllipsisVertical } from "lucide-react";
+import { Edit3, BarChart2, EllipsisVertical, AlignJustify } from "lucide-react";
 import { apiUrl } from "../../common/api/config";
 import { useState } from "react";
 
@@ -129,6 +129,14 @@ const ProductCard = ({ product }) => {
               >
                 <MenuItem
                   onClick={() => {
+                    navigate(`/products/${product.id}`);
+                    handleMenuClose();
+                  }}
+                >
+                  <AlignJustify size={16} style={{ marginRight: 15 }} /> View Details
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
                     navigate(`/products/${product.id}/edit`);
                     handleMenuClose();
                   }}
@@ -141,7 +149,7 @@ const ProductCard = ({ product }) => {
                     handleMenuClose();
                   }}
                 >
-                  <BarChart2 size={16} style={{ marginRight: 15 }} /> Analytics
+                  <BarChart2 size={16} style={{ marginRight: 15 }} /> View Analytics
                 </MenuItem>
               </Menu>
             </div>
