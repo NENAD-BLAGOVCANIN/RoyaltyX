@@ -6,9 +6,6 @@ import { Container, Spinner } from "react-bootstrap";
 import { apiUrl } from "../../common/api/config";
 import DateRangeSelector from "../../common/components/DateRangeSelector";
 import { getProductAnalytics } from "../api/analytics";
-import { ImpressionsCard } from "../../analytics/components/ImpressionsCard";
-import { SalesCard } from "../../analytics/components/SalesCard";
-import { RevenueCard } from "../../analytics/components/RevenueCard";
 import SalesOverTime from "../../analytics/components/SalesOverTime";
 import RentalsOverTime from "../../analytics/components/RentalsOverTime";
 import ImpressionsOverTime from "../../analytics/components/ImpressionsOverTime";
@@ -27,9 +24,6 @@ function Analytics() {
     showRentalsOverTime,
     showImpressionsOverTime,
     showImpressionRevenueOverTime,
-    showTotalImpressionsCard,
-    showTotalSalesCard,
-    showTotalRevenueCard,
   } = useSettings();
 
   const [analytics, setAnalytics] = useState(null);
@@ -102,12 +96,6 @@ function Analytics() {
           <DateRangeSelector />
         </div>
       </div>
-
-      <Grid container spacing={3}>
-        {showTotalImpressionsCard && <ImpressionsCard analytics={analytics} />}
-        {showTotalSalesCard && <SalesCard analytics={analytics} />}
-        {showTotalRevenueCard && <RevenueCard analytics={analytics} />}
-      </Grid>
 
       <Grid container columnSpacing={3}>
         {showSalesOverTime && <SalesOverTime analytics={analytics} />}
