@@ -3,11 +3,23 @@ import Papa from "papaparse";
 import FileUploadInput from "../../components/FileUploadInput";
 import PageHeader from "../../../common/components/PageHeader";
 import { apiUrl } from "../../../common/api/config";
-import { Download, Trash } from "react-bootstrap-icons";
+import { Download, Trash2 } from "lucide-react";
 import ViewFileModal from "../../components/ViewFileModal";
 import { ReactComponent as GoogleSheetsIcon } from "../../../common/assets/img/vectors/google_sheets_icon.svg";
 import { Link } from "react-router-dom";
 import { getFiles } from "../../../management/api/files";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Box,
+  Typography
+} from "@mui/material";
 
 const ImportData = () => {
   const [files, setFiles] = useState([]);
@@ -60,49 +72,62 @@ const ImportData = () => {
       <FileUploadInput setFiles={setFiles} />
 
       {files.length > 0 && (
-        <div className="mt-5">
-          <h5 className="pb-3">Uploaded Files</h5>
-          <table className="table table-bordered">
-            <thead>
-              <tr>
-                <th>File Name</th>
-                <th>Uploaded At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {files.map((file) => (
-                <tr key={file.id}>
-                  <td>{file.name}</td>
-                  <td>{new Date(file.created_at).toLocaleString()}</td>
-                  <td className="d-flex align-items-center">
-                    <div className="px-1">
-                      <button
-                        onClick={() => handleOpenCsvViewer(file)}
-                        className="btn btn-basic"
-                      >
-                        <GoogleSheetsIcon />
-                      </button>
-                    </div>
-                    <div className="px-1">
-                      <a href={apiUrl + file.file} className="btn btn-basic">
-                        <Download />
-                      </a>
-                    </div>
-                    <div className="px-1">
-                      <Link
-                        to={`/management/data/${file.id}/delete`}
-                        className="btn btn-basic"
-                      >
-                        <Trash className="text-danger" />
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Box sx={{ mt: 5 }}>
+          <Typography variant="h6" sx={{ pb: 3 }}>
+            Uploaded Files
+          </Typography>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="uploaded files table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>File Name</TableCell>
+                  <TableCell>Uploaded At</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {files.map((file) => (
+                  <TableRow
+                    key={file.id}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {file.name}
+                    </TableCell>
+                    <TableCell>
+                      {new Date(file.created_at).toLocaleString()}
+                    </TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <IconButton
+                          onClick={() => handleOpenCsvViewer(file)}
+                          aria-label="view file"
+                        >
+                          <GoogleSheetsIcon />
+                        </IconButton>
+                        <IconButton
+                          component="a"
+                          href={apiUrl + file.file}
+                          aria-label="download file"
+                        >
+                          <Download size={20} />
+                        </IconButton>
+                        <IconButton
+                          component={Link}
+                          to={`/management/data/${file.id}/delete`}
+                          aria-label="delete file"
+                          sx={{ color: 'error.main' }}
+                        >
+                          <Trash2 size={20} />
+                        </IconButton>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       )}
 
       {showModal && (

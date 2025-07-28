@@ -63,8 +63,7 @@ const CsvViewer = ({ data, onCellChange }) => {
                     SYSTEM_FIELDS.includes(key) || isSelected
                       ? {}
                       : {
-                          filter: "blur(0.5px)",
-                          opacity: 0.6,
+                          opacity: 0.4,
                         }
                   }
                   className={
