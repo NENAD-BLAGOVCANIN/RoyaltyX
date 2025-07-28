@@ -10,10 +10,10 @@ import {
   CardContent,
   Grid,
 } from "@mui/material";
+import { Inventory2 } from "@mui/icons-material";
 import { Edit3, BarChart2, EllipsisVertical } from "lucide-react";
 import { apiUrl } from "../../common/api/config";
 import { useState } from "react";
-import { ReactComponent as ProductThumbnailPlaceholder } from "../../common/assets/img/vectors/product-thumbnail-placeholder-lg.svg";
 
 const ProductCard = ({ product }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -46,9 +46,23 @@ const ProductCard = ({ product }) => {
             sx={{ borderRadius: 1, height: 180, objectFit: "cover" }}
           />
         ) : (
-          <div style={{ textAlign: "center", padding: "16px" }}>
-            <ProductThumbnailPlaceholder />
-          </div>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: 180,
+              backgroundColor: "grey.300",
+              borderRadius: 1,
+            }}
+          >
+            <Inventory2
+              sx={{
+                fontSize: 64,
+                color: "grey.400",
+              }}
+            />
+          </Box>
         )}
         <CardContent
           sx={{
