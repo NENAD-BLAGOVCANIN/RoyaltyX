@@ -125,10 +125,7 @@ function Members() {
                           fontSize: "1rem",
                           fontWeight: 600,
                         }}
-                      >
-                        {user?.user_details?.name?.charAt(0)?.toUpperCase() ||
-                          "U"}
-                      </Avatar>
+                      />
                       <Typography variant="body1" sx={{ fontWeight: 500 }}>
                         {user?.user_details?.name || "Unknown User"}
                       </Typography>

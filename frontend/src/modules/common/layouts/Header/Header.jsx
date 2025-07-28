@@ -61,10 +61,7 @@ function Header() {
                       sx={{
                         cursor: "pointer",
                       }}
-                    >
-                      {user?.user_details?.name?.charAt(0)?.toUpperCase() ||
-                        "U"}
-                    </Avatar>
+                    />
                   </Tooltip>
                 ))}
               </AvatarGroup>

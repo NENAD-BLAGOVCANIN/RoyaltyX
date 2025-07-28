@@ -169,9 +169,7 @@ function AddMemberModal({
                         width: 40,
                         height: 40,
                       }}
-                    >
-                      {user.name?.charAt(0)?.toUpperCase() || "U"}
-                    </Avatar>
+                    />
                   </ListItemAvatar>
 
                   <ListItemText

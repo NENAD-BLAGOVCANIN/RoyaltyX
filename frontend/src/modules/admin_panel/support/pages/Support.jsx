@@ -371,10 +371,7 @@ function Support() {
                         <Avatar
                           src={ticket.customer?.avatar}
                           sx={{ width: 32, height: 32 }}
-                        >
-                          {ticket.customer?.name?.charAt(0)?.toUpperCase() ||
-                            "U"}
-                        </Avatar>
+                        />
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                           <Typography variant="body2" sx={{ fontWeight: 500 }}>
                             {ticket.customer?.name}
@@ -414,11 +411,7 @@ function Support() {
                           <Avatar
                             src={ticket.assigned_admin?.avatar}
                             sx={{ width: 24, height: 24 }}
-                          >
-                            {ticket.assigned_admin?.name
-                              ?.charAt(0)
-                              ?.toUpperCase() || "A"}
-                          </Avatar>
+                          />
                           <Typography variant="body2">
                             {ticket.assigned_admin?.name}
                           </Typography>
