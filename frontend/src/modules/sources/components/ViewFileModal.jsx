@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
-import { uploadFile, deleteFile } from "../../management/api/files";
+import { uploadFile, deleteFile } from "../api/files";
 import CsvViewer from "../../common/components/CsvViewer/CsvViewer";
 import { ReactComponent as GoogleSheetsIcon } from "../../common/assets/img/vectors/google_sheets_icon.svg";
 import {

@@ -8,7 +8,6 @@ from rest_framework.views import APIView
 from .models import File
 from .serializers import FileSerializer
 from .services import create_file, delete_file
-from .utils.producer_processing import process_producers
 
 
 class FileListCreateView(APIView):
@@ -56,17 +55,3 @@ class FileDetailView(APIView):
     def delete(self, request, pk):
         response_data = delete_file(pk)
         return Response(response_data, status=status.HTTP_204_NO_CONTENT)
-
-
-class ProducerListCreateView(APIView):
-    permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]
-
-    def post(self, request):
-        user = request.user
-        uploaded_file = request.FILES.get("file")
-        project_id = getattr(user, "currently_selected_project_id", None)
-
-        response = process_producers(uploaded_file, project_id)
-
-        return Response(response)

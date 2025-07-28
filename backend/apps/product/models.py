@@ -112,15 +112,3 @@ class ProductImpressions(BaseModel):
 
     class Meta:
         db_table = "product_impressions"
-
-
-class ProductUser(BaseModel):
-    """Model which represents producers for individual products"""
-
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
-    producer_fee = models.IntegerField(choices=((i, i) for i in range(1, 101)))
-
-    class Meta:
-        unique_together = ("product", "user")
-        db_table = "product_user"

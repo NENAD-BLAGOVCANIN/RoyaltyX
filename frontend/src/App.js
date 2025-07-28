@@ -22,7 +22,6 @@ import accountRoutes from "./modules/account";
 import contentRoutes from "./modules/content";
 import analyticsRoutes from "./modules/analytics";
 import supportRoutes from "./modules/support/routes";
-import managementRoutes from "./modules/management";
 import productRoutes from "./modules/products";
 import { ProjectProvider } from "./modules/common/contexts/ProjectContext";
 import { SettingsProvider } from "./modules/common/contexts/SettingsContext";
@@ -86,7 +85,6 @@ function App() {
                       ...reportRoutes,
                       ...accountRoutes,
                       ...contentRoutes,
-                      ...managementRoutes,
                       ...sourceRoutes,
                       ...productRoutes,
                       ...supportRoutes,

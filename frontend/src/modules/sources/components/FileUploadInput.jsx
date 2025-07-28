@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { uploadFile } from "../../management/api/files";
+import { uploadFile } from "../api/files";
 import { useDropzone } from "react-dropzone";
 import { Spinner } from "react-bootstrap";
 

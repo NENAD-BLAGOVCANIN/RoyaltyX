@@ -14,6 +14,10 @@ import {
   Box,
   IconButton,
   Divider,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import {
   PersonAdd as PersonAddIcon,
@@ -31,6 +35,7 @@ function AddMemberModal({
 }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedRoles, setSelectedRoles] = useState({});
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -79,8 +84,10 @@ function AddMemberModal({
   };
 
   const handleAddMember = async (user) => {
+    const selectedRole = selectedRoles[user.id] || "producer";
     const data = {
       user: user.id,
+      role: selectedRole,
     };
 
     setLoading(true);
@@ -182,15 +189,33 @@ function AddMemberModal({
                   />
 
                   <ListItemSecondaryAction>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      startIcon={<PersonAddIcon />}
-                      onClick={() => handleAddMember(user)}
-                      disabled={loading}
-                    >
-                      Add
-                    </Button>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <FormControl size="small" sx={{ minWidth: 100 }}>
+                        <InputLabel>Role</InputLabel>
+                        <Select
+                          value={selectedRoles[user.id] || "producer"}
+                          label="Role"
+                          onChange={(e) =>
+                            setSelectedRoles({
+                              ...selectedRoles,
+                              [user.id]: e.target.value,
+                            })
+                          }
+                        >
+                          <MenuItem value="producer">Producer</MenuItem>
+                          <MenuItem value="owner">Owner</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<PersonAddIcon />}
+                        onClick={() => handleAddMember(user)}
+                        disabled={loading}
+                      >
+                        Add
+                      </Button>
+                    </Box>
                   </ListItemSecondaryAction>
                 </ListItem>
                 {index < users.length - 1 && <Divider />}

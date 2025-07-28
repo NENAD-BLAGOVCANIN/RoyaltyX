@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SYSTEM_FIELDS } from "../../../management/constants";
+import { SYSTEM_FIELDS } from "../../../sources/constants";
 
 const CsvViewer = ({ data, onCellChange }) => {
   const [selectedCell, setSelectedCell] = useState({ row: null, col: null });

@@ -7,7 +7,7 @@ import { Download, Trash2 } from "lucide-react";
 import ViewFileModal from "../../components/ViewFileModal";
 import { ReactComponent as GoogleSheetsIcon } from "../../../common/assets/img/vectors/google_sheets_icon.svg";
 import { Link } from "react-router-dom";
-import { getFiles } from "../../../management/api/files";
+import { getFiles } from "../../api/files";
 import {
   Table,
   TableBody,

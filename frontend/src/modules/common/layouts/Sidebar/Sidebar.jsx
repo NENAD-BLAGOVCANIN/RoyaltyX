@@ -11,21 +11,16 @@ import {
   Typography,
   useTheme,
   useMediaQuery,
-  Divider,
 } from "@mui/material";
 import {
-  Settings,
   Gauge,
   FileText,
-  User,
   Database,
   Package2,
   LayoutPanelTop,
   LayoutDashboard,
   Users,
 } from "lucide-react";
-import { useProject } from "../../contexts/ProjectContext";
-import { useAuth } from "../../contexts/AuthContext";
 import { UpgradePlanButton } from "../../components/UpgradePlanButton";
 import { ProjectSelector } from "../../../global/components/ProjectSelector";
 
@@ -38,12 +33,6 @@ function Sidebar() {
 
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
 
-  const { project } = useProject();
-  const { email } = useAuth();
-
-  const projectUser = project?.users?.find(
-    (user) => user.user_details.email === email
-  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -118,75 +107,6 @@ function Sidebar() {
             boxSizing: "border-box",
           }}
         >
-          {/* Management Section */}
-          {projectUser?.role === "owner" && (
-            <>
-              <Typography
-                variant="caption"
-                sx={{
-                  color: "text.secondary",
-                  px: 2,
-                  py: 1,
-                  display: "block",
-                }}
-              >
-                Management
-              </Typography>
-
-              <ListItem disablePadding>
-                <ListItemButton
-                  component={Link}
-                  to="/management/settings"
-                  selected={isActivePage("/management/settings")}
-                  sx={{
-                    borderRadius: 2,
-                    mb: 0.5,
-                    "&.Mui-selected": {
-                      backgroundColor: "action.selected",
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ minWidth: 40 }}>
-                    <Settings size={18} color="var(--color-text-lighter)" />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Project Settings"
-                    primaryTypographyProps={{
-                      variant: "body2",
-
-                      noWrap: true,
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-
-              <ListItem disablePadding>
-                <ListItemButton
-                  component={Link}
-                  to="/management/producers"
-                  selected={isActivePage("/management/producers")}
-                  sx={{
-                    borderRadius: 2,
-                    mb: 0.5,
-                    "&.Mui-selected": {
-                      backgroundColor: "action.selected",
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ minWidth: 40 }}>
-                    <User size={18} color="var(--color-text-lighter)" />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Producers"
-                    primaryTypographyProps={{
-                      variant: "body2",
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <Divider />
-            </>
-          )}
 
           <Typography
             variant="caption"

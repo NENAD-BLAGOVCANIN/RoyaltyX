@@ -71,10 +71,8 @@ function Members() {
     switch (role?.toLowerCase()) {
       case "owner":
         return "primary";
-      case "admin":
+      case "producer":
         return "secondary";
-      case "member":
-        return "default";
       default:
         return "default";
     }
