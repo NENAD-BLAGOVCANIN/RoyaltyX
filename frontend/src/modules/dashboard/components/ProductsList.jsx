@@ -1,9 +1,8 @@
 import { Spinner } from "react-bootstrap";
-import { ReactComponent as ProductThumbnailPlaceholder } from "../../common/assets/img/vectors/product-thumbnail-placeholder-lg.svg";
 import { useNavigate } from "react-router";
-import { apiUrl } from "../../common/api/config";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import { ArrowRight, Shredder } from "lucide-react";
+import ProductCard from "../../products/components/ProductCard";
 
 export const ProductsList = ({ products, loading }) => {
   const navigate = useNavigate();
@@ -32,46 +31,11 @@ export const ProductsList = ({ products, loading }) => {
           <Spinner animation="border" />
         </div>
       ) : products?.length > 0 ? (
-        <div className="row">
+        <Grid container spacing={3}>
           {products?.map((product) => (
-            <div className="col-md-4 pb-4" key={product.id}>
-              <div
-                className="card pointer bg-transparent border-0"
-                onClick={() => {
-                  navigate("/products/" + product.id);
-                }}
-              >
-                {product.thumbnail ? (
-                  <div className="card-img-top">
-                    <img
-                      alt={product.title}
-                      className="rounded"
-                      src={(() => {
-                        const url = product.thumbnail.replace("/media/", "");
-                        if (url.startsWith("https")) {
-                          return decodeURIComponent(url).replace(
-                            "https",
-                            "http"
-                          );
-                        } else {
-                          return apiUrl + product.thumbnail;
-                        }
-                      })()}
-                    />
-                  </div>
-                ) : (
-                  <div className="card-img-top text-center">
-                    <ProductThumbnailPlaceholder />
-                  </div>
-                )}
-                <div className="py-3">
-                  <h5>{product.title}</h5>
-                  <p className="txt-lighter medium">{product.description}</p>
-                </div>
-              </div>
-            </div>
+            <ProductCard product={product} key={product.id} />
           ))}
-        </div>
+        </Grid>
       ) : (
         <Grid
           sx={{
