@@ -24,7 +24,7 @@ const DeleteData = () => {
 
   const handleFileDeletion = async () => {
     await deleteFile(file_id);
-    navigate("/management/data/import");
+    navigate("/sources/manual-import");
     toast.success("File successfully deleted!");
   };
 

@@ -114,7 +114,7 @@ const ImportData = () => {
                         </IconButton>
                         <IconButton
                           component={Link}
-                          to={`/management/data/${file.id}/delete`}
+                          to={`/sources/manual-import/${file.id}/delete`}
                           aria-label="delete file"
                           sx={{ color: 'error.main' }}
                         >
