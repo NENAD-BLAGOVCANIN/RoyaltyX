@@ -78,10 +78,6 @@ def calculate_yearly_stats(
     rentals_map = {entry["year"]: entry["count"] for entry in yearly_rentals}
 
     yearly_stats = []
-    single_year_adjustment = False
-    if years == 1:
-        years += 1
-        single_year_adjustment = True
 
     for i in range(years):
         if period_end:
@@ -96,9 +92,6 @@ def calculate_yearly_stats(
                 .replace(month=1, day=1)
                 .date()
             )
-
-        if single_year_adjustment:
-            year_date = (year_date + timedelta(days=365)).replace(month=1, day=1).date()
 
         yearly_stats.append(
             {
@@ -571,7 +564,7 @@ def calculate_analytics(
             time_stats = calculate_hourly_stats(
                 impressions_qs, sales_qs, period_start_time, period_end_time
             )
-    elif granularity == "monthly":  # monthly (default)
+    elif granularity == "monthly": 
         months = 12
         if period_start and period_end:
             months = (
@@ -582,13 +575,48 @@ def calculate_analytics(
         time_stats = calculate_monthly_stats(
             impressions_qs, sales_qs, months, filters.get("period_end__lte")
         )
-    else:
+    elif granularity == "yearly": 
         years = 5
         if period_start and period_end:
             years = period_end.year - period_start.year + 1
         time_stats = calculate_yearly_stats(
             impressions_qs, sales_qs, years, filters.get("period_end__lte")
         )
+
+    else:
+        # Find the earliest data point to determine the full range
+        earliest_impression = impressions_qs.order_by('period_start').first()
+        earliest_sale = sales_qs.order_by('period_start').first()
+        
+        earliest_date = None
+        if earliest_impression and earliest_sale:
+            earliest_date = min(earliest_impression.period_start, earliest_sale.period_start)
+        elif earliest_impression:
+            earliest_date = earliest_impression.period_start
+        elif earliest_sale:
+            earliest_date = earliest_sale.period_start
+        
+        if earliest_date:
+            from datetime import datetime
+            current_date = datetime.now().date()
+            months = (current_date.year - earliest_date.year) * 12 + (current_date.month - earliest_date.month) + 1
+            years = current_date.year - earliest_date.year + 1
+        else:
+            # Fallback to 1 year if no data exists
+            years = 1
+            months = 12
+        
+        # If only 1-2 year of data, switch to monthly granularity for better visualization
+        if years <= 2:
+            time_stats = calculate_monthly_stats(
+                impressions_qs, sales_qs, months, None
+            )
+            granularity = "monthly"
+        else:
+            time_stats = calculate_yearly_stats(
+                impressions_qs, sales_qs, years, None
+            )
+            granularity = "yearly"
 
     data = calculate_totals(impressions_qs, sales_qs)
 
