@@ -10,6 +10,8 @@ class File(BaseModel):
     )
     file = models.FileField(upload_to="uploads/", max_length=255, null=True)
     name = models.CharField(max_length=255, blank=True)
+    is_processed = models.BooleanField(default=False)
+    column_mappings = models.JSONField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.name and self.file:
@@ -18,3 +20,14 @@ class File(BaseModel):
 
     class Meta:
         db_table = "file"
+
+
+class ColumnMapping(BaseModel):
+    """Stores the mapping between CSV columns and our expected fields"""
+    file = models.ForeignKey(File, on_delete=models.CASCADE, related_name='mappings')
+    csv_column = models.CharField(max_length=255)  # Column name from CSV
+    mapped_field = models.CharField(max_length=255)  # Our expected field name
+    
+    class Meta:
+        db_table = "column_mapping"
+        unique_together = ['file', 'csv_column']

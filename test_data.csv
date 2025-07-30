@@ -1,0 +1,6 @@
+Product Name,Views,Revenue Per Thousand,Sales Price,Currency,Units Sold,Transaction Type,Refunded,Earnings,Earnings Currency,Start Date,End Date
+Game of Thrones Season 1,150000,2.50,9.99,USD,1250,purchase,No,1875.00,USD,2024-01-01,2024-01-31
+Breaking Bad Complete Series,89000,3.20,29.99,USD,890,purchase,No,2668.50,USD,2024-01-01,2024-01-31
+The Office Season 1,200000,1.80,7.99,USD,2100,rental,No,1680.00,USD,2024-01-01,2024-01-31
+Friends Complete Series,175000,2.10,24.99,USD,1800,purchase,Yes,4499.00,USD,2024-01-01,2024-01-31
+Stranger Things Season 4,300000,4.50,12.99,USD,3200,purchase,No,4156.80,USD,2024-01-01,2024-01-31

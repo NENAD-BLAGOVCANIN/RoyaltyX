@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
 import FileUploadInput from "../../components/FileUploadInput";
+import ColumnMappingModal from "../../components/ColumnMappingModal";
 import PageHeader from "../../../common/components/PageHeader";
 import { apiUrl } from "../../../common/api/config";
 import { Download, Trash2 } from "lucide-react";
@@ -18,7 +19,8 @@ import {
   Paper,
   IconButton,
   Box,
-  Typography
+  Typography,
+  Chip
 } from "@mui/material";
 
 const ImportData = () => {
@@ -26,6 +28,10 @@ const ImportData = () => {
   const [showModal, setShowModal] = useState(false);
   const [csvData, setCsvData] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
+  
+  // Column mapping modal state
+  const [showColumnMappingModal, setShowColumnMappingModal] = useState(false);
+  const [pendingFileData, setPendingFileData] = useState(null);
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -62,14 +68,41 @@ const ImportData = () => {
     setCsvData([]);
   };
 
+  const handleFileUploaded = (fileData) => {
+    setPendingFileData(fileData);
+    setShowColumnMappingModal(true);
+  };
+
+  const handleMappingConfirmed = (response) => {
+    // Add the processed file to the files list
+    setFiles((prevFiles) => [response.file, ...prevFiles]);
+    setPendingFileData(null);
+  };
+
+  const handleCloseColumnMappingModal = () => {
+    setShowColumnMappingModal(false);
+    setPendingFileData(null);
+  };
+
+  const getFileStatusChip = (file) => {
+    if (file.is_processed) {
+      return <Chip label="Processed" color="success" size="small" />;
+    } else {
+      return <Chip label="Pending Mapping" color="warning" size="small" />;
+    }
+  };
+
   return (
     <div className="py-3">
       <PageHeader
         title="Manual Data Import"
-        description="Manage your data sources and reports from different platforms all in one place."
+        description="Upload CSV files and map columns to import your data. Our smart mapping system will suggest the best column matches."
       />
 
-      <FileUploadInput setFiles={setFiles} />
+      <FileUploadInput 
+        setFiles={setFiles} 
+        onFileUploaded={handleFileUploaded}
+      />
 
       {files.length > 0 && (
         <Box sx={{ mt: 5 }}>
@@ -81,6 +114,7 @@ const ImportData = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>File Name</TableCell>
+                  <TableCell>Status</TableCell>
                   <TableCell>Uploaded At</TableCell>
                   <TableCell>Actions</TableCell>
                 </TableRow>
@@ -95,16 +129,21 @@ const ImportData = () => {
                       {file.name}
                     </TableCell>
                     <TableCell>
+                      {getFileStatusChip(file)}
+                    </TableCell>
+                    <TableCell>
                       {new Date(file.created_at).toLocaleString()}
                     </TableCell>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <IconButton
-                          onClick={() => handleOpenCsvViewer(file)}
-                          aria-label="view file"
-                        >
-                          <GoogleSheetsIcon />
-                        </IconButton>
+                        {file.is_processed && (
+                          <IconButton
+                            onClick={() => handleOpenCsvViewer(file)}
+                            aria-label="view file"
+                          >
+                            <GoogleSheetsIcon />
+                          </IconButton>
+                        )}
                         <IconButton
                           component="a"
                           href={apiUrl + file.file}
@@ -138,6 +177,13 @@ const ImportData = () => {
           setFiles={setFiles}
         />
       )}
+
+      <ColumnMappingModal
+        open={showColumnMappingModal}
+        onClose={handleCloseColumnMappingModal}
+        fileData={pendingFileData}
+        onMappingConfirmed={handleMappingConfirmed}
+      />
     </div>
   );
 };
