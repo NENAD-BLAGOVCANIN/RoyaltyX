@@ -59,13 +59,14 @@ const CsvViewer = ({ data, onCellChange }) => {
                   onClick={() =>
                     setSelectedCell({ row: rowIndex, col: colIndex })
                   }
-                  style={
-                    SYSTEM_FIELDS.includes(key) || isSelected
+                  style={{
+                    ...(SYSTEM_FIELDS.includes(key) || isSelected
                       ? {}
                       : {
                           opacity: 0.4,
-                        }
-                  }
+                        }),
+                    position: 'relative'
+                  }}
                   className={
                     isSelected 
                       ? "selected-cell"
@@ -81,7 +82,31 @@ const CsvViewer = ({ data, onCellChange }) => {
                       }
                       onBlur={() => setSelectedCell({ row: null, col: null })}
                       autoFocus
-                      className="form-control form-control-sm text-center border-0"
+                      style={{
+                        height: '100%',
+                        width: '100%',
+                        minHeight: '100%',
+                        maxHeight: '100%',
+                        minWidth: '100%',
+                        maxWidth: '100%',
+                        boxSizing: 'border-box',
+                        fontSize: 'inherit',
+                        lineHeight: 'inherit',
+                        fontFamily: 'inherit',
+                        padding: '0',
+                        margin: '0',
+                        border: 'none',
+                        background: 'transparent',
+                        borderRadius: '0',
+                        outline: 'none',
+                        resize: 'none',
+                        display: 'block',
+                        position: 'absolute',
+                        top: '0',
+                        left: '0',
+                        right: '0',
+                        bottom: '0'
+                      }}
                     />
                   ) : (
                     row[key]
