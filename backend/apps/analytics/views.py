@@ -15,7 +15,7 @@ class AnalyticsView(APIView):
     def _determine_granularity(self, period_start, period_end):
         """Determine appropriate granularity based on date range"""
         if not period_start or not period_end:
-            return "monthly"
+            return "max"
 
         delta = period_end - period_start
 
@@ -23,7 +23,7 @@ class AnalyticsView(APIView):
             return "daily" # TODO: Change to "hourly" after switching Date fields to DateTime
         elif delta.days <= 31:  # Approximately 1 month
             return "daily"
-        elif delta.days <= 365:
+        elif delta.days <= 730:
             return "monthly"
         else:
             return "yearly"
