@@ -34,19 +34,22 @@ def read_csv(file: BinaryIO) -> List[Dict[str, str]]:
 def process_report_with_mappings(file_obj) -> Dict[str, str]:
     """Processes CSV report using column mappings and updates products."""
     try:
-        if not validate_csv(file_obj.file):
-            return {"status": "error", "message": "Invalid CSV file"}
+        # Open the file properly
+        with file_obj.file.open('rb') as file_handle:
+            if not validate_csv(file_handle):
+                return {"status": "error", "message": "Invalid CSV file"}
 
-        data = read_csv(file_obj.file)
-        mappings = file_obj.column_mappings or {}
-        
-        result = update_products_with_mappings(data, file_obj.project_id, file_obj.id, mappings)
+            data = read_csv(file_handle)
+            mappings = file_obj.column_mappings or {}
+            
+            result = update_products_with_mappings(data, file_obj.project_id, file_obj.id, mappings)
 
-        return {
-            "status": "success",
-            "message": f"Updated {result['updated']} products",
-        }
+            return {
+                "status": "success",
+                "message": f"Updated {result['updated']} products",
+            }
     except Exception as e:
+        print(f"Error in process_report_with_mappings: {e}", flush=True)
         return {"status": "error", "message": str(e)}
 
 

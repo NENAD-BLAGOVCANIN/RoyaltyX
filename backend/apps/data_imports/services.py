@@ -49,10 +49,11 @@ def confirm_column_mappings(file_id, mappings):
     
     # Read CSV data to validate against actual content
     try:
-        csv_data = read_csv(file.file)
-        data_is_valid, data_errors = validate_csv_data_with_mappings(csv_data, mappings)
-        if not data_is_valid:
-            raise ValueError("; ".join(data_errors))
+        with file.file.open('rb') as file_handle:
+            csv_data = read_csv(file_handle)
+            data_is_valid, data_errors = validate_csv_data_with_mappings(csv_data, mappings)
+            if not data_is_valid:
+                raise ValueError("; ".join(data_errors))
     except Exception as e:
         raise ValueError(f"Error reading CSV file: {str(e)}")
     

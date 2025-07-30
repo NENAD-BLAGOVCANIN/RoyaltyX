@@ -103,7 +103,8 @@ const ColumnMappingModal = ({
   };
 
   const getRequiredFields = () => {
-    const required = new Set(['title']); // Always required
+    // Base required fields for any import
+    const required = new Set(['title', 'period_start', 'period_end']);
     
     // Check if sales data will be created
     const salesIndicators = ['unit_price', 'quantity', 'royalty_amount'];
@@ -111,12 +112,8 @@ const ColumnMappingModal = ({
     
     if (hasSalesData) {
       required.add('unit_price');
-      required.add('unit_price_currency');
       required.add('quantity');
       required.add('royalty_amount');
-      required.add('royalty_currency');
-      required.add('period_start');
-      required.add('period_end');
     }
     
     // Check if impressions data will be created
@@ -124,8 +121,7 @@ const ColumnMappingModal = ({
     const hasImpressionData = impressionIndicators.some(field => mappings[field]);
     
     if (hasImpressionData) {
-      required.add('period_start');
-      required.add('period_end');
+      required.add('impressions');
     }
     
     return required;
@@ -133,6 +129,109 @@ const ColumnMappingModal = ({
 
   const isFieldRequired = (fieldKey) => {
     return getRequiredFields().has(fieldKey);
+  };
+
+  const getFieldRequirementType = (fieldKey) => {
+    // Base required fields
+    const baseRequired = ['title', 'period_start', 'period_end'];
+    if (baseRequired.includes(fieldKey)) {
+      return 'required';
+    }
+
+    // Check if user has mapped any sales-related fields
+    const salesIndicators = ['unit_price', 'quantity', 'royalty_amount'];
+    const hasSalesData = salesIndicators.some(field => mappings[field]);
+    
+    // Sales-specific required fields - show chip if ANY sales field is mapped
+    const salesFields = ['unit_price', 'quantity', 'royalty_amount'];
+    if (salesFields.includes(fieldKey) && hasSalesData) {
+      return 'sales';
+    }
+
+    // Check if user has mapped any impression-related fields
+    const impressionIndicators = ['impressions', 'ecpm'];
+    const hasImpressionData = impressionIndicators.some(field => mappings[field]);
+    
+    // Impressions-specific required fields - show chip if ANY impression field is mapped
+    const impressionFields = ['impressions'];
+    if (impressionFields.includes(fieldKey) && hasImpressionData) {
+      return 'impressions';
+    }
+
+    // Show potential requirement chips for unmapped fields
+    // This helps users understand what would be required if they choose certain data types
+    
+    // Show "Required for Sales" on sales fields even if not mapped, 
+    // but only if no sales data is currently mapped (to avoid confusion)
+    if (salesFields.includes(fieldKey) && !hasSalesData) {
+      return 'potential-sales';
+    }
+
+    // Show "Required for Impressions" on impression fields even if not mapped,
+    // but only if no impression data is currently mapped
+    if (impressionFields.includes(fieldKey) && !hasImpressionData) {
+      return 'potential-impressions';
+    }
+
+    return null;
+  };
+
+  const getRequirementChip = (fieldKey) => {
+    const requirementType = getFieldRequirementType(fieldKey);
+    
+    // Debug logging
+    console.log(`Field: ${fieldKey}, Requirement Type: ${requirementType}`, { mappings });
+    
+    if (requirementType === 'required') {
+      return (
+        <Chip 
+          label="Required" 
+          size="small" 
+          color="error" 
+          variant="outlined"
+        />
+      );
+    } else if (requirementType === 'sales') {
+      return (
+        <Chip 
+          label="Required for Sales" 
+          size="small" 
+          color="warning" 
+          variant="outlined"
+        />
+      );
+    } else if (requirementType === 'impressions') {
+      return (
+        <Chip 
+          label="Required for Impressions" 
+          size="small" 
+          color="info" 
+          variant="outlined"
+        />
+      );
+    } else if (requirementType === 'potential-sales') {
+      return (
+        <Chip 
+          label="Required for Sales" 
+          size="small" 
+          color="warning" 
+          variant="outlined"
+          sx={{ opacity: 0.7 }}
+        />
+      );
+    } else if (requirementType === 'potential-impressions') {
+      return (
+        <Chip 
+          label="Required for Impressions" 
+          size="small" 
+          color="info" 
+          variant="outlined"
+          sx={{ opacity: 0.7 }}
+        />
+      );
+    }
+    
+    return null;
   };
 
   if (!fileData) return null;
@@ -189,9 +288,7 @@ const ColumnMappingModal = ({
                         <Typography variant="body2" fontWeight="medium">
                           {field.label}
                         </Typography>
-                        {isFieldRequired(field.key) && (
-                          "*"
-                        )}
+                        {getRequirementChip(field.key)}
                       </Box>
                     </TableCell>
                     <TableCell>

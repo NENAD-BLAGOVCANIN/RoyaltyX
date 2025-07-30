@@ -5,24 +5,17 @@ def get_required_fields_for_data_type(data_type: str) -> List[str]:
     """Get required fields for different data types"""
     if data_type == "sales":
         return [
-            "title",  # Required for Product
             "unit_price",  # Required for ProductSale
-            "unit_price_currency",  # Required for ProductSale
             "quantity",  # Required for ProductSale
             "royalty_amount",  # Required for ProductSale
-            "royalty_currency",  # Required for ProductSale
-            "period_start",  # Required for ProductSale
-            "period_end",  # Required for ProductSale
         ]
     elif data_type == "impressions":
         return [
-            "title",  # Required for Product
-            "period_start",  # Required for ProductImpressions
-            "period_end",  # Required for ProductImpressions
+            "impressions",  # Required for ProductImpressions
         ]
     else:
-        # General required fields (at minimum we need title)
-        return ["title"]
+        # No additional requirements for basic product data
+        return []
 
 
 def detect_data_types_from_mappings(mappings: Dict[str, str]) -> List[str]:
@@ -39,10 +32,6 @@ def detect_data_types_from_mappings(mappings: Dict[str, str]) -> List[str]:
     if any(field in mappings and mappings[field] for field in impressions_indicators):
         data_types.append("impressions")
     
-    # If no specific data type detected, at least we need basic product data
-    if not data_types:
-        data_types.append("basic")
-    
     return data_types
 
 
@@ -53,13 +42,21 @@ def validate_column_mappings(mappings: Dict[str, str]) -> Tuple[bool, List[str]]
     """
     errors = []
     
-    # Always require title for any import
-    if not mappings.get("title"):
-        errors.append("Title field is required - please map a column to 'Title'")
+    # Always require title, period_start, and period_end for any import
+    base_required_fields = ["title", "period_start", "period_end"]
+    for field in base_required_fields:
+        if not mappings.get(field):
+            field_label = field.replace('_', ' ').title()
+            errors.append(f"'{field_label}' field is required - please map a column")
     
     # Detect what types of data will be created
     data_types = detect_data_types_from_mappings(mappings)
     
+    # If no data types detected, that's fine - user just wants basic product data
+    if not data_types:
+        return len(errors) == 0, errors
+    
+    # Validate requirements for each detected data type
     for data_type in data_types:
         required_fields = get_required_fields_for_data_type(data_type)
         

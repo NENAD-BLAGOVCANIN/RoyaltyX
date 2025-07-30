@@ -89,10 +89,16 @@ class ExpectedFieldsView(APIView):
         # Transform to a more frontend-friendly format
         fields_list = []
         for field_key, possible_names in expected_fields.items():
+            # Create custom descriptions for currency fields
+            if field_key in ['unit_price_currency', 'royalty_currency']:
+                description = f"Optional - defaults to USD. Maps to: {', '.join(possible_names[:3])}{'...' if len(possible_names) > 3 else ''}"
+            else:
+                description = f"Maps to: {', '.join(possible_names[:3])}{'...' if len(possible_names) > 3 else ''}"
+            
             fields_list.append({
                 'key': field_key,
                 'label': field_key.replace('_', ' ').title(),
-                'description': f"Maps to: {', '.join(possible_names[:3])}{'...' if len(possible_names) > 3 else ''}"
+                'description': description
             })
         
         return Response({'fields': fields_list}, status=status.HTTP_200_OK)
