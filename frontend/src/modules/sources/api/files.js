@@ -5,7 +5,7 @@ export const getFiles = async () => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
   });
 
@@ -21,7 +21,7 @@ export const getFile = async (fileId) => {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
   });
 
@@ -32,7 +32,7 @@ export const getFile = async (fileId) => {
   return await response.json();
 };
 
-export const uploadFile = async (file, data) => {
+export const uploadFile = async (file, data = {}) => {
   const formData = new FormData();
   formData.append("file", file);
   
@@ -46,7 +46,7 @@ export const uploadFile = async (file, data) => {
   const response = await fetch(apiUrl + "/data_imports/files/", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
     body: formData,
   });
@@ -59,12 +59,46 @@ export const uploadFile = async (file, data) => {
   return await response.json();
 };
 
+export const confirmColumnMappings = async (fileId, mappings) => {
+  const response = await fetch(apiUrl + `/data_imports/files/${fileId}/confirm-mappings/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    body: JSON.stringify({ mappings }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || "Failed to confirm column mappings");
+  }
+
+  return await response.json();
+};
+
+export const getExpectedFields = async () => {
+  const response = await fetch(apiUrl + "/data_imports/expected-fields/", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch expected fields");
+  }
+
+  return await response.json();
+};
+
 export const deleteFile = async (fileId) => {
   const response = await fetch(apiUrl + `/data_imports/files/${fileId}/`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
   });
 

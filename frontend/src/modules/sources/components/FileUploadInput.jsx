@@ -4,7 +4,7 @@ import { uploadFile } from "../api/files";
 import { useDropzone } from "react-dropzone";
 import { Spinner } from "react-bootstrap";
 
-const FileUploadInput = ({ setFiles }) => {
+const FileUploadInput = ({ setFiles, onFileUploaded }) => {
   const [uploading, setUploading] = useState(false);
 
   const onDrop = async (acceptedFiles) => {
@@ -14,11 +14,16 @@ const FileUploadInput = ({ setFiles }) => {
     setUploading(true);
     try {
       const response = await uploadFile(file);
-      if (response.report.status === "success") {
+      if (response.requires_mapping) {
+        // File uploaded successfully, now needs column mapping
+        toast.success("File uploaded successfully! Please map the columns.");
+        onFileUploaded(response);
+      } else if (response.report && response.report.status === "success") {
+        // Legacy flow - file processed immediately
         toast.success(response.report.message);
         setFiles((prevFiles) => [response.file, ...prevFiles]);
       } else {
-        toast.error(response.report.message);
+        toast.error(response.report?.message || "Upload failed");
       }
     } catch (error) {
       toast.error("Error: " + error.message);

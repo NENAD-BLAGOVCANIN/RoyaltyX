@@ -7,7 +7,8 @@ from rest_framework.views import APIView
 
 from .models import File
 from .serializers import FileSerializer
-from .services import create_file, delete_file
+from .services import create_file, delete_file, confirm_column_mappings
+from .utils.column_mapping import get_expected_fields
 
 
 class FileListCreateView(APIView):
@@ -55,3 +56,43 @@ class FileDetailView(APIView):
     def delete(self, request, pk):
         response_data = delete_file(pk)
         return Response(response_data, status=status.HTTP_204_NO_CONTENT)
+
+
+class ColumnMappingView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, file_id):
+        """Confirm column mappings and process the file"""
+        mappings = request.data.get('mappings', {})
+        
+        try:
+            response_data = confirm_column_mappings(file_id, mappings)
+            return Response(response_data, status=status.HTTP_200_OK)
+        
+        except ValueError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred: " + str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
+class ExpectedFieldsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Get the list of expected fields for column mapping"""
+        expected_fields = get_expected_fields()
+        
+        # Transform to a more frontend-friendly format
+        fields_list = []
+        for field_key, possible_names in expected_fields.items():
+            fields_list.append({
+                'key': field_key,
+                'label': field_key.replace('_', ' ').title(),
+                'description': f"Maps to: {', '.join(possible_names[:3])}{'...' if len(possible_names) > 3 else ''}"
+            })
+        
+        return Response({'fields': fields_list}, status=status.HTTP_200_OK)
