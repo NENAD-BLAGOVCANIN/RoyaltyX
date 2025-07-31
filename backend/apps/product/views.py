@@ -80,24 +80,78 @@ def product_detail(request, product_id):
 
 
 @api_view(http_method_names=["GET"])
+@permission_classes([IsAuthenticated])
 def getTopPerformingContentByImpressions(request):
+    user = request.user
+    currently_selected_project_id = user.currently_selected_project_id
+
+    try:
+        project_user = ProjectUser.objects.get(
+            project_id=currently_selected_project_id, user=user
+        )
+    except ProjectUser.DoesNotExist:
+        return Response(
+            {"error": "User is not part of this project."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    # Apply role-based filtering
+    if project_user.role == ProjectUser.PROJECT_USER_ROLE_OWNER:
+        products = Product.objects.filter(project_id=currently_selected_project_id)
+    elif project_user.role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
+        # Producers can only see products they have been given access to
+        accessible_product_ids = ProducerProductAccess.objects.filter(
+            project_user=project_user
+        ).values_list('product_id', flat=True)
+        products = Product.objects.filter(id__in=accessible_product_ids)
+    else:
+        products = Product.objects.none()
+
     products = (
-        Product.objects.filter(project_id=request.user.currently_selected_project_id)
+        products
         .annotate(total_impressions=Sum("productimpressions__impressions"))
         .filter(total_impressions__gt=0)
         .order_by("-total_impressions")[:10]
     )
+    
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(http_method_names=["GET"])
+@permission_classes([IsAuthenticated])
 def getTopPerformingContentBySales(request):
+    user = request.user
+    currently_selected_project_id = user.currently_selected_project_id
+
+    try:
+        project_user = ProjectUser.objects.get(
+            project_id=currently_selected_project_id, user=user
+        )
+    except ProjectUser.DoesNotExist:
+        return Response(
+            {"error": "User is not part of this project."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    # Apply role-based filtering
+    if project_user.role == ProjectUser.PROJECT_USER_ROLE_OWNER:
+        products = Product.objects.filter(project_id=currently_selected_project_id)
+    elif project_user.role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
+        # Producers can only see products they have been given access to
+        accessible_product_ids = ProducerProductAccess.objects.filter(
+            project_user=project_user
+        ).values_list('product_id', flat=True)
+        products = Product.objects.filter(id__in=accessible_product_ids)
+    else:
+        products = Product.objects.none()
+
     products = (
-        Product.objects.filter(project_id=request.user.currently_selected_project_id)
+        products
         .annotate(total_sales=Sum("productsale__royalty_amount"))
         .filter(total_sales__gt=0)
         .order_by("-total_sales")[:10]
     )
+    
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
