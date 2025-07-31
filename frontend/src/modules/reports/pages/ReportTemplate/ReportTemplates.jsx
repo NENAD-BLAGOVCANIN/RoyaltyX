@@ -1,10 +1,22 @@
 import { useEffect, useState } from "react";
 import { getReportTemplates } from "../../api/report-templates";
-import { Pencil, Trash } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import PageHeader from "../../../common/components/PageHeader";
-import { Box, Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Tooltip
+} from "@mui/material";
+import { Edit, Delete } from "@mui/icons-material";
 
 const ReportTemplates = () => {
   const [templates, setTemplates] = useState([]);
@@ -42,43 +54,60 @@ const ReportTemplates = () => {
         </Button>
       </Box>
 
-      <table className="table table-bordered table-hover my-2">
-        <thead>
-          <tr>
-            <th>Template name</th>
-            <th>Created by</th>
-            <th>Created at</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {templates.map((template) => (
-            <tr key={template.id}>
-              <td>{template.template_name}</td>
-              <td>{template?.created_by?.email}</td>
-              <td>
-                {formatDistanceToNow(new Date(template.created_at), {
-                  addSuffix: true,
-                })}
-              </td>
-              <td className="d-flex align-items-center gap-2 justify-content-start">
-                <Link
-                  className="btn btn-basic"
-                  to={`/report-templates/${template.id}/edit`}
-                >
-                  <Pencil className="text-primary" />
-                </Link>
-                <Link
-                  className="btn btn-basic"
-                  to={`/report-templates/${template.id}/delete`}
-                >
-                  <Trash className="text-danger" />
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TableContainer component={Paper} sx={{ mt: 2 }}>
+        <Table sx={{ minWidth: 650 }} aria-label="report templates table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Template name</TableCell>
+              <TableCell>Created by</TableCell>
+              <TableCell>Created at</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {templates.map((template) => (
+              <TableRow
+                key={template.id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {template.template_name}
+                </TableCell>
+                <TableCell>{template?.created_by?.email}</TableCell>
+                <TableCell>
+                  {formatDistanceToNow(new Date(template.created_at), {
+                    addSuffix: true,
+                  })}
+                </TableCell>
+                <TableCell>
+                  <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Tooltip title="Edit template">
+                      <IconButton
+                        component={Link}
+                        to={`/report-templates/${template.id}/edit`}
+                        color="primary"
+                        size="small"
+                      >
+                        <Edit />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete template">
+                      <IconButton
+                        component={Link}
+                        to={`/report-templates/${template.id}/delete`}
+                        color="error"
+                        size="small"
+                      >
+                        <Delete />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };
