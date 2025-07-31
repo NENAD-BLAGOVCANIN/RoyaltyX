@@ -5,7 +5,7 @@ export const colors = {
     primaryHover: "#1976d2d3",
     text: "#1e1f21",
     textLighter: "#5d5e5f",
-    bodyBackground: "#fff",
+    bodyBackground: "#fcfcfc",
     paper: "#fff",
     lightGray: "#f2f2f2",
     lightContrast: "#f3f3f3",

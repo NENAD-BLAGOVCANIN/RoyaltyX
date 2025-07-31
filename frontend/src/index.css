@@ -598,12 +598,12 @@ table.table.dataTable > :not(caption) > * > * {
   border-radius: 50px;
   left: 4px;
   bottom: 4px;
-  background-color: var(--color-body-background);
+  background-color: white;
   transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: var(--color-text);
+  background-color: var(--color-primary);
 }
 
 input:checked + .slider:before {
