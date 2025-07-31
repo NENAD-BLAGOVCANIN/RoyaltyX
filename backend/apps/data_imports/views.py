@@ -55,7 +55,7 @@ class FileDetailView(APIView):
 
     def delete(self, request, pk):
         response_data = delete_file(pk)
-        return Response(response_data, status=status.HTTP_204_NO_CONTENT)
+        return Response(response_data, status=status.HTTP_200_OK)
 
 
 class ColumnMappingView(APIView):
