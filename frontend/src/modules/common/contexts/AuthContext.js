@@ -71,9 +71,8 @@ export const AuthProvider = ({ children }) => {
         // Check if this is a new user from Google OAuth or from regular registration
         const shouldShowThemeSelection = isNewUser || user.is_new_user;
         
-        // Clear the new user flag and redirect appropriately
+        // Redirect appropriately (flag will be cleared by ThemeSelection component)
         if (shouldShowThemeSelection) {
-          localStorage.removeItem("newUserThemeSelection");
           navigate("/theme-selection");
         } else {
           navigate("/my-projects");
@@ -101,9 +100,8 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem("accessToken", response.access);
       
-      // Clear the new user flag and redirect appropriately
+      // Redirect appropriately (flag will be cleared by ThemeSelection component)
       if (isNewUser) {
-        localStorage.removeItem("newUserThemeSelection");
         navigate("/theme-selection");
       } else {
         navigate("/my-projects");
@@ -138,18 +136,24 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
     if (storedToken) {
-      checkTokenExpiration(storedToken);
-      const decodedToken = jwtDecode(storedToken);
+      try {
+        checkTokenExpiration(storedToken);
+        const decodedToken = jwtDecode(storedToken);
 
-      setAuthenticated(true);
-      setToken(storedToken);
-      setId(decodedToken.id);
-      setEmail(decodedToken.email);
-      setName(decodedToken.name);
-      setAvatar(decodedToken.avatar);
-      setRole(decodedToken.role);
-      setSubscriptionPlan(decodedToken.subscription_plan || "free");
-      setCurrentlySelectedProjectId(decodedToken.currently_selected_project_id);
+        setAuthenticated(true);
+        setToken(storedToken);
+        setId(decodedToken.id);
+        setEmail(decodedToken.email);
+        setName(decodedToken.name);
+        setAvatar(decodedToken.avatar);
+        setRole(decodedToken.role);
+        setSubscriptionPlan(decodedToken.subscription_plan || "free");
+        setCurrentlySelectedProjectId(decodedToken.currently_selected_project_id);
+      } catch (error) {
+        // If token is invalid, clear it
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refresh_token");
+      }
     }
     setLoading(false);
   }, []);

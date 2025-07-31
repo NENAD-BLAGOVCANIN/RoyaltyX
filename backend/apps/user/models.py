@@ -69,6 +69,7 @@ class User(AbstractBaseUser):
     is_deleted = models.BooleanField(default=False)
     is_email_verified = models.BooleanField(default=False)
     verification_code = models.CharField(max_length=30, null=True)
+    verification_token_expiry = models.DateTimeField(null=True, blank=True)
     avatar = models.CharField(null=True, max_length=300)
     subscription_plan = models.CharField(
         max_length=10, choices=SUBSCRIPTION_PLAN_CHOICES, default="free"

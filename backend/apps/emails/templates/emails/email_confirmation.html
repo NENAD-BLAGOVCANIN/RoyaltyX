@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Email - RoyaltyX</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        .title {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-bottom: 30px;
+        }
+        .verification-code {
+            background-color: #f8f9fa;
+            border: 2px dashed #1976d2;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .code {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1976d2;
+            letter-spacing: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .button {
+            display: inline-block;
+            background-color: #1976d2;
+            color: white !important;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .button:hover {
+            background-color: #1565c0;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">RoyaltyX</div>
+            <h1 class="title">Confirm Your Email Address</h1>
+        </div>
+        
+        <div class="content">
+            <p>Hello {{ user_name }},</p>
+            
+            <p>Thank you for registering with RoyaltyX! To complete your account setup and start using our platform, please confirm your email address.</p>
+            
+            <div class="verification-code">
+                <p><strong>Your verification code is:</strong></p>
+                <div class="code">{{ verification_code }}</div>
+            </div>
+            
+            <p>You can also click the button below to verify your email automatically:</p>
+            
+            <div style="text-align: center;">
+                <a href="{{ verification_link }}" class="button">Verify Email Address</a>
+            </div>
+            
+            <div class="warning">
+                <strong>Important:</strong> This verification code will expire in 24 hours. If you don't verify your email within this time, you'll need to request a new verification code.
+            </div>
+            
+            <p>If you didn't create an account with RoyaltyX, please ignore this email.</p>
+        </div>
+        
+        <div class="footer">
+            <p>Best regards,<br>The RoyaltyX Team</p>
+            <p>If you're having trouble with the button above, copy and paste the following URL into your web browser:</p>
+            <p style="word-break: break-all; color: #1976d2;">{{ verification_link }}</p>
+        </div>
+    </div>
+</body>
+</html>
