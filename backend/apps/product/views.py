@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.project.models import ProjectUser
+from apps.project.models import ProjectUser, ProducerProductAccess
 
 from .models import Product
 from .serializers import ProductSerializer
@@ -31,8 +31,11 @@ class ProductListCreateAPIView(APIView):
         if project_user.role == ProjectUser.PROJECT_USER_ROLE_OWNER:
             products = Product.objects.filter(project_id=currently_selected_project_id)
         elif project_user.role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
-            # Producers can see all products in the project
-            products = Product.objects.filter(project_id=currently_selected_project_id)
+            # Producers can only see products they have been given access to
+            accessible_product_ids = ProducerProductAccess.objects.filter(
+                project_user=project_user
+            ).values_list('product_id', flat=True)
+            products = Product.objects.filter(id__in=accessible_product_ids)
         else:
             products = Product.objects.none()
 

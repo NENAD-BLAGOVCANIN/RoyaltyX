@@ -20,9 +20,11 @@ import {
   PersonAdd as PersonAddIcon,
   MoreVert as MoreVertIcon,
   Delete as DeleteIcon,
+  Edit as EditIcon,
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import AddMemberModal from "../components/AddMemberModal";
+import EditMemberModal from "../components/EditMemberModal";
 import { removeProjectMember } from "../api/members";
 import { useProject } from "../../common/contexts/ProjectContext";
 import PageHeader from "../../common/components/PageHeader";
@@ -30,6 +32,7 @@ import PageHeader from "../../common/components/PageHeader";
 function Members() {
   const { project, setProject } = useProject();
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
+  const [showEditMemberModal, setShowEditMemberModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -63,6 +66,13 @@ function Members() {
   const handleRemoveFromMenu = () => {
     if (selectedUser) {
       handleRemoveProjectMember(selectedUser);
+    }
+    handleMenuClose();
+  };
+
+  const handleEditFromMenu = () => {
+    if (selectedUser) {
+      setShowEditMemberModal(true);
     }
     handleMenuClose();
   };
@@ -192,6 +202,14 @@ function Members() {
         setShowAddMemberModal={setShowAddMemberModal}
       />
 
+      <EditMemberModal
+        project={project}
+        setProject={setProject}
+        showEditMemberModal={showEditMemberModal}
+        setShowEditMemberModal={setShowEditMemberModal}
+        selectedMember={selectedUser}
+      />
+
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -205,6 +223,10 @@ function Members() {
           horizontal: "right",
         }}
       >
+        <MenuItem onClick={handleEditFromMenu}>
+          <EditIcon sx={{ mr: 1, fontSize: "1.2rem" }} />
+          Edit access
+        </MenuItem>
         <MenuItem onClick={handleRemoveFromMenu} sx={{ color: "error.main" }}>
           <DeleteIcon sx={{ mr: 1, fontSize: "1.2rem" }} />
           Remove from project
