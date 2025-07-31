@@ -59,6 +59,7 @@ export const ProjectSelector = () => {
           elevation={0}
           sx={{
             p: 1,
+            py: 0.9,
             pr: 2,
             backgroundColor: "action.hover",
             borderRadius: 2,

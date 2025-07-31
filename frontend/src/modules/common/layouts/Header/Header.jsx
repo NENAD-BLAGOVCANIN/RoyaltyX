@@ -27,6 +27,7 @@ function Header() {
         sx={{
           backgroundColor: "background.default",
           borderBottom: "1px solid",
+          borderLeft: "none",
           borderColor: "divider",
           color: "text.primary",
         }}
