@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { UpgradePlanButton } from "../../components/UpgradePlanButton";
 import { ProjectSelector } from "../../../global/components/ProjectSelector";
+import SidebarProductList from "../../components/SidebarProductList";
 
 const SIDEBAR_WIDTH = 242;
 
@@ -301,6 +302,8 @@ function Sidebar() {
             <UpgradePlanButton />
           </ListItem>
         </List>
+        
+        <SidebarProductList />
       </Box>
     </Box>
   );
