@@ -1,13 +1,15 @@
-import { Box, Divider, Link, Menu, MenuItem, Paper, Typography } from "@mui/material";
+import { Box, Divider, Menu, MenuItem, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getUserInfo } from "../../account/api/user";
 import { ChevronDown, Folder } from "lucide-react";
 import { getMyProjects, switchProject } from "../../projects/api/project";
+import { useNavigate } from "react-router";
 
 export const ProjectSelector = () => {
   const [projectMenuAnchor, setProjectMenuAnchor] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [myProjects, setMyProjects] = useState([]);
+  const navigate = useNavigate();
   const handleProjectMenuOpen = (event) => {
     setProjectMenuAnchor(event.currentTarget);
   };
@@ -75,26 +77,28 @@ export const ProjectSelector = () => {
           }}
           onClick={handleProjectMenuOpen}
         >
-          <Box sx={{ 
-            display: "flex", 
-            alignItems: "center", 
-            px: 1,
-            flex: 1,
-            minWidth: 0,
-            overflow: "hidden"
-          }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              px: 1,
+              flex: 1,
+              minWidth: 0,
+              overflow: "hidden",
+            }}
+          >
             <Folder
               size={18}
               color="var(--color-text-lighter)"
               style={{ marginRight: 8, flexShrink: 0 }}
             />
-            <Typography 
-              variant="body2" 
-              sx={{ 
+            <Typography
+              variant="body2"
+              sx={{
                 fontWeight: 500,
                 overflow: "hidden",
                 textOverflow: "ellipsis",
-                whiteSpace: "nowrap"
+                whiteSpace: "nowrap",
               }}
             >
               {userInfo?.project?.name ||
@@ -124,9 +128,10 @@ export const ProjectSelector = () => {
         ))}
         <Divider />
         <MenuItem
-          component={Link}
-          to="/my-projects"
-          onClick={handleProjectMenuClose}
+          onClick={() => {
+            navigate("/my-projects");
+            handleProjectMenuClose();
+          }}
           sx={{ color: "primary.main", fontWeight: 500 }}
         >
           View all

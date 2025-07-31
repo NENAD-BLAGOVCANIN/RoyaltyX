@@ -100,8 +100,8 @@ function Overview() {
               <Box sx={{ mt: 2 }}>
                 <Chip
                   icon={<Mail size={16} />}
-                  label={userInfo.email_verified ? "Verified" : "Not Verified"}
-                  color={userInfo.email_verified ? "success" : "error"}
+                  label={userInfo.is_email_verified ? "Verified" : "Not Verified"}
+                  color={userInfo.is_email_verified ? "success" : "error"}
                   size="small"
                   sx={{ mr: 1, mb: 1 }}
                 />

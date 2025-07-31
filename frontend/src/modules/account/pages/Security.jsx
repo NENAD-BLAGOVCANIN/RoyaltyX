@@ -7,13 +7,6 @@ import {
   Grid,
   Button,
   TextField,
-  Switch,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListItemSecondaryAction,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -21,7 +14,7 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
-import { Shield, Lock, Mail, Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { Lock, Eye, EyeOff } from "lucide-react";
 import { changePassword } from "../api/user";
 
 function SecurityPage() {
@@ -29,8 +22,6 @@ function SecurityPage() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [changePasswordDialog, setChangePasswordDialog] = useState(false);
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [loginAlerts, setLoginAlerts] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -41,22 +32,6 @@ function SecurityPage() {
     confirmPassword: "",
   });
 
-  const securityFeatures = [
-    {
-      title: "Email Notifications",
-      description: "Get notified about important security events",
-      icon: <Mail size={20} color="currentColor" />,
-      enabled: emailNotifications,
-      action: () => setEmailNotifications(!emailNotifications),
-    },
-    {
-      title: "Login Alerts",
-      description: "Receive alerts for new device logins",
-      icon: <ShieldCheck size={20} color="currentColor" />,
-      enabled: loginAlerts,
-      action: () => setLoginAlerts(!loginAlerts),
-    },
-  ];
 
   const handlePasswordChange = (field, value) => {
     setPasswordForm((prev) => ({
@@ -137,55 +112,6 @@ function SecurityPage() {
               >
                 Change Password
               </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Security Features */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent sx={{ p: 3 }}>
-              <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-                <Shield
-                  size={20}
-                  color="currentColor"
-                  style={{ marginRight: 16, color: "primary.main" }}
-                />
-                <Typography variant="h6" sx={{ fontWeight: 500 }}>
-                  Security Features
-                </Typography>
-              </Box>
-              <List sx={{ p: 0 }}>
-                {securityFeatures.map((feature, index) => (
-                  <Box key={feature.title}>
-                    <ListItem sx={{ px: 0, py: 2 }}>
-                      <ListItemIcon sx={{ minWidth: 40 }}>
-                        {feature.icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={
-                          <Typography variant="subtitle2">
-                            {feature.title}
-                          </Typography>
-                        }
-                        secondary={
-                          <Typography variant="body2" color="text.secondary">
-                            {feature.description}
-                          </Typography>
-                        }
-                      />
-                      <ListItemSecondaryAction>
-                        <Switch
-                          checked={feature.enabled}
-                          onChange={feature.action}
-                          color="primary"
-                        />
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    {index < securityFeatures.length - 1 && <Divider />}
-                  </Box>
-                ))}
-              </List>
             </CardContent>
           </Card>
         </Grid>
