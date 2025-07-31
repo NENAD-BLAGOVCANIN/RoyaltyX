@@ -73,8 +73,14 @@ function Members() {
   const handleEditFromMenu = () => {
     if (selectedUser) {
       setShowEditMemberModal(true);
+      // Don't close menu immediately - let the modal handle the selectedUser
+      setAnchorEl(null);
     }
-    handleMenuClose();
+  };
+
+  const handleEditModalClose = () => {
+    setShowEditMemberModal(false);
+    setSelectedUser(null);
   };
 
   const getRoleColor = (role) => {
@@ -206,7 +212,7 @@ function Members() {
         project={project}
         setProject={setProject}
         showEditMemberModal={showEditMemberModal}
-        setShowEditMemberModal={setShowEditMemberModal}
+        setShowEditMemberModal={handleEditModalClose}
         selectedMember={selectedUser}
       />
 
