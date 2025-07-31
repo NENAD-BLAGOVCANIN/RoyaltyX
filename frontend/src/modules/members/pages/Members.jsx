@@ -30,7 +30,7 @@ import { useProject } from "../../common/contexts/ProjectContext";
 import PageHeader from "../../common/components/PageHeader";
 
 function Members() {
-  const { project, setProject } = useProject();
+  const { project, setProject, currentUserRole } = useProject();
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   const [showEditMemberModal, setShowEditMemberModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -73,7 +73,6 @@ function Members() {
   const handleEditFromMenu = () => {
     if (selectedUser) {
       setShowEditMemberModal(true);
-      // Don't close menu immediately - let the modal handle the selectedUser
       setAnchorEl(null);
     }
   };
@@ -100,13 +99,15 @@ function Members() {
         title="Members"
         description="Add or remove users who are able to view this project."
         action={
-          <Button
-            variant="contained"
-            startIcon={<PersonAddIcon />}
-            onClick={handleOpenMembersModal}
-          >
-            Add Member
-          </Button>
+          currentUserRole === "owner" ? (
+            <Button
+              variant="contained"
+              startIcon={<PersonAddIcon />}
+              onClick={handleOpenMembersModal}
+            >
+              Add Member
+            </Button>
+          ) : null
         }
       />
 
@@ -118,7 +119,9 @@ function Members() {
                 <TableCell>Member</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Role</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                {currentUserRole === "owner" && (
+                  <TableCell align="right">Actions</TableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -163,14 +166,16 @@ function Members() {
                       }}
                     />
                   </TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      onClick={(event) => handleMenuOpen(event, user)}
-                      size="small"
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                  </TableCell>
+                  {currentUserRole === "owner" && (
+                    <TableCell align="right">
+                      <IconButton
+                        onClick={(event) => handleMenuOpen(event, user)}
+                        size="small"
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
@@ -189,15 +194,20 @@ function Members() {
             No members found
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            Add members to your project to start collaborating
+            {currentUserRole === "owner" 
+              ? "Add members to your project to start collaborating"
+              : "No members have been added to this project yet"
+            }
           </Typography>
-          <Button
-            variant="contained"
-            startIcon={<PersonAddIcon />}
-            onClick={handleOpenMembersModal}
-          >
-            Add First Member
-          </Button>
+          {currentUserRole === "owner" && (
+            <Button
+              variant="contained"
+              startIcon={<PersonAddIcon />}
+              onClick={handleOpenMembersModal}
+            >
+              Add First Member
+            </Button>
+          )}
         </Paper>
       )}
 
@@ -229,14 +239,18 @@ function Members() {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={handleEditFromMenu}>
-          <EditIcon sx={{ mr: 1, fontSize: "1.2rem" }} />
-          Edit access
-        </MenuItem>
-        <MenuItem onClick={handleRemoveFromMenu} sx={{ color: "error.main" }}>
-          <DeleteIcon sx={{ mr: 1, fontSize: "1.2rem" }} />
-          Remove from project
-        </MenuItem>
+        {currentUserRole === "owner" && (
+          <MenuItem onClick={handleEditFromMenu}>
+            <EditIcon sx={{ mr: 1, fontSize: "1.2rem" }} />
+            Edit access
+          </MenuItem>
+        )}
+        {currentUserRole === "owner" && (
+          <MenuItem onClick={handleRemoveFromMenu} sx={{ color: "error.main" }}>
+            <DeleteIcon sx={{ mr: 1, fontSize: "1.2rem" }} />
+            Remove from project
+          </MenuItem>
+        )}
       </Menu>
     </Box>
   );
