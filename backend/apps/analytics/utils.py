@@ -2,9 +2,10 @@ from datetime import date, datetime, timedelta
 from typing import Any, Dict, List, Optional, Union
 
 from django.db.models import Count, DecimalField, ExpressionWrapper, F, QuerySet, Sum
-from django.db.models.functions import TruncYear, TruncMonth, TruncDate, TruncHour
+from django.db.models.functions import TruncDate, TruncHour, TruncMonth, TruncYear
 
 from apps.product.models import Product, ProductImpressions, ProductSale
+from apps.project.models import ProducerProductAccess, ProjectUser
 from apps.sources.models import Source
 
 
@@ -537,6 +538,7 @@ def calculate_analytics(
     period_end: date,
     product_id: int = None,
     granularity: str = "monthly",
+    user=None,
 ) -> Dict[str, Any]:
     if product_id:
         impressions_qs = ProductImpressions.objects.filter(product_id=product_id)
@@ -546,6 +548,24 @@ def calculate_analytics(
             product__project_id=project_id
         )
         sales_qs = ProductSale.objects.filter(product__project_id=project_id)
+        
+        # Apply producer role filtering if user is provided and is a producer
+        if user:
+            try:
+                project_user = ProjectUser.objects.get(user=user, project_id=project_id)
+                if project_user.role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
+                    # Get accessible product IDs for this producer
+                    accessible_product_ids = list(ProducerProductAccess.objects.filter(
+                        project_user=project_user
+                    ).values_list('product_id', flat=True))
+                    
+                    # Filter impressions and sales to only accessible products
+                    impressions_qs = impressions_qs.filter(product_id__in=accessible_product_ids)
+                    sales_qs = sales_qs.filter(product_id__in=accessible_product_ids)
+            except ProjectUser.DoesNotExist:
+                # User is not a member of this project, return empty querysets
+                impressions_qs = impressions_qs.none()
+                sales_qs = sales_qs.none()
 
     if filters:
         impressions_qs = impressions_qs.filter(**filters)

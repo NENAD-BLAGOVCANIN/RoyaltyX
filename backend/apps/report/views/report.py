@@ -14,7 +14,7 @@ from weasyprint import HTML
 from apps.analytics.utils import calculate_analytics
 from apps.notifications.utils import create_notification
 from apps.product.models import Product
-from apps.project.models import Project
+from apps.project.models import ProducerProductAccess, Project, ProjectUser
 from apps.report.models import Report
 from apps.report.serializers import ReportRequestSerializer, ReportSerializer
 
@@ -60,15 +60,34 @@ class ReportsView(APIView):
                     {"error": "Invalid date format. Use YYYY-MM-DD."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-                
-
-        analytics = calculate_analytics(
-            currently_selected_project_id, filters, period_start, period_end,
-        )
 
         user = request.user
+
+        analytics = calculate_analytics(
+            currently_selected_project_id, filters, period_start, period_end, user=user
+        )
+
         project = Project.objects.get(id=currently_selected_project_id)
+
+        # Apply role-based filtering to products
         products = Product.objects.filter(project=project)
+        try:
+            project_user = ProjectUser.objects.get(
+                user=user, project_id=currently_selected_project_id
+            )
+            if project_user.role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
+                # Get accessible product IDs for this producer
+                accessible_product_ids = list(
+                    ProducerProductAccess.objects.filter(
+                        project_user=project_user
+                    ).values_list("product_id", flat=True)
+                )
+
+                # Filter products to only accessible ones
+                products = products.filter(id__in=accessible_product_ids)
+        except ProjectUser.DoesNotExist:
+            # User is not a member of this project, return empty products
+            products = products.none()
 
         product_data = []
         total_royalty_sum = 0

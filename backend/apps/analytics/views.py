@@ -20,7 +20,7 @@ class AnalyticsView(APIView):
         delta = period_end - period_start
 
         if delta.days <= 1:
-            return "daily" # TODO: Change to "hourly" after switching Date fields to DateTime
+            return "daily"  # TODO: Change to "hourly" after switching Date fields to DateTime
         elif delta.days <= 31:  # Approximately 1 month
             return "daily"
         elif delta.days <= 730:
@@ -46,7 +46,13 @@ class AnalyticsView(APIView):
         granularity = self._determine_granularity(period_start, period_end)
 
         data = calculate_analytics(
-            project_id, filters, period_start, period_end, product_id, granularity
+            project_id,
+            filters,
+            period_start,
+            period_end,
+            product_id,
+            granularity,
+            request.user,
         )
 
         return Response(data, status=status.HTTP_200_OK)
