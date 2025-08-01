@@ -2,6 +2,7 @@ import { Box, capitalize, Card, Grid, IconButton, Typography } from "@mui/materi
 import youtubeLogo from "../../common/assets/img/platform_logos/youtube.webp";
 import tiktokLogo from "../../common/assets/img/platform_logos/tiktok.webp";
 import twitchLogo from "../../common/assets/img/platform_logos/twitch.webp";
+import vimeoLogo from "../../common/assets/img/platform_logos/vimeo.webp";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
@@ -16,6 +17,8 @@ export const SourceItem = ({ source }) => {
         return tiktokLogo;
       case "twitch":
         return twitchLogo;
+      case "vimeo":
+        return vimeoLogo;
       default:
         return youtubeLogo;
     }

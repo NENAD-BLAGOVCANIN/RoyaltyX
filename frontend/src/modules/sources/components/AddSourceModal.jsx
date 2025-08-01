@@ -14,6 +14,7 @@ import { useState } from "react";
 import { LinkYoutubeCard } from "./LinkYoutubeCard";
 import { LinkTikTokCard } from "./LinkTikTokCard";
 import { LinkTwitchCard } from "./LinkTwitchCard";
+import { LinkVimeoCard } from "./LinkVimeoCard";
 import googleAdsLogo from "../../common/assets/img/platform_logos/google_ads.webp";
 import amazonLogo from "../../common/assets/img/platform_logos/amazon.webp";
 import instagramLogo from "../../common/assets/img/platform_logos/instagram.webp";
@@ -55,6 +56,11 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
     {
       name: "TikTok",
       component: <LinkTikTokCard createSource={createSource} />,
+      isCustomComponent: true,
+    },
+    {
+      name: "Vimeo",
+      component: <LinkVimeoCard createSource={createSource} />,
       isCustomComponent: true,
     },
     {

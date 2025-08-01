@@ -2,6 +2,8 @@ from apps.sources.utils.tiktok_service import TikTokService
 from apps.sources.utils.tiktok_sync import fetch_tiktok_stats, fetch_tiktok_videos
 from apps.sources.utils.twitch_sync import fetch_twitch_stats, fetch_twitch_videos
 from apps.sources.utils.twitch_service import TwitchService
+from apps.sources.utils.vimeo_service import VimeoService
+from apps.sources.utils.vimeo_sync import fetch_vimeo_videos_and_stats
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -82,6 +84,19 @@ class SourceListCreateView(APIView):
                 
                 fetch_twitch_videos(source.id)
                 fetch_twitch_stats(source.id)
+            
+            elif source.platform == Source.PLATFORM_VIMEO and source.access_token:
+                if not source.channel_id:
+                    try:
+                        service = VimeoService(source.access_token)
+                        channel_details = service.fetch_user_info()
+                        source.channel_id = channel_details["user_id"]
+                        source.account_name = channel_details.get("display_name") or "Vimeo User"
+                        source.save(update_fields=["channel_id", "account_name"])
+                    except Exception as e:
+                        print(f"Failed to fetch Vimeo channel details: {e}")
+                
+                fetch_vimeo_videos_and_stats(source.id)
 
             return Response(
                 SourceSerializer(source).data, status=status.HTTP_201_CREATED
