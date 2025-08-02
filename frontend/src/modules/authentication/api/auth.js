@@ -13,6 +13,16 @@ export const login = async (user) => {
     const responseData = await response.json();
 
     if (!response.ok) {
+      // Check if this is an email verification error
+      if (responseData.email_verification && responseData.verification_required) {
+        return {
+          success: false,
+          message: responseData.email_verification[0] || "Please verify your email address before logging in.",
+          email_verification_required: true,
+          email: responseData.email ? responseData.email[0] : null
+        };
+      }
+      
       throw new Error(responseData.detail || "Login failed");
     }
 

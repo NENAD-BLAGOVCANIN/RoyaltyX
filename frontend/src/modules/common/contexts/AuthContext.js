@@ -108,7 +108,12 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: true };
     } else {
-      return { success: false, message: response.message || "Login failed" };
+      return { 
+        success: false, 
+        message: response.message || "Login failed",
+        email_verification_required: response.email_verification_required,
+        email: response.email
+      };
     }
   };
 

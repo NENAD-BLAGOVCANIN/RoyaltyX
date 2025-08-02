@@ -11,6 +11,8 @@ import { GoogleLoginButton } from "../../components";
 
 export default function Login() {
   const [error, setError] = useState("");
+  const [emailVerificationRequired, setEmailVerificationRequired] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
   const { login } = useAuth();
   const [loading, setLoading] = useState(false);
 
@@ -18,6 +20,8 @@ export default function Login() {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setEmailVerificationRequired(false);
+    setUserEmail("");
 
     const data = new FormData(e.target);
     const user = Object.fromEntries(data.entries());
@@ -27,6 +31,10 @@ export default function Login() {
       toast.success("Successfully logged in!");
     } else {
       setError(response.message);
+      if (response.email_verification_required) {
+        setEmailVerificationRequired(true);
+        setUserEmail(response.email || user.email);
+      }
     }
 
     setLoading(false);
@@ -77,7 +85,23 @@ export default function Login() {
           <Divider sx={{ flex: 1 }} />
         </Box>
 
-        {error && <span className="text-danger small">{error}</span>}
+        {error && (
+          <div className="mb-3">
+            <span className="text-danger small">{error}</span>
+            {emailVerificationRequired && (
+              <div className="mt-2">
+                <Link 
+                  to={`/verify-email${userEmail ? `?email=${encodeURIComponent(userEmail)}` : ''}`}
+                  className="text-decoration-none"
+                >
+                  <Typography variant="body2" color="primary" sx={{ fontWeight: 500 }}>
+                    Click here to verify your email
+                  </Typography>
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="py-2">
             <TextField
