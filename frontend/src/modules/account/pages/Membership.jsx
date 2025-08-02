@@ -38,41 +38,69 @@ function MembershipPage() {
   });
   const [currentPlan, setCurrentPlan] = useState(subscriptionPlan || "free");
 
+  // Helper function to determine plan hierarchy level
+  const getPlanLevel = (planName) => {
+    const levels = {
+      free: 0,
+      discovery: 1,
+      professional: 2,
+      premium: 3,
+      enterprise: 4,
+    };
+    return levels[planName] || 0;
+  };
+
   const plans = [
     {
       name: "free",
       displayName: "Free",
       price: "$0",
       period: "forever",
-      description: "Perfect for getting started",
+      description: "Get started with basic features",
       features: [
-        "Up to 3 projects",
-        "5GB storage",
-        "Basic analytics",
-        "Email support",
-        "Standard templates",
+        "Limited platform sync",
+        "Basic dashboard access",
+        "Community support",
       ],
       limitations: [
-        "Limited integrations",
-        "Basic reporting",
+        "Very limited features",
+        "No data sync",
         "Community support only",
       ],
       popular: false,
     },
     {
-      name: "basic",
-      displayName: "Basic",
-      price: "$19.99",
-      period: "per month",
+      name: "discovery",
+      displayName: "Discovery",
+      price: "$19",
+      period: "per month ($199/yr)",
+      description: "Free Trial (30 Days), then $19/mo",
+      features: [
+        "Sync data from max of 3 platforms",
+        "Previous month data sync",
+        "Core content upload",
+        "Basic revenue dashboard",
+        "Essential analytics",
+      ],
+      limitations: [
+        "Limited to 3 platforms",
+        "Only previous month data",
+        "Basic analytics only",
+      ],
+      popular: false,
+    },
+    {
+      name: "professional",
+      displayName: "Professional",
+      price: "$49",
+      period: "per month ($499/yr)",
       description: "Best for growing businesses",
       features: [
-        "Up to 15 projects",
-        "50GB storage",
-        "Advanced analytics",
-        "Priority support",
-        "Custom templates",
-        "API access",
-        "Team collaboration",
+        "Sync data from max of 7 platforms",
+        "Previous month data sync",
+        "Weekly updates",
+        "Deeper revenue breakdowns",
+        "Enhanced analytics",
       ],
       limitations: [],
       popular: true,
@@ -80,18 +108,33 @@ function MembershipPage() {
     {
       name: "premium",
       displayName: "Premium",
-      price: "$49.99",
-      period: "per month",
-      description: "For large organizations",
+      price: "$99",
+      period: "per month ($999/yr)",
+      description: "For advanced users and teams",
       features: [
-        "Unlimited projects",
-        "500GB storage",
-        "Enterprise analytics",
-        "24/7 phone support",
-        "Custom integrations",
-        "White-label options",
-        "Advanced security",
+        "Sync data from over 12 platforms",
+        "Previous year data sync",
+        "Daily insights",
+        "AI forecasting",
+        "Full analytics suite",
+        "Trend & pricing tools",
+      ],
+      limitations: [],
+      popular: false,
+    },
+    {
+      name: "enterprise",
+      displayName: "Enterprise",
+      price: "Contact",
+      period: "for pricing",
+      description: "Tailored for large organizations",
+      features: [
+        "Sync data from all available platforms",
+        "Custom platform integrations",
+        "Previous year data sync",
+        "Tailored packaged pricing",
         "Dedicated account manager",
+        "Priority support",
       ],
       limitations: [],
       popular: false,
@@ -237,7 +280,6 @@ function MembershipPage() {
                   border: plan.current ? 2 : 1,
                   borderColor: plan.current ? "primary.main" : "divider",
                   ...(plan.popular && {
-                    transform: "scale(1.05)",
                     zIndex: 1,
                   }),
                 }}
@@ -327,13 +369,13 @@ function MembershipPage() {
                       </Button>
                     ) : currentPlan === "free" && plan.name !== "free" ? (
                       <Button
-                        variant={plan.popular ? "contained" : "outlined"}
+                        variant="outlined"
                         fullWidth
                         startIcon={<ArrowUp size={16} />}
                         onClick={() => handleUpgrade(plan)}
                         disabled={loading}
                       >
-                        Upgrade
+                        {plan.name === "enterprise" ? "Contact Sales" : "Upgrade"}
                       </Button>
                     ) : currentPlan !== "free" && plan.name === "free" ? (
                       <Button
@@ -353,7 +395,7 @@ function MembershipPage() {
                         variant="outlined"
                         fullWidth
                         startIcon={
-                          plan.name === "premium" ? (
+                          getPlanLevel(plan.name) > getPlanLevel(currentPlan) ? (
                             <ArrowUp size={16} />
                           ) : (
                             <ArrowDown size={16} />
@@ -362,7 +404,7 @@ function MembershipPage() {
                         onClick={() => handleUpgrade(plan)}
                         disabled={loading}
                       >
-                        {plan.name === "premium" ? "Upgrade" : "Change Plan"}
+                        {getPlanLevel(plan.name) > getPlanLevel(currentPlan) ? "Upgrade" : "Change Plan"}
                       </Button>
                     ) : null}
                   </Box>
