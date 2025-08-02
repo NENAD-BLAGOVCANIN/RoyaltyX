@@ -20,16 +20,19 @@ import {
   PersonAdd as PersonAddIcon,
   MoreVert as MoreVertIcon,
   Delete as DeleteIcon,
+  Edit as EditIcon,
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import AddMemberModal from "../components/AddMemberModal";
+import EditMemberModal from "../components/EditMemberModal";
 import { removeProjectMember } from "../api/members";
 import { useProject } from "../../common/contexts/ProjectContext";
 import PageHeader from "../../common/components/PageHeader";
 
 function Members() {
-  const { project, setProject } = useProject();
+  const { project, setProject, currentUserRole } = useProject();
   const [showAddMemberModal, setShowAddMemberModal] = useState(false);
+  const [showEditMemberModal, setShowEditMemberModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -67,14 +70,24 @@ function Members() {
     handleMenuClose();
   };
 
+  const handleEditFromMenu = () => {
+    if (selectedUser) {
+      setShowEditMemberModal(true);
+      setAnchorEl(null);
+    }
+  };
+
+  const handleEditModalClose = () => {
+    setShowEditMemberModal(false);
+    setSelectedUser(null);
+  };
+
   const getRoleColor = (role) => {
     switch (role?.toLowerCase()) {
       case "owner":
         return "primary";
-      case "admin":
+      case "producer":
         return "secondary";
-      case "member":
-        return "default";
       default:
         return "default";
     }
@@ -86,13 +99,15 @@ function Members() {
         title="Members"
         description="Add or remove users who are able to view this project."
         action={
-          <Button
-            variant="contained"
-            startIcon={<PersonAddIcon />}
-            onClick={handleOpenMembersModal}
-          >
-            Add Member
-          </Button>
+          currentUserRole === "owner" ? (
+            <Button
+              variant="contained"
+              startIcon={<PersonAddIcon />}
+              onClick={handleOpenMembersModal}
+            >
+              Add Member
+            </Button>
+          ) : null
         }
       />
 
@@ -104,7 +119,9 @@ function Members() {
                 <TableCell>Member</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Role</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                {currentUserRole === "owner" && (
+                  <TableCell align="right">Actions</TableCell>
+                )}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -127,10 +144,7 @@ function Members() {
                           fontSize: "1rem",
                           fontWeight: 600,
                         }}
-                      >
-                        {user?.user_details?.name?.charAt(0)?.toUpperCase() ||
-                          "U"}
-                      </Avatar>
+                      />
                       <Typography variant="body1" sx={{ fontWeight: 500 }}>
                         {user?.user_details?.name || "Unknown User"}
                       </Typography>
@@ -152,14 +166,16 @@ function Members() {
                       }}
                     />
                   </TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      onClick={(event) => handleMenuOpen(event, user)}
-                      size="small"
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
-                  </TableCell>
+                  {currentUserRole === "owner" && (
+                    <TableCell align="right">
+                      <IconButton
+                        onClick={(event) => handleMenuOpen(event, user)}
+                        size="small"
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
@@ -178,15 +194,20 @@ function Members() {
             No members found
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            Add members to your project to start collaborating
+            {currentUserRole === "owner" 
+              ? "Add members to your project to start collaborating"
+              : "No members have been added to this project yet"
+            }
           </Typography>
-          <Button
-            variant="contained"
-            startIcon={<PersonAddIcon />}
-            onClick={handleOpenMembersModal}
-          >
-            Add First Member
-          </Button>
+          {currentUserRole === "owner" && (
+            <Button
+              variant="contained"
+              startIcon={<PersonAddIcon />}
+              onClick={handleOpenMembersModal}
+            >
+              Add First Member
+            </Button>
+          )}
         </Paper>
       )}
 
@@ -195,6 +216,14 @@ function Members() {
         setProject={setProject}
         showAddMemberModal={showAddMemberModal}
         setShowAddMemberModal={setShowAddMemberModal}
+      />
+
+      <EditMemberModal
+        project={project}
+        setProject={setProject}
+        showEditMemberModal={showEditMemberModal}
+        setShowEditMemberModal={handleEditModalClose}
+        selectedMember={selectedUser}
       />
 
       <Menu
@@ -210,10 +239,18 @@ function Members() {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={handleRemoveFromMenu} sx={{ color: "error.main" }}>
-          <DeleteIcon sx={{ mr: 1, fontSize: "1.2rem" }} />
-          Remove from project
-        </MenuItem>
+        {currentUserRole === "owner" && (
+          <MenuItem onClick={handleEditFromMenu}>
+            <EditIcon sx={{ mr: 1, fontSize: "1.2rem" }} />
+            Edit access
+          </MenuItem>
+        )}
+        {currentUserRole === "owner" && (
+          <MenuItem onClick={handleRemoveFromMenu} sx={{ color: "error.main" }}>
+            <DeleteIcon sx={{ mr: 1, fontSize: "1.2rem" }} />
+            Remove from project
+          </MenuItem>
+        )}
       </Menu>
     </Box>
   );

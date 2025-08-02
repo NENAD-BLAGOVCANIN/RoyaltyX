@@ -11,11 +11,6 @@ const TopicsList = () => {
           </Link>
         </li>
         <li className="py-2">
-          <Link to="/admin/documentation/producer-upload" className="mb-0">
-            Producer Upload
-          </Link>
-        </li>
-        <li className="py-2">
           <Link to="/admin/documentation/products-list-view" className="mb-0">
             Products List View
           </Link>

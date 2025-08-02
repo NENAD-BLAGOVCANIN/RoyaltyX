@@ -15,7 +15,7 @@ export const InfoPopover = ({ title = "", text }) => {
 
   return (
     <OverlayTrigger
-      placement="top"
+      placement="bottom"
       delay={{ show: 200, hide: 100 }}
       overlay={popover}
       trigger={["hover", "focus"]}

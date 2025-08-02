@@ -1,10 +1,20 @@
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
 import { toast } from "react-toastify";
-import { uploadFile, deleteFile } from "../../management/api/files";
+import { uploadFile, deleteFile } from "../api/files";
 import CsvViewer from "../../common/components/CsvViewer/CsvViewer";
-import { Modal } from "react-bootstrap";
 import { ReactComponent as GoogleSheetsIcon } from "../../common/assets/img/vectors/google_sheets_icon.svg";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  IconButton,
+  Box,
+  Typography
+} from "@mui/material";
+import { X } from "lucide-react";
 
 const ViewFileModal = ({ csvData, selectedFile, handleCloseModal, setFiles }) => {
   const [editableData, setEditableData] = useState([]);
@@ -45,24 +55,42 @@ const ViewFileModal = ({ csvData, selectedFile, handleCloseModal, setFiles }) =>
   };
 
   return (
-    <Modal onHide={handleCloseModal} size="xl" centered show>
-      <Modal.Header closeButton>
-        <Modal.Title className="h6 d-flex align-items-center">
-          <GoogleSheetsIcon className="me-2" /> {selectedFile?.name}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="p-0" style={{ overflow: "auto" }}>
-        <CsvViewer data={editableData} onCellChange={handleCellChange}/>
-      </Modal.Body>
-      <Modal.Footer>
-        <button className="btn btn-outline-secondary" onClick={handleCloseModal}>
+    <Dialog
+      open={true}
+      onClose={handleCloseModal}
+      maxWidth="xl"
+      fullWidth
+      PaperProps={{
+        sx: { height: '90vh' }
+      }}
+    >
+      <DialogTitle>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <GoogleSheetsIcon style={{ marginRight: '8px' }} />
+            <Typography variant="h6">{selectedFile?.name}</Typography>
+          </Box>
+          <IconButton
+            onClick={handleCloseModal}
+            size="small"
+            aria-label="close"
+          >
+            <X />
+          </IconButton>
+        </Box>
+      </DialogTitle>
+      <DialogContent sx={{ p: 0, overflow: 'auto' }}>
+        <CsvViewer data={editableData} onCellChange={handleCellChange} />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCloseModal} variant="outlined">
           Cancel
-        </button>
-        <button className="btn btn-primary" onClick={handleSave}>
+        </Button>
+        <Button onClick={handleSave} variant="contained">
           Save changes
-        </button>
-      </Modal.Footer>
-    </Modal>
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

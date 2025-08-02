@@ -14,13 +14,21 @@ import {
   Box,
   IconButton,
   Divider,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Chip,
+  OutlinedInput,
+  Checkbox,
+  ListItemIcon,
 } from "@mui/material";
 import {
   PersonAdd as PersonAddIcon,
   Close as CloseIcon,
 } from "@mui/icons-material";
 import { getUsers } from "../../admin_panel/api/user";
-import { addProjectMember } from "../api/members";
+import { addProjectMember, getProjectProducts, updateProjectMember } from "../api/members";
 import { toast } from "react-toastify";
 
 function AddMemberModal({
@@ -31,15 +39,23 @@ function AddMemberModal({
 }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedRoles, setSelectedRoles] = useState({});
+  const [products, setProducts] = useState([]);
+  const [selectedProducts, setSelectedProducts] = useState({});
+  const [showProductSelection, setShowProductSelection] = useState({});
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchData = async () => {
       try {
-        const fetchedUsers = await getUsers();
+        const [fetchedUsers, fetchedProducts] = await Promise.all([
+          getUsers(),
+          getProjectProducts()
+        ]);
 
         // Debug logging
         console.log("Project users:", project?.users);
         console.log("Fetched users:", fetchedUsers);
+        console.log("Fetched products:", fetchedProducts);
 
         // Filter out users who are already project members
         // Try multiple possible ID mappings to be safe
@@ -63,29 +79,89 @@ function AddMemberModal({
 
         console.log("Available users after filtering:", availableUsers);
         setUsers(availableUsers);
+        setProducts(fetchedProducts);
+
+        // Initialize product selection state for producer role (default)
+        const initialProductSelection = {};
+        const initialSelectedProducts = {};
+        availableUsers.forEach(user => {
+          initialProductSelection[user.id] = true; // Show product selection by default since default role is producer
+          initialSelectedProducts[user.id] = [];
+        });
+        setShowProductSelection(initialProductSelection);
+        setSelectedProducts(initialSelectedProducts);
       } catch (error) {
-        console.error("Error fetching users:", error);
-        toast.error("Error loading users");
+        console.error("Error fetching data:", error);
+        toast.error("Error loading data");
       }
     };
 
     if (showAddMemberModal) {
-      fetchUsers();
+      fetchData();
     }
   }, [showAddMemberModal, project?.users]);
 
   const handleCloseAddMemberModal = () => {
     setShowAddMemberModal(false);
+    // Reset all states when modal closes
+    setSelectedRoles({});
+    setSelectedProducts({});
+    setShowProductSelection({});
+    setUsers([]);
+    setProducts([]);
   };
 
+  const handleRoleChange = (userId, role) => {
+    setSelectedRoles({
+      ...selectedRoles,
+      [userId]: role,
+    });
+
+    if (role === "producer") {
+      setShowProductSelection({
+        ...showProductSelection,
+        [userId]: true,
+      });
+    } else {
+      setShowProductSelection({
+        ...showProductSelection,
+        [userId]: false,
+      });
+      // Clear selected products for non-producers
+      setSelectedProducts({
+        ...selectedProducts,
+        [userId]: [],
+      });
+    }
+  };
+
+
   const handleAddMember = async (user) => {
+    const selectedRole = selectedRoles[user.id] || "producer";
+    
+    // If producer role and no products selected, show error
+    if (selectedRole === "producer" && (!selectedProducts[user.id] || selectedProducts[user.id].length === 0)) {
+      toast.error("Please select at least one product for the producer to access.");
+      return;
+    }
+
     const data = {
       user: user.id,
+      role: selectedRole,
+      product_ids: selectedRole === "producer" ? selectedProducts[user.id] : [],
     };
 
     setLoading(true);
     try {
       const createdProjectUser = await addProjectMember(data);
+
+      // If producer, also set product access
+      if (selectedRole === "producer" && selectedProducts[user.id]) {
+        await updateProjectMember(createdProjectUser.id, {
+          role: selectedRole,
+          product_ids: selectedProducts[user.id],
+        });
+      }
 
       setProject({
         ...project,
@@ -117,7 +193,7 @@ function AddMemberModal({
     <Dialog
       open={showAddMemberModal}
       onClose={handleCloseAddMemberModal}
-      maxWidth="sm"
+      maxWidth="md"
       fullWidth
     >
       <DialogTitle sx={{ pb: 1 }}>
@@ -162,9 +238,7 @@ function AddMemberModal({
                         width: 40,
                         height: 40,
                       }}
-                    >
-                      {user.name?.charAt(0)?.toUpperCase() || "U"}
-                    </Avatar>
+                    />
                   </ListItemAvatar>
 
                   <ListItemText
@@ -182,17 +256,82 @@ function AddMemberModal({
                   />
 
                   <ListItemSecondaryAction>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      startIcon={<PersonAddIcon />}
-                      onClick={() => handleAddMember(user)}
-                      disabled={loading}
-                    >
-                      Add
-                    </Button>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <FormControl size="small" sx={{ minWidth: 100 }}>
+                        <InputLabel>Role</InputLabel>
+                        <Select
+                          value={selectedRoles[user.id] || "producer"}
+                          label="Role"
+                          onChange={(e) => handleRoleChange(user.id, e.target.value)}
+                        >
+                          <MenuItem value="producer">Producer</MenuItem>
+                          <MenuItem value="owner">Owner</MenuItem>
+                        </Select>
+                      </FormControl>
+                      
+                      {/* Product Selection for Producers - Inline */}
+                      {showProductSelection[user.id] && (
+                        <FormControl size="small" sx={{ minWidth: 150 }}>
+                          <InputLabel>Products *</InputLabel>
+                          <Select
+                            multiple
+                            value={selectedProducts[user.id] || []}
+                            onChange={(e) => {
+                              setSelectedProducts({
+                                ...selectedProducts,
+                                [user.id]: e.target.value,
+                              });
+                            }}
+                            input={<OutlinedInput label="Products *" />}
+                            renderValue={(selected) => (
+                              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                {selected.map((productId) => {
+                                  const product = products.find(p => p.id === productId);
+                                  return (
+                                    <Chip
+                                      key={productId}
+                                      label={product?.title || `Product ${productId}`}
+                                      size="small"
+                                    />
+                                  );
+                                })}
+                              </Box>
+                            )}
+                          >
+                            {products.length > 0 ? (
+                              products.map((product) => (
+                                <MenuItem key={product.id} value={product.id}>
+                                  <ListItemIcon>
+                                    <Checkbox
+                                      checked={(selectedProducts[user.id] || []).includes(product.id)}
+                                      size="small"
+                                    />
+                                  </ListItemIcon>
+                                  <ListItemText primary={product.title} />
+                                </MenuItem>
+                              ))
+                            ) : (
+                              <MenuItem disabled>
+                                <ListItemText primary="No products available" />
+                              </MenuItem>
+                            )}
+                          </Select>
+                        </FormControl>
+                      )}
+                      
+                      <Button
+                        variant="contained"
+                        size="small"
+                        startIcon={<PersonAddIcon />}
+                        onClick={() => handleAddMember(user)}
+                        disabled={loading}
+                      >
+                        Add
+                      </Button>
+                    </Box>
                   </ListItemSecondaryAction>
                 </ListItem>
+                
                 {index < users.length - 1 && <Divider />}
               </Box>
             ))}

@@ -33,3 +33,27 @@ class ProjectUser(models.Model):
     class Meta:
         unique_together = ("project", "user")
         db_table = "project_user"
+
+
+class ProducerProductAccess(models.Model):
+    """
+    Model to handle which products a producer can access within a project.
+    Only applies to users with 'producer' role.
+    """
+    project_user = models.ForeignKey(
+        ProjectUser, 
+        on_delete=models.CASCADE, 
+        related_name="product_access"
+    )
+    product = models.ForeignKey(
+        "product.Product", 
+        on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.project_user.user.username} - {self.product.title}"
+
+    class Meta:
+        unique_together = ("project_user", "product")
+        db_table = "producer_product_access"

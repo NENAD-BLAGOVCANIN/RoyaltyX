@@ -7,8 +7,8 @@ from rest_framework.views import APIView
 
 from .models import File
 from .serializers import FileSerializer
-from .services import create_file, delete_file
-from .utils.producer_processing import process_producers
+from .services import create_file, delete_file, confirm_column_mappings
+from .utils.column_mapping import get_expected_fields
 
 
 class FileListCreateView(APIView):
@@ -55,18 +55,50 @@ class FileDetailView(APIView):
 
     def delete(self, request, pk):
         response_data = delete_file(pk)
-        return Response(response_data, status=status.HTTP_204_NO_CONTENT)
+        return Response(response_data, status=status.HTTP_200_OK)
 
 
-class ProducerListCreateView(APIView):
+class ColumnMappingView(APIView):
     permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]
 
-    def post(self, request):
-        user = request.user
-        uploaded_file = request.FILES.get("file")
-        project_id = getattr(user, "currently_selected_project_id", None)
+    def post(self, request, file_id):
+        """Confirm column mappings and process the file"""
+        mappings = request.data.get('mappings', {})
+        
+        try:
+            response_data = confirm_column_mappings(file_id, mappings)
+            return Response(response_data, status=status.HTTP_200_OK)
+        
+        except ValueError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+        except Exception as e:
+            return Response(
+                {"error": "An unexpected error occurred: " + str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
-        response = process_producers(uploaded_file, project_id)
 
-        return Response(response)
+class ExpectedFieldsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Get the list of expected fields for column mapping"""
+        expected_fields = get_expected_fields()
+        
+        # Transform to a more frontend-friendly format
+        fields_list = []
+        for field_key, possible_names in expected_fields.items():
+            # Create custom descriptions for currency fields
+            if field_key in ['unit_price_currency', 'royalty_currency']:
+                description = f"Optional - defaults to USD. Maps to: {', '.join(possible_names[:3])}{'...' if len(possible_names) > 3 else ''}"
+            else:
+                description = f"Maps to: {', '.join(possible_names[:3])}{'...' if len(possible_names) > 3 else ''}"
+            
+            fields_list.append({
+                'key': field_key,
+                'label': field_key.replace('_', ' ').title(),
+                'description': description
+            })
+        
+        return Response({'fields': fields_list}, status=status.HTTP_200_OK)

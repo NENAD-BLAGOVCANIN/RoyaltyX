@@ -252,9 +252,7 @@ function Users() {
                             <Avatar
                               src={user.avatar}
                               sx={{ width: 40, height: 40 }}
-                            >
-                              {user.name?.charAt(0)?.toUpperCase() || "U"}
-                            </Avatar>
+                            />
                             <Box>
                               <Typography
                                 variant="subtitle2"

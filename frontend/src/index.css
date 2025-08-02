@@ -22,18 +22,22 @@
 }
 
 .dark-mode {
-  --color-primary-lighter: #0bb050b1;
-  --color-text: white;
-  --color-text-lighter: #a5b0b9;
-  --color-body-background: #1a1b1c;
-  --sidebar-background: #1a1b1c;
-  --nav-link-hover-background: #ffffff0e;
-  --color-light-contrast: #232425;
-  --color-power-contrast: #2d3132;
-  --content-over-widget-color: #2b2c2d;
-  --scrollbar-color: #3a3c3d;
-  --color-subtle: #4c5155;
-  --color-very-subtle: #405050;
+  --color-primary: #1976d2;
+  --color-primary-lighter: #1976d240;
+  --color-primary-hover: #1976d2d3;
+  --color-text: #efeff1;
+  --color-text-lighter: #adadb8;
+  --color-body-background: #0e0e10;
+  --sidebar-background: #0e0e10;
+  --nav-link-hover-background: #ffffff0a;
+  --color-light-contrast: #1f1f23;
+  --color-power-contrast: #262629;
+  --content-over-widget-color: #18181b;
+  --scrollbar-color: #464649;
+  --color-subtle: #464649;
+  --color-very-subtle: #2a2a2d;
+  --color-danger: #f13c20;
+  --color-success: #00f5c4;
 }
 
 #sidebar.active {
@@ -594,12 +598,12 @@ table.table.dataTable > :not(caption) > * > * {
   border-radius: 50px;
   left: 4px;
   bottom: 4px;
-  background-color: var(--color-body-background);
+  background-color: white;
   transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: var(--color-text);
+  background-color: var(--color-primary);
 }
 
 input:checked + .slider:before {
@@ -622,4 +626,67 @@ input:checked + .slider:before {
 
 .btn-black-white:hover {
   opacity: 0.75;
+}
+
+/* Modern gradient background for dark mode */
+.dark-mode body {
+  background: linear-gradient(135deg, #0e0e10 0%, #1a0e1a 25%, #0e0e10 50%, #0a0a0f 75%, #0e0e10 100%) !important;
+  background-size: 400% 400% !important;
+  animation: gradientShift 15s ease infinite !important;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Enhanced sidebar with subtle gradient */
+.dark-mode #sidebar {
+  background: linear-gradient(180deg, #0e0e10 0%, #12121a 100%) !important;
+  border-right: 1px solid #2a2a2d !important;
+}
+
+/* Enhanced cards and modals */
+.dark-mode .card {
+  background: rgba(24, 24, 27, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(70, 70, 73, 0.3) !important;
+}
+
+.dark-mode .modal-content {
+  background: rgba(24, 24, 27, 0.95) !important;
+  backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(70, 70, 73, 0.3) !important;
+}
+
+/* Enhanced form controls */
+.dark-mode .form-control {
+  background: rgba(31, 31, 35, 0.6) !important;
+  border: 1px solid rgba(70, 70, 73, 0.5) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+.dark-mode .form-control:focus {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 0.2rem rgba(25, 118, 210, 0.25) !important;
+}
+
+/* Enhanced buttons */
+.dark-mode .btn-primary {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3) !important;
+}
+
+.dark-mode .btn-primary:hover {
+  background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%) !important;
+  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4) !important;
+  transform: translateY(-1px) !important;
 }

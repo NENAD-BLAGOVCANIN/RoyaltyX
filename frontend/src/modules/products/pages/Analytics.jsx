@@ -6,9 +6,6 @@ import { Container, Spinner } from "react-bootstrap";
 import { apiUrl } from "../../common/api/config";
 import DateRangeSelector from "../../common/components/DateRangeSelector";
 import { getProductAnalytics } from "../api/analytics";
-import { ImpressionsCard } from "../../analytics/components/ImpressionsCard";
-import { SalesCard } from "../../analytics/components/SalesCard";
-import { RevenueCard } from "../../analytics/components/RevenueCard";
 import SalesOverTime from "../../analytics/components/SalesOverTime";
 import RentalsOverTime from "../../analytics/components/RentalsOverTime";
 import ImpressionsOverTime from "../../analytics/components/ImpressionsOverTime";
@@ -17,7 +14,7 @@ import { useSettings } from "../../common/contexts/SettingsContext";
 import { ReactComponent as ProductThumbnailPlaceholder } from "../../common/assets/img/vectors/product-thumbnail-placeholder.svg";
 import SalesStatsCard from "../../analytics/components/SalesStatsCard";
 import GeneralStatsCard from "../../analytics/components/GeneralStatsCard";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 function Analytics() {
   const { id } = useParams();
@@ -27,9 +24,6 @@ function Analytics() {
     showRentalsOverTime,
     showImpressionsOverTime,
     showImpressionRevenueOverTime,
-    showTotalImpressionsCard,
-    showTotalSalesCard,
-    showTotalRevenueCard,
   } = useSettings();
 
   const [analytics, setAnalytics] = useState(null);
@@ -67,7 +61,7 @@ function Analytics() {
 
   return (
     <>
-      <div className="d-flex justify-content-between flex-wrap align-items-center mt-4 mb-3 ps-1">
+      <div className="d-flex justify-content-between flex-wrap align-items-center mb-3">
         <div className="d-flex align-items-center gap-2 mb-2">
           {product.thumbnail ? (
             <img
@@ -98,16 +92,10 @@ function Analytics() {
           )}
           <h2 className="bold mb-0">{product.title}</h2>
         </div>
-        <div className="mb-2">
+        <Box sx={{ mb: 2, mt: 2 }}>
           <DateRangeSelector />
-        </div>
+        </Box>
       </div>
-
-      <Grid container spacing={3}>
-        {showTotalImpressionsCard && <ImpressionsCard analytics={analytics} />}
-        {showTotalSalesCard && <SalesCard analytics={analytics} />}
-        {showTotalRevenueCard && <RevenueCard analytics={analytics} />}
-      </Grid>
 
       <Grid container columnSpacing={3}>
         {showSalesOverTime && <SalesOverTime analytics={analytics} />}

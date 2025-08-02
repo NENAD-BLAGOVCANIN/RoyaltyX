@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import PageHeader from "../../../common/components/PageHeader";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { deleteFile, getFile } from "../../../management/api/files";
+import { deleteFile, getFile } from "../../api/files";
 
 const DeleteData = () => {
   const { file_id } = useParams();
@@ -20,11 +20,11 @@ const DeleteData = () => {
     };
 
     fetchFileData();
-  }, []);
+  }, [file_id]);
 
   const handleFileDeletion = async () => {
     await deleteFile(file_id);
-    navigate("/management/data/import");
+    navigate("/sources/manual-import");
     toast.success("File successfully deleted!");
   };
 

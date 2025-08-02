@@ -9,7 +9,6 @@ import { SalesCard } from "../../analytics/components/SalesCard";
 import { ImpressionsCard } from "../../analytics/components/ImpressionsCard";
 import { RevenueCard } from "../../analytics/components/RevenueCard";
 import { useSettings } from "../../common/contexts/SettingsContext";
-import { useLocation } from "react-router";
 import { Grid } from "@mui/material";
 
 function Dashboard() {
@@ -21,16 +20,16 @@ function Dashboard() {
     showTotalSalesCard,
     showTotalRevenueCard,
   } = useSettings();
-  const location = useLocation();
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const periodStart = params.get("period_start");
-    const periodEnd = params.get("period_end");
+    // Calculate the last 4 months date range
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setMonth(startDate.getMonth() - 4);
 
     const period_range = {
-      period_start: periodStart,
-      period_end: periodEnd,
+      period_start: startDate.toISOString().split('T')[0], // Format as YYYY-MM-DD
+      period_end: endDate.toISOString().split('T')[0], // Format as YYYY-MM-DD
     };
 
     const fetchAnalytics = async () => {
@@ -43,7 +42,7 @@ function Dashboard() {
     };
 
     fetchAnalytics();
-  }, [location.search]);
+  }, []);
 
   return (
     <>

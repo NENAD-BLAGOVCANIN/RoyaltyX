@@ -31,7 +31,7 @@ import { getUserInfo } from "../api/user";
 function Overview() {
   const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
-  const { subscriptionPlan } = useAuth();
+  const { subscriptionPlan, avatar } = useAuth();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -82,7 +82,7 @@ function Overview() {
           <Card sx={{ height: "100%" }}>
             <CardContent sx={{ textAlign: "center", p: 3 }}>
               <Avatar
-                src={userInfo.avatar}
+                src={avatar}
                 sx={{
                   width: 80,
                   height: 80,
@@ -90,9 +90,7 @@ function Overview() {
                   mb: 2,
                   fontSize: "2rem",
                 }}
-              >
-                {userInfo.name ? userInfo.name.charAt(0).toUpperCase() : "U"}
-              </Avatar>
+              />
               <Typography variant="h5" sx={{ mb: 1, fontWeight: 500 }}>
                 {userInfo.name || "User"}
               </Typography>
@@ -102,8 +100,8 @@ function Overview() {
               <Box sx={{ mt: 2 }}>
                 <Chip
                   icon={<Mail size={16} />}
-                  label={userInfo.email_verified ? "Verified" : "Not Verified"}
-                  color={userInfo.email_verified ? "success" : "error"}
+                  label={userInfo.is_email_verified ? "Verified" : "Not Verified"}
+                  color={userInfo.is_email_verified ? "success" : "error"}
                   size="small"
                   sx={{ mr: 1, mb: 1 }}
                 />

@@ -2,9 +2,10 @@ from datetime import date, datetime, timedelta
 from typing import Any, Dict, List, Optional, Union
 
 from django.db.models import Count, DecimalField, ExpressionWrapper, F, QuerySet, Sum
-from django.db.models.functions import TruncYear, TruncMonth, TruncDate, TruncHour
+from django.db.models.functions import TruncDate, TruncHour, TruncMonth, TruncYear
 
 from apps.product.models import Product, ProductImpressions, ProductSale
+from apps.project.models import ProducerProductAccess, ProjectUser
 from apps.sources.models import Source
 
 
@@ -78,10 +79,6 @@ def calculate_yearly_stats(
     rentals_map = {entry["year"]: entry["count"] for entry in yearly_rentals}
 
     yearly_stats = []
-    single_year_adjustment = False
-    if years == 1:
-        years += 1
-        single_year_adjustment = True
 
     for i in range(years):
         if period_end:
@@ -96,9 +93,6 @@ def calculate_yearly_stats(
                 .replace(month=1, day=1)
                 .date()
             )
-
-        if single_year_adjustment:
-            year_date = (year_date + timedelta(days=365)).replace(month=1, day=1).date()
 
         yearly_stats.append(
             {
@@ -544,6 +538,7 @@ def calculate_analytics(
     period_end: date,
     product_id: int = None,
     granularity: str = "monthly",
+    user=None,
 ) -> Dict[str, Any]:
     if product_id:
         impressions_qs = ProductImpressions.objects.filter(product_id=product_id)
@@ -553,6 +548,24 @@ def calculate_analytics(
             product__project_id=project_id
         )
         sales_qs = ProductSale.objects.filter(product__project_id=project_id)
+        
+        # Apply producer role filtering if user is provided and is a producer
+        if user:
+            try:
+                project_user = ProjectUser.objects.get(user=user, project_id=project_id)
+                if project_user.role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
+                    # Get accessible product IDs for this producer
+                    accessible_product_ids = list(ProducerProductAccess.objects.filter(
+                        project_user=project_user
+                    ).values_list('product_id', flat=True))
+                    
+                    # Filter impressions and sales to only accessible products
+                    impressions_qs = impressions_qs.filter(product_id__in=accessible_product_ids)
+                    sales_qs = sales_qs.filter(product_id__in=accessible_product_ids)
+            except ProjectUser.DoesNotExist:
+                # User is not a member of this project, return empty querysets
+                impressions_qs = impressions_qs.none()
+                sales_qs = sales_qs.none()
 
     if filters:
         impressions_qs = impressions_qs.filter(**filters)
@@ -571,7 +584,7 @@ def calculate_analytics(
             time_stats = calculate_hourly_stats(
                 impressions_qs, sales_qs, period_start_time, period_end_time
             )
-    elif granularity == "monthly":  # monthly (default)
+    elif granularity == "monthly": 
         months = 12
         if period_start and period_end:
             months = (
@@ -582,13 +595,48 @@ def calculate_analytics(
         time_stats = calculate_monthly_stats(
             impressions_qs, sales_qs, months, filters.get("period_end__lte")
         )
-    else:
+    elif granularity == "yearly": 
         years = 5
         if period_start and period_end:
             years = period_end.year - period_start.year + 1
         time_stats = calculate_yearly_stats(
             impressions_qs, sales_qs, years, filters.get("period_end__lte")
         )
+
+    else:
+        # Find the earliest data point to determine the full range
+        earliest_impression = impressions_qs.order_by('period_start').first()
+        earliest_sale = sales_qs.order_by('period_start').first()
+        
+        earliest_date = None
+        if earliest_impression and earliest_sale:
+            earliest_date = min(earliest_impression.period_start, earliest_sale.period_start)
+        elif earliest_impression:
+            earliest_date = earliest_impression.period_start
+        elif earliest_sale:
+            earliest_date = earliest_sale.period_start
+        
+        if earliest_date:
+            from datetime import datetime
+            current_date = datetime.now().date()
+            months = (current_date.year - earliest_date.year) * 12 + (current_date.month - earliest_date.month) + 1
+            years = current_date.year - earliest_date.year + 1
+        else:
+            # Fallback to 1 year if no data exists
+            years = 1
+            months = 12
+        
+        # If only 1-2 year of data, switch to monthly granularity for better visualization
+        if years <= 2:
+            time_stats = calculate_monthly_stats(
+                impressions_qs, sales_qs, months, None
+            )
+            granularity = "monthly"
+        else:
+            time_stats = calculate_yearly_stats(
+                impressions_qs, sales_qs, years, None
+            )
+            granularity = "yearly"
 
     data = calculate_totals(impressions_qs, sales_qs)
 

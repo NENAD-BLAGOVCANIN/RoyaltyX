@@ -1,9 +1,9 @@
 import { Spinner } from "react-bootstrap";
-import ProductCard from "../../../management/components/ProductCard";
 import { useProducts } from "../../api/products";
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { Shredder } from "lucide-react";
 import PageHeader from "../../../common/components/PageHeader";
+import ProductCard from "../../components/ProductCard";
 
 const Products = () => {
   const { products, loading } = useProducts();
@@ -17,11 +17,11 @@ const Products = () => {
       ) : products?.length > 0 ? (
         <>
           <PageHeader title="Products" />
-          <div className="row">
+          <Grid container spacing={3}>
             {products?.map((product) => (
               <ProductCard product={product} />
             ))}
-          </div>
+          </Grid>
         </>
       ) : (
         <Box

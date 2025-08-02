@@ -3,6 +3,7 @@ import Logout from "./pages/Logout";
 import Register from "./pages/Register/Register";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import ThemeSelection from "./pages/ThemeSelection/ThemeSelection";
+import VerifyEmail from "./pages/VerifyEmail";
 
 const authRoutes = [
   {
@@ -12,6 +13,10 @@ const authRoutes = [
   {
     path: "register",
     element: <Register />,
+  },
+  {
+    path: "verify-email",
+    element: <VerifyEmail />,
   },
   {
     path: "reset-password",

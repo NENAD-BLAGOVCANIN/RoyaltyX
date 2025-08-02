@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { SYSTEM_FIELDS } from "../../../management/constants";
+import { SYSTEM_FIELDS } from "../../../sources/constants";
 
 const CsvViewer = ({ data, onCellChange }) => {
   const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
 
   const filteredData = data?.filter((row) =>
-    Object.values(row).some((val) => val && val.toString().trim() !== ""),
+    Object.values(row).some((val) => val && val.toString().trim() !== "")
   );
 
   if (!filteredData || filteredData.length === 0)
@@ -52,43 +52,62 @@ const CsvViewer = ({ data, onCellChange }) => {
             <tr key={rowIndex}>
               <th className="text-center">{rowIndex + 1}</th>
               {columnKeys.map((key, colIndex) => {
-                const isSelected = selectedCell.row === rowIndex && selectedCell.col === colIndex;
+                const isSelected =
+                  selectedCell.row === rowIndex &&
+                  selectedCell.col === colIndex;
                 return (
-                <td
-                  key={colIndex}
-                  onClick={() =>
-                    setSelectedCell({ row: rowIndex, col: colIndex })
-                  }
-                  style={
-                    SYSTEM_FIELDS.includes(key) || isSelected
-                      ? {}
-                      : {
-                          filter: "blur(0.5px)",
-                          opacity: 0.6,
+                  <td
+                    key={colIndex}
+                    onClick={() =>
+                      setSelectedCell({ row: rowIndex, col: colIndex })
+                    }
+                    style={{
+                      ...(SYSTEM_FIELDS.includes(key) || isSelected ? {} : {}),
+                      position: "relative",
+                    }}
+                    className={isSelected ? "selected-cell" : ""}
+                  >
+                    {isSelected ? (
+                      <input
+                        type="text"
+                        value={row[key] ?? ""}
+                        onChange={(e) =>
+                          onCellChange?.(rowIndex, key, e.target.value)
                         }
-                  }
-                  className={
-                    isSelected 
-                      ? "selected-cell"
-                      : ""
-                  }
-                >
-                  {isSelected ? (
-                    <input
-                      type="text"
-                      value={row[key] ?? ""}
-                      onChange={(e) =>
-                        onCellChange?.(rowIndex, key, e.target.value)
-                      }
-                      onBlur={() => setSelectedCell({ row: null, col: null })}
-                      autoFocus
-                      className="form-control form-control-sm text-center border-0"
-                    />
-                  ) : (
-                    row[key]
-                  )}
-                </td>
-              )})}
+                        onBlur={() => setSelectedCell({ row: null, col: null })}
+                        autoFocus
+                        style={{
+                          height: "100%",
+                          width: "100%",
+                          minHeight: "100%",
+                          maxHeight: "100%",
+                          minWidth: "100%",
+                          maxWidth: "100%",
+                          boxSizing: "border-box",
+                          fontSize: "inherit",
+                          lineHeight: "inherit",
+                          fontFamily: "inherit",
+                          padding: "0",
+                          margin: "0",
+                          border: "none",
+                          background: "transparent",
+                          borderRadius: "0",
+                          outline: "none",
+                          resize: "none",
+                          display: "block",
+                          position: "absolute",
+                          top: "0",
+                          left: "0",
+                          right: "0",
+                          bottom: "0",
+                        }}
+                      />
+                    ) : (
+                      row[key]
+                    )}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

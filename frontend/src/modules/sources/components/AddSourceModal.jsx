@@ -15,7 +15,7 @@ import { LinkYoutubeCard } from "./LinkYoutubeCard";
 import { LinkTikTokCard } from "./LinkTikTokCard";
 import { LinkTwitchCard } from "./LinkTwitchCard";
 import googleAdsLogo from "../../common/assets/img/platform_logos/google_ads.webp";
-import amazonLogo from "../../common/assets/img/platform_logos/amazon.webp";
+import amazonLogo from "../../common/assets/img/platform_logos/amazon.svg";
 import instagramLogo from "../../common/assets/img/platform_logos/instagram.webp";
 import patreonLogo from "../../common/assets/img/platform_logos/patreon.webp";
 import appleAppStoreLogo from "../../common/assets/img/platform_logos/apple_app_store.png";

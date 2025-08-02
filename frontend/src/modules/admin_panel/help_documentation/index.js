@@ -1,6 +1,5 @@
 import HelpDocumentation from "./pages/HelpDocumentation";
 import Messaging from "./pages/Messaging";
-import ProducerUpload from "./pages/ProducerUpload";
 import ProductsListView from "./pages/ProductsListView";
 import DataUpload from "./pages/DataUpload";
 import ReportGeneration from "./pages/ReportGeneration";
@@ -13,10 +12,6 @@ const helpDocumentationRoutes = [
   {
     path: "documentation/data-upload",
     element: <DataUpload />,
-  },
-  {
-    path: "documentation/producer-upload",
-    element: <ProducerUpload />,
   },
   {
     path: "documentation/products-list-view",

@@ -13,6 +13,16 @@ export const login = async (user) => {
     const responseData = await response.json();
 
     if (!response.ok) {
+      // Check if this is an email verification error
+      if (responseData.email_verification && responseData.verification_required) {
+        return {
+          success: false,
+          message: responseData.email_verification[0] || "Please verify your email address before logging in.",
+          email_verification_required: true,
+          email: responseData.email ? responseData.email[0] : null
+        };
+      }
+      
       throw new Error(responseData.detail || "Login failed");
     }
 
@@ -38,10 +48,10 @@ export const register = async (user) => {
     if (response.ok) {
       return { 
         success: true, 
-        message: "Registration successful", 
+        message: responseData.message || "Registration successful", 
         data: responseData,
-        access: responseData.access,
-        refresh: responseData.refresh
+        verification_required: responseData.verification_required,
+        email: responseData.email
       };
     } else {
       // Handle field-specific errors from Django serializer
@@ -63,6 +73,76 @@ export const register = async (user) => {
     return { 
       success: false, 
       message: error.message || "Network error. Please try again."
+    };
+  }
+};
+
+export const verifyEmail = async (email, code) => {
+  try {
+    const response = await fetch(apiUrl + "/authentication/verify-email/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        code: code,
+      }),
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      return {
+        success: true,
+        message: responseData.message,
+        data: responseData,
+        access: responseData.access,
+        refresh: responseData.refresh,
+      };
+    } else {
+      return {
+        success: false,
+        message: responseData.error || "Verification failed",
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "Network error. Please try again.",
+    };
+  }
+};
+
+export const resendVerification = async (email) => {
+  try {
+    const response = await fetch(apiUrl + "/authentication/resend-verification/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      return {
+        success: true,
+        message: responseData.message,
+      };
+    } else {
+      return {
+        success: false,
+        message: responseData.error || "Failed to resend verification email",
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "Network error. Please try again.",
     };
   }
 };

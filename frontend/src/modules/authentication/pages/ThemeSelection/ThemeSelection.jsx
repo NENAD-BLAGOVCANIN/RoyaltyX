@@ -41,6 +41,8 @@ export default function ThemeSelection() {
 
     try {
       setTheme(selectedTheme);
+      // Clear the new user flag since they've completed theme selection
+      localStorage.removeItem("newUserThemeSelection");
       navigate("/my-projects");
     } catch (error) {
       toast.error("Failed to apply theme. Please try again.");
@@ -50,6 +52,8 @@ export default function ThemeSelection() {
   };
 
   const handleSkip = () => {
+    // Clear the new user flag even if they skip theme selection
+    localStorage.removeItem("newUserThemeSelection");
     navigate("/my-projects");
   };
 

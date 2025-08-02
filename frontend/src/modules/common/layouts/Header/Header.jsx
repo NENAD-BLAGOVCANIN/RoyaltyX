@@ -27,6 +27,7 @@ function Header() {
         sx={{
           backgroundColor: "background.default",
           borderBottom: "1px solid",
+          borderLeft: "none",
           borderColor: "divider",
           color: "text.primary",
         }}
@@ -61,10 +62,7 @@ function Header() {
                       sx={{
                         cursor: "pointer",
                       }}
-                    >
-                      {user?.user_details?.name?.charAt(0)?.toUpperCase() ||
-                        "U"}
-                    </Avatar>
+                    />
                   </Tooltip>
                 ))}
               </AvatarGroup>
