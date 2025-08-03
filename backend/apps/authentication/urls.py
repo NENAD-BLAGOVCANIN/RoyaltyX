@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from .views import ChangePasswordView, RegisterView, MyTokenObtainPairSerializer, VerifyEmailView, ResendVerificationView
+from .views import ChangePasswordView, RegisterView, MyTokenObtainPairSerializer, VerifyEmailView, ResendVerificationView, ForgotPasswordView, ResetPasswordView
 from .google_auth import GoogleAuthView
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -17,5 +17,7 @@ urlpatterns = [
     path("verify-email/", VerifyEmailView.as_view(), name="verify_email"),
     path("resend-verification/", ResendVerificationView.as_view(), name="resend_verification"),
     path("change-password/", ChangePasswordView.as_view(), name="change_password"),
+    path("forgot-password/", ForgotPasswordView.as_view(), name="forgot_password"),
+    path("reset-password/", ResetPasswordView.as_view(), name="reset_password"),
     path("google-auth/", GoogleAuthView.as_view(), name="google_auth"),
 ]

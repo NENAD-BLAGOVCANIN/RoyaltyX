@@ -125,6 +125,15 @@ export default function Login() {
             />
           </div>
 
+          {/* Forgot Password Link */}
+          <div className="d-flex justify-content-end py-2">
+            <Link to="/forgot-password" className="text-decoration-none">
+              <Typography variant="body2" color="primary" sx={{ fontSize: "0.875rem" }}>
+                Forgot your password?
+              </Typography>
+            </Link>
+          </div>
+
           <div className="py-2 mt-3">
             <Button variant="primary" size="lg" type="submit" loading={loading}>
               Log In
