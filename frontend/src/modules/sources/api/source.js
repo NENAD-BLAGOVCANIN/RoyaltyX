@@ -32,9 +32,13 @@ export const useSource = (sourceId) => {
   const updateSource = async (sourceData) => {
     try {
       const updated = await updateSourceMutation(sourceData);
+      if (updated) {
+        setSource(updated);
+      }
       return updated;
     } catch (error) {
       console.error("Error updating source:", error);
+      throw error;
     }
   };
 

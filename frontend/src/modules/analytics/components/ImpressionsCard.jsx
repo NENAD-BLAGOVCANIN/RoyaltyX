@@ -66,7 +66,7 @@ export const ImpressionsCard = ({ analytics }) => {
                   color: "text.secondary",
                 }}
               >
-                Impressions in last 4 months
+                Impressions in last 5 months
                 <InfoPopover
                   title="Monthly impressions"
                   text="Impressions represent the number of times your content has been

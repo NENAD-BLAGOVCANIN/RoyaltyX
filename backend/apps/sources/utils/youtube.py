@@ -86,7 +86,9 @@ def refresh_access_token(refresh_token: str) -> str:
 
 
 def fetch_youtube_videos(source_id=None):
-    sources = Source.objects.filter(platform=Source.PLATFORM_YOUTUBE)
+    sources = Source.objects.filter(
+        platform=Source.PLATFORM_YOUTUBE, status=Source.STATUS_ACTIVE
+    )
     if source_id:
         sources = sources.filter(id=source_id)
 
@@ -124,7 +126,9 @@ def fetch_youtube_videos(source_id=None):
 
 
 def fetch_youtube_stats(source_id=None):
-    sources = Source.objects.filter(platform=Source.PLATFORM_YOUTUBE)
+    sources = Source.objects.filter(
+        platform=Source.PLATFORM_YOUTUBE, status=Source.STATUS_ACTIVE
+    )
     if source_id:
         sources = sources.filter(id=source_id)
 
@@ -152,17 +156,19 @@ def fetch_youtube_stats(source_id=None):
             else:
                 print("No rows returned in stats.")
                 current_view_count = 0
-            
+
             # Get yesterday's view count from ProductImpressions
             yesterday = date.today() - timedelta(days=1)
             yesterday_impressions = ProductImpressions.objects.filter(
-                product=product, 
-                period_start=yesterday.isoformat(), 
-                period_end=yesterday.isoformat()
+                product=product,
+                period_start=yesterday.isoformat(),
+                period_end=yesterday.isoformat(),
             ).first()
 
-            yesterday_views = yesterday_impressions.impressions if yesterday_impressions else 0
-            
+            yesterday_views = (
+                yesterday_impressions.impressions if yesterday_impressions else 0
+            )
+
             # Calculate the actual view count for today (current - yesterday)
             views = current_view_count - yesterday_views
 

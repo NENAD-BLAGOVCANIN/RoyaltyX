@@ -66,7 +66,7 @@ export const RevenueCard = ({ analytics }) => {
                   color: "text.secondary",
                 }}
               >
-                Revenue in last 4 months
+                Revenue in last 5 months
                 <InfoPopover
                   title="Monthly revenue"
                   text="This stat represents the total royalty revenue generated over the last month."
