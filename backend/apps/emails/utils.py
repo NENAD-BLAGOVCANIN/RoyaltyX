@@ -65,6 +65,19 @@ def generate_verification_code(length: int = 6) -> str:
     return ''.join(secrets.choice(string.digits) for _ in range(length))
 
 
+def generate_password_reset_token(length: int = 32) -> str:
+    """
+    Generate a secure random password reset token.
+    
+    Args:
+        length: Length of the token
+        
+    Returns:
+        str: Random password reset token
+    """
+    return secrets.token_urlsafe(length)
+
+
 def send_email_confirmation(
     user_email: str, 
     user_name: str, 
@@ -109,4 +122,51 @@ def send_email_confirmation(
 
     except Exception as e:
         logger.error(f"Error sending email confirmation to {user_email}: {str(e)}")
+        return False
+
+
+def send_password_reset_email(
+    user_email: str, 
+    user_name: str, 
+    reset_token: str,
+    reset_link: str
+) -> bool:
+    """
+    Send a password reset email to a user.
+
+    Args:
+        user_email: The email address of the user
+        user_name: The name of the user
+        reset_token: The password reset token
+        reset_link: The password reset link
+
+    Returns:
+        bool: True if email was sent successfully, False otherwise
+    """
+    try:
+        subject = "Reset Your Password - RoyaltyX"
+
+        context = {
+            "user_name": user_name,
+            "reset_token": reset_token,
+            "reset_link": reset_link,
+        }
+
+        success = Email.send_template_email(
+            subject=subject,
+            template_name="emails/password_reset.html",
+            context=context,
+            recipient_list=[user_email],
+            fail_silently=False,
+        )
+
+        if success:
+            logger.info(f"Password reset email sent successfully to {user_email}")
+        else:
+            logger.error(f"Failed to send password reset email to {user_email}")
+
+        return success
+
+    except Exception as e:
+        logger.error(f"Error sending password reset email to {user_email}: {str(e)}")
         return False
