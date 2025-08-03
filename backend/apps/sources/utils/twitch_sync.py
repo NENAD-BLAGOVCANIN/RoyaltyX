@@ -6,10 +6,12 @@ from apps.sources.utils.twitch_service import TwitchService
 
 
 def fetch_twitch_videos(source_id=None):
-    sources = Source.objects.filter(platform=Source.PLATFORM_TWITCH)
+    sources = Source.objects.filter(
+        platform=Source.PLATFORM_TWITCH, status=Source.STATUS_ACTIVE
+    )
     if source_id:
         sources = sources.filter(id=source_id)
-    
+
     for source in sources:
         # Refresh token if expired
         if source.token_expires_at and timezone.now() > source.token_expires_at:
@@ -26,7 +28,7 @@ def fetch_twitch_videos(source_id=None):
         try:
             # Fetch both VODs
             videos = service.fetch_videos(user_id=source.channel_id)
-            
+
             # Process VODs
             for video in videos:
                 existing_product = Product.objects.filter(
@@ -38,7 +40,9 @@ def fetch_twitch_videos(source_id=None):
                     thumbnail = None
                     raw_thumbnail_url = video.get("thumbnail_url", None)
                     if raw_thumbnail_url:
-                        thumbnail = raw_thumbnail_url.replace("%{width}", "640").replace("%{height}", "360")
+                        thumbnail = raw_thumbnail_url.replace(
+                            "%{width}", "640"
+                        ).replace("%{height}", "360")
                     Product.objects.create(
                         external_id=video.get("id", None),
                         title=video.get("title", None),
@@ -47,7 +51,7 @@ def fetch_twitch_videos(source_id=None):
                         project=source.project,
                         source=source,
                     )
-                    
+
             source.last_fetched_at = timezone.now()
             source.save(update_fields=["last_fetched_at"])
 
@@ -56,7 +60,9 @@ def fetch_twitch_videos(source_id=None):
 
 
 def fetch_twitch_stats(source_id=None):
-    sources = Source.objects.filter(platform=Source.PLATFORM_TWITCH)
+    sources = Source.objects.filter(
+        platform=Source.PLATFORM_TWITCH, status=Source.STATUS_ACTIVE
+    )
     if source_id:
         sources = sources.filter(id=source_id)
 
@@ -81,18 +87,20 @@ def fetch_twitch_stats(source_id=None):
             try:
                 stats = service.fetch_video_stats(product.external_id)
                 print(stats, flush=True)
-                
+
                 current_view_count = stats.get("view_count", 0) if stats else 0
-                
+
                 yesterday = date.today() - timedelta(days=1)
                 yesterday_impressions = ProductImpressions.objects.filter(
                     product=product,
                     period_start=yesterday.isoformat(),
-                    period_end=yesterday.isoformat()
+                    period_end=yesterday.isoformat(),
                 ).first()
-                
-                yesterday_view_count = yesterday_impressions.impressions if yesterday_impressions else 0
-                
+
+                yesterday_view_count = (
+                    yesterday_impressions.impressions if yesterday_impressions else 0
+                )
+
                 # Calculate the actual view count for today (current - yesterday)
                 views = max(0, current_view_count - yesterday_view_count)
 

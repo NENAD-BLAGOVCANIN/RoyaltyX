@@ -22,7 +22,18 @@ class Source(BaseModel):
         (PLATFORM_TWITCH, "Twitch"),
     ]
 
+    STATUS_ACTIVE = "active"
+    STATUS_PAUSED = "paused"
+
+    STATUS_CHOICES = [
+        (STATUS_ACTIVE, "Active"),
+        (STATUS_PAUSED, "Paused"),
+    ]
+
     account_name = models.CharField(max_length=50)
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default=STATUS_ACTIVE
+    )
 
     platform = models.CharField(max_length=50, choices=PLATFORMS)
     project = models.ForeignKey(

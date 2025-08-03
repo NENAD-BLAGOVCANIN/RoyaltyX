@@ -20,7 +20,7 @@ import { useState } from "react";
 
 export const Source = () => {
   const { sourceId } = useParams();
-  const { source, loading, deleteSource } = useSource(sourceId);
+  const { source, loading, deleteSource, updateSource, updating } = useSource(sourceId);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -33,6 +33,18 @@ export const Source = () => {
       toast.error("Failed to delete source");
     } finally {
       setConfirmOpen(false);
+    }
+  };
+
+  const handleToggleStatus = async () => {
+    try {
+      const newStatus = source.status === 'active' ? 'paused' : 'active';
+      const updatedSource = await updateSource({ status: newStatus });
+      if (updatedSource) {
+        toast.success(`Source ${newStatus === 'active' ? 'activated' : 'paused'} successfully`);
+      }
+    } catch (error) {
+      toast.error("Failed to update source status");
     }
   };
 
@@ -114,7 +126,9 @@ export const Source = () => {
                 <Typography variant="subtitle1" fontWeight={500} sx={{ mt: 2 }}>
                   Status
                 </Typography>
-                <Typography variant="body1">Active</Typography> {/* mockup */}
+                <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>
+                  {source.status || 'active'}
+                </Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -137,8 +151,13 @@ export const Source = () => {
                   >
                     Delete Source
                   </Button>
-                  <Button variant="outlined" color="primary">
-                    Pause Source
+                  <Button 
+                    variant="outlined" 
+                    color={source.status === 'active' ? 'warning' : 'success'}
+                    onClick={handleToggleStatus}
+                    disabled={updating}
+                  >
+                    {updating ? 'Updating...' : (source.status === 'active' ? 'Pause Source' : 'Activate Source')}
                   </Button>
                 </Box>
               </CardContent>
