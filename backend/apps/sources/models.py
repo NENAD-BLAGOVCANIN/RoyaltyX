@@ -12,6 +12,7 @@ class Source(BaseModel):
     PLATFORM_AMAZON = "amazon"
     PLATFORM_TIKTOK = "tiktok"
     PLATFORM_TWITCH = "twitch"
+    PLATFORM_VIMEO = "vimeo"
 
     PLATFORMS = [
         (PLATFORM_YOUTUBE, "YouTube"),
@@ -20,6 +21,7 @@ class Source(BaseModel):
         (PLATFORM_AMAZON, "Amazon"),
         (PLATFORM_TIKTOK, "TikTok"),
         (PLATFORM_TWITCH, "Twitch"),
+        (PLATFORM_VIMEO, "Vimeo"),
     ]
 
     STATUS_ACTIVE = "active"
