@@ -4,11 +4,11 @@ import vimeoLogo from "../../common/assets/img/platform_logos/vimeo.webp";
 import { Typography, Card, Button, Grid, Box } from "@mui/material";
 import { requestAccessTokenFromVimeo } from "../api/vimeo";
 
-const a = "https://7b63d104c29d.ngrok-free.app"
+const a = "https://7b63d104c29d.ngrok-free.app";
 
 const openVimeoOAuthPopup = () => {
-    console.log(appUrl);
-    
+  console.log(appUrl);
+
   const redirectUri = `${a}/vimeo-oauth-callback`;
 
   const scope = "public private";
@@ -42,15 +42,15 @@ export const LinkVimeoCard = ({ createSource }) => {
           const expiresAt = Date.now() + tokenData.expires_in * 1000;
           tokenExpiresAt = new Date(expiresAt).toISOString();
         }
-        
+
         const source = {
           account_name: "Account Name",
           platform: "vimeo",
           access_token: tokenData.access_token,
           refresh_token: tokenData.refresh_token,
           token_expires_at: tokenExpiresAt,
-          channel_id: (tokenData.user?.uri || '').split('/').pop(),
-          account_name: (tokenData.user?.name || ''),
+          channel_id: (tokenData.user?.uri || "").split("/").pop(),
+          account_name: tokenData.user?.name || "",
         };
         try {
           await createSource(source);
@@ -76,16 +76,11 @@ export const LinkVimeoCard = ({ createSource }) => {
           }}
         >
           <Box>
-            <Box>
             <img
               src={vimeoLogo}
               alt="Vimeo Logo"
-              style={{ height: "70px", objectFit: "contain", marginBottom: 10 }}
+              style={{ height: "70px", paddingTop: 15, paddingBottom: 15, objectFit: "contain", marginBottom: 10 }}
             />
-              <Typography variant="h6" sx={{ color: "white", fontWeight: "bold" }}>
-                V
-              </Typography>
-            </Box>
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
               Vimeo
             </Typography>
