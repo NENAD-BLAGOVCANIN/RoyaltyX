@@ -15,7 +15,6 @@ describe("Login", () => {
 
   it("should successfully login with test user credentials", () => {
     cy.loginAsTestUser();
-    cy.visit("/");
 
     cy.url().should("not.include", "/login");
     cy.url().should("not.include", "/register");
