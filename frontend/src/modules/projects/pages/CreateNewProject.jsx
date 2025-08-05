@@ -73,6 +73,7 @@ function CreateNewProject() {
             variant="outlined"
             fullWidth
             margin="normal"
+            name="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             inputRef={nameInputRef}
