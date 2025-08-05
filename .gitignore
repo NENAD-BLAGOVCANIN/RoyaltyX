@@ -32,3 +32,4 @@ backend/media/uploads/
 backend/media/reports/
 backend/celerybeat-schedule
 backend/media/
+frontend/cypress/downloads/

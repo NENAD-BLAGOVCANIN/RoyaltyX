@@ -19,4 +19,29 @@ describe('RoyaltyX App', () => {
     // Check that JavaScript is working (React app should render)
     cy.get('#root').should('not.be.empty');
   });
+
+  it('should have proper meta tags and SEO elements', () => {
+    cy.visit('/');
+    
+    // Check for favicon
+    cy.get('link[rel="icon"]').should('exist');
+    
+    // Check for viewport meta tag
+    cy.get('meta[name="viewport"]').should('exist');
+    
+    // Check that the page is responsive
+    cy.viewport(375, 667); // Mobile viewport
+    cy.get('#root').should('be.visible');
+    
+    cy.viewport(1280, 720); // Desktop viewport
+    cy.get('#root').should('be.visible');
+  });
+
+  it('should handle 404 pages gracefully', () => {
+    // Visit a non-existent page
+    cy.visit('/non-existent-page', { failOnStatusCode: false });
+    
+    // Should still load the React app (SPA routing)
+    cy.get('#root').should('exist');
+  });
 });
