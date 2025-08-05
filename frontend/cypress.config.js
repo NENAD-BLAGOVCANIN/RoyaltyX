@@ -10,8 +10,10 @@ module.exports = defineConfig({
     defaultCommandTimeout: 10000,
     requestTimeout: 10000,
     responseTimeout: 10000,
-    setupNodeEvents(_on, _config) {
-      // implement node event listeners here
+    setupNodeEvents(on, config) {
+      // Cypress automatically loads environment variables with CYPRESS_ prefix
+      // No additional configuration needed
+      return config;
     },
     specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
   },

@@ -28,10 +28,20 @@
     {
       "files": ["cypress/**/*.js"],
       "env": {
-        "cypress/globals": true
+        "node": true
       },
       "plugins": ["cypress"],
-      "extends": ["plugin:cypress/recommended"]
+      "globals": {
+        "cy": "readonly",
+        "Cypress": "readonly",
+        "describe": "readonly",
+        "it": "readonly",
+        "beforeEach": "readonly",
+        "afterEach": "readonly",
+        "before": "readonly",
+        "after": "readonly",
+        "expect": "readonly"
+      }
     }
   ]
 }
