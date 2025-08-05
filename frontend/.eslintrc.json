@@ -24,6 +24,14 @@
         "ecmaVersion": 2021,
         "sourceType": "module"
       }
+    },
+    {
+      "files": ["cypress/**/*.js"],
+      "env": {
+        "cypress/globals": true
+      },
+      "plugins": ["cypress"],
+      "extends": ["plugin:cypress/recommended"]
     }
   ]
 }

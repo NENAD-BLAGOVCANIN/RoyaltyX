@@ -56,7 +56,12 @@
     "eject": "react-scripts eject",
     "lint": "eslint . --fix",
     "format": "prettier --write .",
-    "lint:fix": "eslint . --fix && prettier --write ."
+    "lint:fix": "eslint . --fix && prettier --write .",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:headless": "cypress run --headless",
+    "e2e": "start-server-and-test start http://localhost:3000 cypress:run",
+    "e2e:open": "start-server-and-test start http://localhost:3000 cypress:open"
   },
   "eslintConfig": {
     "extends": [
@@ -79,13 +84,18 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.26.8",
     "@types/node": "^22.7.9",
+    "cypress": "^14.5.3",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-cypress": "^5.1.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-unused-imports": "^4.1.4",
-    "prettier": "^3.5.3"
+    "prettier": "^3.5.3",
+    "serve": "^14.2.4",
+    "start-server-and-test": "^2.0.13",
+    "wait-on": "^8.0.4"
   }
 }
