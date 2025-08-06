@@ -1,8 +1,6 @@
 from rest_framework import serializers
 
 from apps.sources.serializers import SourceSerializer
-from apps.user.models import User
-from apps.user.serializers import UserSerializer
 
 from .models import Product, ProductImpressions, ProductSale
 

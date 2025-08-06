@@ -1,7 +1,9 @@
 from datetime import date, timedelta
+
 from django.utils import timezone
-from apps.sources.models import Source
+
 from apps.product.models import Product, ProductImpressions
+from apps.sources.models import Source
 from apps.sources.utils.twitch_service import TwitchService
 
 

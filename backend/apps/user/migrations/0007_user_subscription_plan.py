@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('user', '0006_user_role'),
+        ("user", "0006_user_role"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='subscription_plan',
-            field=models.CharField(choices=[('free', 'Free'), ('basic', 'Basic'), ('premium', 'Premium')], default='free', max_length=10),
+            model_name="user",
+            name="subscription_plan",
+            field=models.CharField(
+                choices=[("free", "Free"), ("basic", "Basic"), ("premium", "Premium")],
+                default="free",
+                max_length=10,
+            ),
         ),
     ]
