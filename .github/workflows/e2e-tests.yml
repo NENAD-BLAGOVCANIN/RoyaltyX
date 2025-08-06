@@ -26,8 +26,10 @@ jobs:
       - name: Cache npm dependencies
         uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+          path: |
+            ~/.npm
+            frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package.json', 'frontend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
       
@@ -47,7 +49,11 @@ jobs:
       - name: Install frontend dependencies
         run: |
           cd frontend
-          npm ci --legacy-peer-deps
+          if [ -f package-lock.json ]; then
+            npm ci --legacy-peer-deps
+          else
+            npm install --legacy-peer-deps
+          fi
       
       - name: Build frontend
         run: |
