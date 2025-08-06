@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sources', '0009_alter_source_platform'),
+        ('sources', '0010_source_status'),
     ]
 
     operations = [
