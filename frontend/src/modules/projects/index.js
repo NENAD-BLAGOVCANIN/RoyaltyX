@@ -1,5 +1,6 @@
 import MyProjects from "./pages/MyProjects";
 import CreateNewProject from "./pages/CreateNewProject";
+import ProjectSettings from "../settings/pages/ProjectSettings";
 
 const projectRoutes = [
   {
@@ -9,6 +10,10 @@ const projectRoutes = [
   {
     path: "projects/create",
     element: <CreateNewProject />,
+  },
+  {
+    path: "settings",
+    element: <ProjectSettings />,
   },
 ];
 

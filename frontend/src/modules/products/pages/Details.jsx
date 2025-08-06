@@ -55,7 +55,7 @@ const Details = () => {
             </MUIButton>
           </Box>
 
-          <Card sx={{ mt: 5 }}>
+          <Card sx={{ mt: 5, borderRadius: 3, boxShadow: 1 }}>
             <CardContent style={{ display: "flex", flexDirection: "column" }}>
               <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
                 Product Metadata

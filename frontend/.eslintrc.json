@@ -24,6 +24,24 @@
         "ecmaVersion": 2021,
         "sourceType": "module"
       }
+    },
+    {
+      "files": ["cypress/**/*.js"],
+      "env": {
+        "node": true
+      },
+      "plugins": ["cypress"],
+      "globals": {
+        "cy": "readonly",
+        "Cypress": "readonly",
+        "describe": "readonly",
+        "it": "readonly",
+        "beforeEach": "readonly",
+        "afterEach": "readonly",
+        "before": "readonly",
+        "after": "readonly",
+        "expect": "readonly"
+      }
     }
   ]
 }

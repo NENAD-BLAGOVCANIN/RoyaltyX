@@ -1,0 +1,112 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches: [main, dev]
+  push:
+    branches: [main, dev]
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package.json', 'frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          if [ -f package-lock.json ]; then
+            npm ci --legacy-peer-deps
+          else
+            npm install --legacy-peer-deps
+          fi
+      
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+      
+      - name: Install backend dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+      
+      - name: Set up environment variables
+        run: |
+          cp .env.example .env
+      
+      - name: Run backend migrations
+        run: |
+          cd backend
+          python manage.py migrate
+      
+      - name: Start backend server
+        run: |
+          cd backend
+          python manage.py runserver &
+          sleep 10
+      
+      - name: Serve frontend build
+        run: |
+          cd frontend
+          npx serve -s build -l 3000 &
+          sleep 5
+      
+      - name: Wait for servers to be ready
+        run: |
+          npx wait-on http://localhost:3000 http://localhost:8000 --timeout 60000
+      
+      - name: Run Cypress tests
+        run: |
+          cd frontend
+          npm run cypress:run:headless
+      
+      - name: Upload Cypress screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: frontend/cypress/screenshots
+          retention-days: 7
+      
+      - name: Upload Cypress videos
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-videos
+          path: frontend/cypress/videos
+          retention-days: 7

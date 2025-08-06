@@ -62,7 +62,7 @@ const EditProduct = () => {
   }
 
   return (
-    <div className="mt-3">
+    <div>
       <h2 className="bold mb-4">Edit Product</h2>
       <div className="row">
         <div className="col-md-7">

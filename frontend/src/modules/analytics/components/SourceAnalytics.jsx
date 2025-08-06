@@ -14,6 +14,7 @@ import {
 import youtubeLogo from "../../common/assets/img/platform_logos/youtube.webp";
 import tiktokLogo from "../../common/assets/img/platform_logos/tiktok.webp";
 import twitchLogo from "../../common/assets/img/platform_logos/twitch.webp";
+import vimeoLogo from "../../common/assets/img/platform_logos/vimeo.webp";
 
 export const SourceAnalytics = ({ analytics }) => {
   const getPlatformLogo = (platform) => {
@@ -24,6 +25,8 @@ export const SourceAnalytics = ({ analytics }) => {
         return tiktokLogo;
       case "twitch":
         return twitchLogo;
+      case "vimeo":
+        return vimeoLogo;
       default:
         return youtubeLogo;
     }

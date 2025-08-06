@@ -5,24 +5,44 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('product', '0019_merge_20250728_1825'),
-        ('project', '0008_alter_projectuser_role'),
+        ("product", "0019_merge_20250728_1825"),
+        ("project", "0008_alter_projectuser_role"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ProducerProductAccess',
+            name="ProducerProductAccess",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='product.product')),
-                ('project_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='product_access', to='project.projectuser')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="product.product",
+                    ),
+                ),
+                (
+                    "project_user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="product_access",
+                        to="project.projectuser",
+                    ),
+                ),
             ],
             options={
-                'db_table': 'producer_product_access',
-                'unique_together': {('project_user', 'product')},
+                "db_table": "producer_product_access",
+                "unique_together": {("project_user", "product")},
             },
         ),
     ]

@@ -9,11 +9,13 @@ import {
   Button,
   TextField,
   Box,
+  Chip,
 } from "@mui/material";
 import { useState } from "react";
 import { LinkYoutubeCard } from "./LinkYoutubeCard";
 import { LinkTikTokCard } from "./LinkTikTokCard";
 import { LinkTwitchCard } from "./LinkTwitchCard";
+import { LinkVimeoCard } from "./LinkVimeoCard";
 import googleAdsLogo from "../../common/assets/img/platform_logos/google_ads.webp";
 import amazonLogo from "../../common/assets/img/platform_logos/amazon.svg";
 import instagramLogo from "../../common/assets/img/platform_logos/instagram.webp";
@@ -55,6 +57,11 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
     {
       name: "TikTok",
       component: <LinkTikTokCard createSource={createSource} />,
+      isCustomComponent: true,
+    },
+    {
+      name: "Vimeo",
+      component: <LinkVimeoCard createSource={createSource} />,
       isCustomComponent: true,
     },
     {
@@ -148,8 +155,29 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
             boxShadow: 2,
             height: "100%",
             mt: 1,
+            opacity: 0.7,
+            position: "relative",
+            "&:hover": {
+              opacity: 0.8,
+            },
           }}
         >
+          {/* Coming Soon Badge */}
+          <Chip
+            label="Coming Soon"
+            size="small"
+            sx={{
+              position: "absolute",
+              top: 12,
+              right: 12,
+              backgroundColor: "#1976d2",
+              color: "white",
+              fontSize: "0.75rem",
+              fontWeight: "bold",
+              zIndex: 1,
+            }}
+          />
+          
           <Box
             sx={{
               display: "flex",

@@ -4,11 +4,12 @@ import FileUploadInput from "../../components/FileUploadInput";
 import ColumnMappingModal from "../../components/ColumnMappingModal";
 import PageHeader from "../../../common/components/PageHeader";
 import { apiUrl } from "../../../common/api/config";
-import { Download, Trash2 } from "lucide-react";
+import { Download, Trash2, Lock } from "lucide-react";
 import ViewFileModal from "../../components/ViewFileModal";
 import { ReactComponent as GoogleSheetsIcon } from "../../../common/assets/img/vectors/google_sheets_icon.svg";
 import { Link } from "react-router-dom";
 import { getFiles } from "../../api/files";
+import { useProject } from "../../../common/contexts/ProjectContext";
 import {
   Table,
   TableBody,
@@ -20,7 +21,9 @@ import {
   IconButton,
   Box,
   Typography,
-  Chip
+  Chip,
+  Alert,
+  AlertTitle
 } from "@mui/material";
 
 const ImportData = () => {
@@ -32,6 +35,10 @@ const ImportData = () => {
   // Column mapping modal state
   const [showColumnMappingModal, setShowColumnMappingModal] = useState(false);
   const [pendingFileData, setPendingFileData] = useState(null);
+  
+  // Get current user role from project context
+  const { currentUserRole } = useProject();
+  const isOwner = currentUserRole === 'owner';
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -91,6 +98,28 @@ const ImportData = () => {
       return <Chip label="Pending Mapping" color="warning" size="small" />;
     }
   };
+
+  // Show access denied message for non-owners
+  if (!isOwner) {
+    return (
+      <div className="py-3">
+        <PageHeader
+          title="Manual Data Import"
+          description="Upload CSV files and map columns to import your data. Our smart mapping system will suggest the best column matches."
+        />
+
+        <Alert severity="warning" sx={{ mt: 3 }}>
+          <AlertTitle>Access Restricted</AlertTitle>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Lock size={20} />
+            <Typography>
+              Only project owners can access the manual data import feature. Please contact your project owner to upload files or request owner permissions.
+            </Typography>
+          </Box>
+        </Alert>
+      </div>
+    );
+  }
 
   return (
     <div className="py-3">

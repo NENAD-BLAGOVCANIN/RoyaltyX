@@ -9,4 +9,4 @@ RUN pip install --upgrade pip setuptools wheel && \
 
 COPY . .
 
-CMD ["sh", "-c", "python manage.py migrate && exec python manage.py runserver 0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py loaddata initial_data.json && exec python manage.py runserver 0.0.0.0:8000"]

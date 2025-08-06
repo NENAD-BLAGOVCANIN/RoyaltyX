@@ -3,7 +3,7 @@ from rest_framework import serializers
 from apps.user.models import User
 from apps.user.serializers import UserSerializer
 
-from .models import Project, ProjectUser, ProducerProductAccess
+from .models import ProducerProductAccess, Project, ProjectUser
 
 
 class ProducerProductAccessSerializer(serializers.ModelSerializer):
@@ -21,11 +21,18 @@ class ProjectUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProjectUser
-        fields = ["id", "project", "user", "user_details", "role", "accessible_products"]
+        fields = [
+            "id",
+            "project",
+            "user",
+            "user_details",
+            "role",
+            "accessible_products",
+        ]
 
     def get_accessible_products(self, obj):
         if obj.role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
-            return list(obj.product_access.values_list('product_id', flat=True))
+            return list(obj.product_access.values_list("product_id", flat=True))
         return []
 
 

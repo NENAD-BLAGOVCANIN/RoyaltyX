@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { login } from "../../authentication/api/auth";
+import { getUserInfo } from "../../account/api/user";
 
 const AuthContext = createContext();
 
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
   const [avatar, setAvatar] = useState("");
   const [role, setRole] = useState("");
   const [subscriptionPlan, setSubscriptionPlan] = useState("free");
+  const [user, setUser] = useState(null);
 
   const [currentlySelectedProjectId, setCurrentlySelectedProjectId] =
     useState(null);
@@ -127,6 +129,7 @@ export const AuthProvider = ({ children }) => {
     setSubscriptionPlan("free");
     setCurrentlySelectedProjectId(null);
     setToken("");
+    setUser(null);
     localStorage.removeItem("accessToken");
     navigate("/");
   };
@@ -135,6 +138,18 @@ export const AuthProvider = ({ children }) => {
     const decodedToken = jwtDecode(token);
     if (decodedToken.exp * 1000 < Date.now()) {
       handleLogout();
+    }
+  };
+
+  // Function to fetch user data from API
+  const fetchUser = async () => {
+    try {
+      const userData = await getUserInfo();
+      setUser(userData);
+      return userData;
+    } catch (error) {
+      console.error("Failed to fetch user data:", error);
+      return null;
     }
   };
 
@@ -163,6 +178,13 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  // Fetch user data when authenticated
+  useEffect(() => {
+    if (authenticated && token) {
+      fetchUser();
+    }
+  }, [authenticated, token]);
+
   const value = {
     authenticated,
     id,
@@ -174,6 +196,8 @@ export const AuthProvider = ({ children }) => {
     setSubscriptionPlan,
     currentlySelectedProjectId,
     token,
+    user,
+    fetchUser,
     login: handleLogin,
     logout: handleLogout,
     loading,
