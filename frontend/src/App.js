@@ -29,6 +29,7 @@ import { MUIThemeWrapper } from "./modules/global/components/MUIThemeWrapper";
 import sourceRoutes from "./modules/sources";
 import oauthRoutes from "./modules/oauth";
 import settingsRoutes from "./modules/settings";
+import InviteAcceptPage from "./modules/members/pages/InviteAcceptPage";
 
 const PrivateRoutes = () => {
   const { authenticated, loading } = useAuth();
@@ -105,6 +106,8 @@ function App() {
                 </Route>
 
                 {renderRoutes([...authRoutes, ...oauthRoutes])}
+
+                <Route path="/invite/:inviteId" element={<InviteAcceptPage />} />
 
                 <Route path="*" element={<PageNotFound />} />
               </Routes>
