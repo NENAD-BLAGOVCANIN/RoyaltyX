@@ -23,7 +23,7 @@ import {
   Edit as EditIcon,
 } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import AddMemberModal from "../components/AddMemberModal";
+import InviteUserModal from "../components/InviteUserModal";
 import EditMemberModal from "../components/EditMemberModal";
 import { removeProjectMember } from "../api/members";
 import { useProject } from "../../common/contexts/ProjectContext";
@@ -105,7 +105,7 @@ function Members() {
               startIcon={<PersonAddIcon />}
               onClick={handleOpenMembersModal}
             >
-              Add Member
+              Invite User
             </Button>
           ) : null
         }
@@ -205,17 +205,15 @@ function Members() {
               startIcon={<PersonAddIcon />}
               onClick={handleOpenMembersModal}
             >
-              Add First Member
+              Send First Invite
             </Button>
           )}
         </Paper>
       )}
 
-      <AddMemberModal
-        project={project}
-        setProject={setProject}
-        showAddMemberModal={showAddMemberModal}
-        setShowAddMemberModal={setShowAddMemberModal}
+      <InviteUserModal
+        showInviteModal={showAddMemberModal}
+        setShowInviteModal={setShowAddMemberModal}
       />
 
       <EditMemberModal

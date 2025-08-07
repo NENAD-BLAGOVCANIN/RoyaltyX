@@ -53,7 +53,7 @@ describe("Project Management", () => {
     cy.contains(secondProjectName).should("be.visible");
 
     // Navigate to a page where ProjectSelector is visible (try dashboard first, fallback to home)
-    cy.visit("/dashboard").then(() => {
+    cy.visit("/").then(() => {
       // Check if ProjectSelector is visible on dashboard, if not try home page
       cy.get('body').then(($body) => {
         if ($body.find('[data-testid="project-selector"]').length === 0) {
