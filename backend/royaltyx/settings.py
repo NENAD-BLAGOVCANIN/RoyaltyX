@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "apps.admin_panel",
     "apps.payments",
     "apps.emails",
+    "apps.invites",
     "apps.oauth.google",
     "rest_framework",
     "rest_framework_simplejwt",
@@ -208,6 +209,9 @@ VIMEO_CLIENT_SECRET = os.environ.get("VIMEO_CLIENT_SECRET")
 VIMEO_REDIRECT_URI = os.environ.get("VIMEO_REDIRECT_URI")
 
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
+
+# Frontend URL for invite links
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 
 # Email Configuration
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
