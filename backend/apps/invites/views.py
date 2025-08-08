@@ -1,19 +1,19 @@
+from django.conf import settings
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
-from django.conf import settings
+
+from apps.project.models import Project
 
 from .models import ProjectInvite
 from .serializers import (
-    ProjectInviteSerializer, 
-    CreateInviteSerializer, 
-    AcceptInviteSerializer,
-    InviteDetailsSerializer
+    CreateInviteSerializer,
+    InviteDetailsSerializer,
+    ProjectInviteSerializer,
 )
 from .services import InviteService
-from apps.project.models import Project
 
 
 @api_view(['POST'])
@@ -35,7 +35,7 @@ def create_invite(request):
             )
             
             response_data = ProjectInviteSerializer(invite).data
-            response_data['invite_link'] = f"{settings.FRONTEND_URL}/invite/{invite.id}"
+            response_data['invite_link'] = f"{settings.APP_URL}/invite/{invite.id}"
             
             return Response(response_data, status=status.HTTP_201_CREATED)
         except ValueError as e:
@@ -94,7 +94,7 @@ def list_pending_invites(request):
         
         # Add invite links to each invite
         for invite_data in serializer.data:
-            invite_data['invite_link'] = f"{settings.FRONTEND_URL}/invite/{invite_data['id']}"
+            invite_data['invite_link'] = f"{settings.APP_URL}/invite/{invite_data['id']}"
         
         return Response(serializer.data, status=status.HTTP_200_OK)
     except Exception as e:
