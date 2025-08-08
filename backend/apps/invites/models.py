@@ -34,7 +34,6 @@ class ProjectInvite(models.Model):
 
     class Meta:
         db_table = "project_invite"
-        unique_together = ("project", "email")
 
     def save(self, *args, **kwargs):
         if not self.expires_at:

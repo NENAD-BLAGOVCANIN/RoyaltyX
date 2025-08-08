@@ -10,18 +10,10 @@ class InviteService:
     @staticmethod
     def create_invite(project, email, role, invited_by, product_ids=None):
         """Create invite and send email"""
-        # Check if invite already exists for this project and email
-        existing_invite = ProjectInvite.objects.filter(
-            project=project, email=email, is_accepted=False
-        ).first()
-
-        if existing_invite and not existing_invite.is_expired:
-            raise ValueError("An active invite already exists for this email address")
-
-        # Delete expired invites for this project and email
+        # Clean up expired invites for this project and email
         ProjectInvite.objects.filter(
             project=project, email=email, is_accepted=False
-        ).delete()
+        ).filter(expires_at__lt=timezone.now()).delete()
 
         invite = ProjectInvite.objects.create(
             project=project, email=email, role=role, invited_by=invited_by
