@@ -1,14 +1,14 @@
 import { Box, Divider, Menu, MenuItem, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getUserInfo } from "../../account/api/user";
 import { ChevronDown, Folder } from "lucide-react";
 import { getMyProjects, switchProject } from "../../projects/api/project";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../common/contexts/AuthContext";
 
 export const ProjectSelector = () => {
   const [projectMenuAnchor, setProjectMenuAnchor] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
   const [myProjects, setMyProjects] = useState([]);
+  const { user } = useAuth();
   const navigate = useNavigate();
   const handleProjectMenuOpen = (event) => {
     setProjectMenuAnchor(event.currentTarget);
@@ -28,14 +28,7 @@ export const ProjectSelector = () => {
   };
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const fetchedUserInfo = await getUserInfo();
-        setUserInfo(fetchedUserInfo);
-      } catch (error) {
-        console.error("Error fetching user info:", error);
-      }
-
+    const fetchProjects = async () => {
       try {
         const fetchedMyProjects = await getMyProjects();
         setMyProjects(fetchedMyProjects);
@@ -44,7 +37,7 @@ export const ProjectSelector = () => {
       }
     };
 
-    fetchUserInfo();
+    fetchProjects();
   }, []);
 
   return (
@@ -59,6 +52,7 @@ export const ProjectSelector = () => {
       >
         <Paper
           elevation={0}
+          data-testid="project-selector"
           sx={{
             p: 1,
             py: 0.95,
@@ -101,8 +95,8 @@ export const ProjectSelector = () => {
                 whiteSpace: "nowrap",
               }}
             >
-              {userInfo?.project?.name ||
-                userInfo?.currently_selected_project?.name}
+              {user?.project?.name ||
+                user?.currently_selected_project?.name}
             </Typography>
           </Box>
           <ChevronDown size={18} style={{ flexShrink: 0 }} />

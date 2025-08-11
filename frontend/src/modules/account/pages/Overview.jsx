@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Box,
   Card,
@@ -26,25 +25,11 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../common/contexts/AuthContext";
-import { getUserInfo } from "../api/user";
 
 function Overview() {
-  const [userInfo, setUserInfo] = useState({});
   const navigate = useNavigate();
-  const { subscriptionPlan, avatar } = useAuth();
+  const { subscriptionPlan, user } = useAuth();
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const fetchedUserInfo = await getUserInfo();
-        setUserInfo(fetchedUserInfo);
-      } catch (error) {
-        console.error("Error fetching user info:", error);
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
 
   const accountMenuItems = [
     {
@@ -82,7 +67,7 @@ function Overview() {
           <Card sx={{ height: "100%" }}>
             <CardContent sx={{ textAlign: "center", p: 3 }}>
               <Avatar
-                src={avatar}
+                src={user?.avatar}
                 sx={{
                   width: 80,
                   height: 80,
@@ -92,16 +77,16 @@ function Overview() {
                 }}
               />
               <Typography variant="h5" sx={{ mb: 1, fontWeight: 500 }}>
-                {userInfo.name || "User"}
+                {user?.name || "User"}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                {userInfo.email || "user@example.com"}
+                {user?.email || "user@example.com"}
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Chip
                   icon={<Mail size={16} />}
-                  label={userInfo.is_email_verified ? "Verified" : "Not Verified"}
-                  color={userInfo.is_email_verified ? "success" : "error"}
+                  label={user?.is_email_verified ? "Verified" : "Not Verified"}
+                  color={user?.is_email_verified ? "success" : "error"}
                   size="small"
                   sx={{ mr: 1, mb: 1 }}
                 />
@@ -138,7 +123,7 @@ function Overview() {
                       </Typography>
                     </Box>
                     <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                      {userInfo.name || "Not provided"}
+                      {user?.name || "Not provided"}
                     </Typography>
                   </Paper>
                 </Grid>
@@ -162,7 +147,7 @@ function Overview() {
                       </Typography>
                     </Box>
                     <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                      {userInfo.email || "Not provided"}
+                      {user?.email || "Not provided"}
                     </Typography>
                   </Paper>
                 </Grid>
@@ -186,7 +171,7 @@ function Overview() {
                       </Typography>
                     </Box>
                     <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                      {formatDate(userInfo.created_at)}
+                      {formatDate(user?.created_at)}
                     </Typography>
                   </Paper>
                 </Grid>

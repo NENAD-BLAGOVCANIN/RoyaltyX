@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.project.models import ProjectUser, ProducerProductAccess
+from apps.project.models import ProducerProductAccess, ProjectUser
 
 from .models import Product
 from .serializers import ProductSerializer

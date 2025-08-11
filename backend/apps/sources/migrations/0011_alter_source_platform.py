@@ -4,15 +4,25 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('sources', '0010_source_status'),
+        ("sources", "0010_source_status"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='source',
-            name='platform',
-            field=models.CharField(choices=[('youtube', 'YouTube'), ('google_ads', 'Google Ads'), ('facebook', 'Facebook'), ('amazon', 'Amazon'), ('tiktok', 'TikTok'), ('twitch', 'Twitch'), ('vimeo', 'Vimeo')], max_length=50),
+            model_name="source",
+            name="platform",
+            field=models.CharField(
+                choices=[
+                    ("youtube", "YouTube"),
+                    ("google_ads", "Google Ads"),
+                    ("facebook", "Facebook"),
+                    ("amazon", "Amazon"),
+                    ("tiktok", "TikTok"),
+                    ("twitch", "Twitch"),
+                    ("vimeo", "Vimeo"),
+                ],
+                max_length=50,
+            ),
         ),
     ]

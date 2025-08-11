@@ -9,6 +9,7 @@ import ViewFileModal from "../../components/ViewFileModal";
 import { ReactComponent as GoogleSheetsIcon } from "../../../common/assets/img/vectors/google_sheets_icon.svg";
 import { Link } from "react-router-dom";
 import { getFiles } from "../../api/files";
+import { useProject } from "../../../common/contexts/ProjectContext";
 import {
   Table,
   TableBody,
@@ -20,7 +21,9 @@ import {
   IconButton,
   Box,
   Typography,
-  Chip
+  Chip,
+  Alert,
+  AlertTitle,
 } from "@mui/material";
 
 const ImportData = () => {
@@ -28,10 +31,14 @@ const ImportData = () => {
   const [showModal, setShowModal] = useState(false);
   const [csvData, setCsvData] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
-  
+
   // Column mapping modal state
   const [showColumnMappingModal, setShowColumnMappingModal] = useState(false);
   const [pendingFileData, setPendingFileData] = useState(null);
+
+  // Get current user role from project context
+  const { currentUserRole } = useProject();
+  const isOwner = currentUserRole === "owner";
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -92,6 +99,27 @@ const ImportData = () => {
     }
   };
 
+  // Show access denied message for non-owners
+  if (!isOwner) {
+    return (
+      <div className="py-3">
+        <PageHeader
+          title="Manual Data Import"
+          description="Upload CSV files and map columns to import your data. Our smart mapping system will suggest the best column matches."
+        />
+
+        <Alert severity="warning" sx={{ mt: 3 }}>
+          <AlertTitle>Access Restricted</AlertTitle>
+          <Typography>
+            Only project owners can access the manual data import feature.
+            Please contact your project owner to upload files or request owner
+            permissions.
+          </Typography>
+        </Alert>
+      </div>
+    );
+  }
+
   return (
     <div className="py-3">
       <PageHeader
@@ -99,8 +127,8 @@ const ImportData = () => {
         description="Upload CSV files and map columns to import your data. Our smart mapping system will suggest the best column matches."
       />
 
-      <FileUploadInput 
-        setFiles={setFiles} 
+      <FileUploadInput
+        setFiles={setFiles}
         onFileUploaded={handleFileUploaded}
       />
 
@@ -123,19 +151,19 @@ const ImportData = () => {
                 {files.map((file) => (
                   <TableRow
                     key={file.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
                       {file.name}
                     </TableCell>
-                    <TableCell>
-                      {getFileStatusChip(file)}
-                    </TableCell>
+                    <TableCell>{getFileStatusChip(file)}</TableCell>
                     <TableCell>
                       {new Date(file.created_at).toLocaleString()}
                     </TableCell>
                     <TableCell>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                      >
                         {file.is_processed && (
                           <IconButton
                             onClick={() => handleOpenCsvViewer(file)}
@@ -155,7 +183,7 @@ const ImportData = () => {
                           component={Link}
                           to={`/sources/manual-import/${file.id}/delete`}
                           aria-label="delete file"
-                          sx={{ color: 'error.main' }}
+                          sx={{ color: "error.main" }}
                         >
                           <Trash2 size={20} />
                         </IconButton>

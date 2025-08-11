@@ -8,8 +8,11 @@ from rest_framework.views import APIView
 from apps.product.models import Product
 from apps.product.serializers import ProductSerializer
 
-from .models import Project, ProjectUser, ProducerProductAccess
-from .serializers import ProjectSerializer, ProjectUserSerializer, ProducerProductAccessSerializer
+from .models import ProducerProductAccess, Project, ProjectUser
+from .serializers import (
+    ProjectSerializer,
+    ProjectUserSerializer,
+)
 
 
 class ProjectListCreateView(APIView):
@@ -160,12 +163,13 @@ def deleteProject(request):
 
 class ProjectProductsView(APIView):
     """Get all products in the current project for product access management."""
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         user = request.user
         currently_selected_project_id = user.currently_selected_project_id
-        
+
         if not currently_selected_project_id:
             return Response(
                 {"error": "No project selected"}, status=status.HTTP_400_BAD_REQUEST
@@ -178,12 +182,13 @@ class ProjectProductsView(APIView):
 
 class ProducerProductAccessView(APIView):
     """Manage producer product access."""
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
         """Set product access for a producer."""
-        project_user_id = request.data.get('project_user_id')
-        product_ids = request.data.get('product_ids', [])
+        project_user_id = request.data.get("project_user_id")
+        product_ids = request.data.get("product_ids", [])
 
         try:
             project_user = ProjectUser.objects.get(id=project_user_id)
@@ -204,7 +209,9 @@ class ProducerProductAccessView(APIView):
         access_objects = []
         for product_id in product_ids:
             try:
-                product = Product.objects.get(id=product_id, project=project_user.project)
+                product = Product.objects.get(
+                    id=product_id, project=project_user.project
+                )
                 access_objects.append(
                     ProducerProductAccess(project_user=project_user, product=product)
                 )
@@ -214,13 +221,14 @@ class ProducerProductAccessView(APIView):
         ProducerProductAccess.objects.bulk_create(access_objects)
 
         return Response(
-            {"message": "Product access updated successfully"}, 
-            status=status.HTTP_200_OK
+            {"message": "Product access updated successfully"},
+            status=status.HTTP_200_OK,
         )
 
 
 class ProjectUserUpdateView(APIView):
     """Update project user role and product access."""
+
     permission_classes = [IsAuthenticated]
 
     def put(self, request, id):
@@ -232,15 +240,15 @@ class ProjectUserUpdateView(APIView):
             )
 
         # Update role
-        new_role = request.data.get('role')
+        new_role = request.data.get("role")
         if new_role:
             project_user.role = new_role
             project_user.save()
 
         # Handle product access for producers
         if new_role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
-            product_ids = request.data.get('product_ids', [])
-            
+            product_ids = request.data.get("product_ids", [])
+
             # Clear existing access
             ProducerProductAccess.objects.filter(project_user=project_user).delete()
 
@@ -248,9 +256,13 @@ class ProjectUserUpdateView(APIView):
             access_objects = []
             for product_id in product_ids:
                 try:
-                    product = Product.objects.get(id=product_id, project=project_user.project)
+                    product = Product.objects.get(
+                        id=product_id, project=project_user.project
+                    )
                     access_objects.append(
-                        ProducerProductAccess(project_user=project_user, product=product)
+                        ProducerProductAccess(
+                            project_user=project_user, product=product
+                        )
                     )
                 except Product.DoesNotExist:
                     continue

@@ -133,10 +133,17 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
     },
   ];
 
-  // Filter sources based on search term
-  const filteredSources = allSources.filter((source) =>
-    source.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filter sources based on search term and sort by integration status
+  const filteredSources = allSources
+    .filter((source) =>
+      source.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      // Put integrated sources (isCustomComponent: true) first
+      if (a.isCustomComponent && !b.isCustomComponent) return -1;
+      if (!a.isCustomComponent && b.isCustomComponent) return 1;
+      return 0; // Keep original order for sources with same status
+    });
 
   const renderSourceCard = (source) => {
     if (source.isCustomComponent) {
