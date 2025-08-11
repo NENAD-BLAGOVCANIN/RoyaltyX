@@ -17,9 +17,13 @@ def fetch_tiktok_videos(source_id=None):
     for source in sources:
         # Refresh token if expired
         if source.token_expires_at and timezone.now() > source.token_expires_at:
-            new_token = TikTokService.refresh_token(source.refresh_token)
-            source.access_token = new_token
-            source.save(update_fields=["_access_token"])
+            response = TikTokService.refresh_token(source.refresh_token)
+            source.access_token = response["access_token"]
+            source.refresh_token = response["refresh_token"]
+            expires_in_seconds = response["expires_in"]
+            expiry_datetime = timezone.now() + timedelta(seconds=expires_in_seconds)
+            source.token_expires_at = expiry_datetime
+            source.save(update_fields=["_access_token", "_refresh_token", "token_expires_at"])
 
         if not source.access_token:
             print(f"No access token set for source {source.id}, skipping videos fetch")
@@ -65,9 +69,13 @@ def fetch_tiktok_stats(source_id=None):
     for source in sources:
         # Refresh token if expired
         if source.token_expires_at and timezone.now() > source.token_expires_at:
-            new_token = TikTokService.refresh_token(source.refresh_token)
-            source.access_token = new_token
-            source.save(update_fields=["_access_token"])
+            response = TikTokService.refresh_token(source.refresh_token)
+            source.access_token = response["access_token"]
+            source.refresh_token = response["refresh_token"]
+            expires_in_seconds = response["expires_in"]
+            expiry_datetime = timezone.now() + timedelta(seconds=expires_in_seconds)
+            source.token_expires_at = expiry_datetime
+            source.save(update_fields=["_access_token", "_refresh_token", "token_expires_at"])
 
         if not source.access_token:
             print(f"No access token set for source {source.id}, skipping stats fetch")

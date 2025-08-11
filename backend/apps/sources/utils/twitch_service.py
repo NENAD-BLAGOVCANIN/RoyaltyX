@@ -27,7 +27,7 @@ class TwitchService:
 
         response = requests.post(url, data=data)
         if response.status_code == 200:
-            return response.json().get("access_token")
+            return response.json()
         else:
             response.raise_for_status()
 
