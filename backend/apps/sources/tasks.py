@@ -4,6 +4,7 @@ from apps.sources.utils.tiktok_sync import fetch_tiktok_stats, fetch_tiktok_vide
 from apps.sources.utils.twitch_sync import fetch_twitch_stats, fetch_twitch_videos
 from apps.sources.utils.vimeo_sync import fetch_vimeo_videos_and_stats
 from apps.sources.utils.youtube import fetch_youtube_stats, fetch_youtube_videos
+from apps.sources.utils.instagram_sync import fetch_instagram_stats, fetch_instagram_videos
 
 
 @shared_task
@@ -44,3 +45,14 @@ def task_fetch_twitch_stats():
 def task_fetch_vimeo_videos_and_stats():
     print("Running task for fetching Vimeo videos and stats.", flush=True)
     fetch_vimeo_videos_and_stats()
+
+@shared_task
+def task_fetch_instagram_videos():
+    print("Running task for fetching Instagram videos.", flush=True)
+    fetch_instagram_videos()
+
+
+@shared_task
+def task_fetch_instagram_stats():
+    print("Running task for fetching Instagram stats.", flush=True)
+    fetch_instagram_stats()

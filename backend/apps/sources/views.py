@@ -10,6 +10,8 @@ from apps.sources.utils.twitch_service import TwitchService
 from apps.sources.utils.twitch_sync import fetch_twitch_stats, fetch_twitch_videos
 from apps.sources.utils.vimeo_service import VimeoService
 from apps.sources.utils.vimeo_sync import fetch_vimeo_videos_and_stats
+from apps.sources.utils.instagram_service import InstagramService
+from apps.sources.utils.instagram_sync import fetch_instagram_stats, fetch_instagram_videos
 
 from .models import Source
 from .serializers import SourceSerializer
@@ -104,6 +106,19 @@ class SourceListCreateView(APIView):
                         print(f"Failed to fetch Vimeo channel details: {e}")
 
                 fetch_vimeo_videos_and_stats(source.id)
+
+            elif source.platform == Source.PLATFORM_INSTAGRAM and source.access_token:
+                try:
+                    service = InstagramService(source.access_token)
+                    channel_details = service.fetch_user_info()
+                    source.channel_id = channel_details["id"]
+                    source.account_name = channel_details.get("username") or "Instagram User"
+                    source.save(update_fields=["channel_id", "account_name"])
+                except Exception as e:
+                    print(f"Failed to fetch Instagram channel details: {e}")
+                
+                fetch_instagram_videos(source.id)
+                fetch_instagram_stats(source.id)
 
             return Response(
                 SourceSerializer(source).data, status=status.HTTP_201_CREATED

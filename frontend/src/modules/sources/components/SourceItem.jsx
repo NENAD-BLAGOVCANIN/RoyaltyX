@@ -3,6 +3,7 @@ import youtubeLogo from "../../common/assets/img/platform_logos/youtube.webp";
 import tiktokLogo from "../../common/assets/img/platform_logos/tiktok.webp";
 import twitchLogo from "../../common/assets/img/platform_logos/twitch.webp";
 import vimeoLogo from "../../common/assets/img/platform_logos/vimeo.webp";
+import instagramLogo from "../../common/assets/img/platform_logos/instagram.webp";
 import { ArrowRight } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 
@@ -19,6 +20,8 @@ export const SourceItem = ({ source }) => {
         return twitchLogo;
       case "vimeo":
         return vimeoLogo;
+      case "instagram":
+        return instagramLogo;
       default:
         return youtubeLogo;
     }
