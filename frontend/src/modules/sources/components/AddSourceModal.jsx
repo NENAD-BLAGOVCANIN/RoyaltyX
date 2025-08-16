@@ -10,6 +10,7 @@ import {
   TextField,
   Box,
   Chip,
+  InputAdornment,
 } from "@mui/material";
 import { useState } from "react";
 import { LinkYoutubeCard } from "./LinkYoutubeCard";
@@ -26,7 +27,7 @@ import spotifyLogo from "../../common/assets/img/platform_logos/spotify.svg";
 import audibleLogo from "../../common/assets/img/platform_logos/audible.svg";
 import temuLogo from "../../common/assets/img/platform_logos/temu.svg";
 import { ReactComponent as FacebookLogo } from "../../common/assets/img/platform_logos/facebook.svg";
-import { X } from "lucide-react";
+import { X, Search } from "lucide-react";
 
 export const AddSourceModal = ({ open, onClose, createSource }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -181,7 +182,7 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
               zIndex: 1,
             }}
           />
-          
+
           <Box
             sx={{
               display: "flex",
@@ -245,17 +246,22 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
 
       <DialogContent sx={{ pb: 3 }}>
         {/* Search Input */}
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 3, display: "flex", justifyContent: "flex-end" }}>
           <TextField
-            fullWidth
-            placeholder="Search sources (e.g., TikTok, Instagram, YouTube...)"
+            placeholder="Search sources..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             variant="outlined"
+            size="small"
             sx={{
-              "& .MuiOutlinedInput-root": {
-                borderRadius: 2,
-              },
+              width: "300px",
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search size={18} color="#6b7280" />
+                </InputAdornment>
+              ),
             }}
           />
         </Box>
