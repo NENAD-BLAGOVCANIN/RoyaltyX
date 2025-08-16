@@ -22,6 +22,7 @@ import {
   CheckCircle,
   User,
   Crown,
+  Trash2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../common/contexts/AuthContext";
@@ -43,6 +44,13 @@ function Overview() {
       description: "View and manage your subscription plan",
       icon: <CreditCard size={20} color="currentColor" />,
       path: "/account/membership",
+    },
+    {
+      title: "Delete Account",
+      description: "Permanently delete your account and all data",
+      icon: <Trash2 size={20} color="currentColor" />,
+      path: "/account/delete",
+      danger: true,
     },
   ];
 
@@ -262,12 +270,18 @@ function Overview() {
                         borderRadius: 1,
                       }}
                     >
-                      <ListItemIcon sx={{ minWidth: 40 }}>
+                      <ListItemIcon sx={{ 
+                        minWidth: 40,
+                        color: item.danger ? "error.main" : "inherit"
+                      }}>
                         {item.icon}
                       </ListItemIcon>
                       <ListItemText
                         primary={
-                          <Typography variant="subtitle1">
+                          <Typography 
+                            variant="subtitle1"
+                            sx={{ color: item.danger ? "error.main" : "inherit" }}
+                          >
                             {item.title}
                           </Typography>
                         }
@@ -280,12 +294,13 @@ function Overview() {
                       <Button
                         variant="outlined"
                         size="small"
+                        color={item.danger ? "error" : "primary"}
                         onClick={(e) => {
                           e.stopPropagation();
                           navigate(item.path);
                         }}
                       >
-                        Manage
+                        {item.danger ? "Delete" : "Manage"}
                       </Button>
                     </ListItem>
                     {index < accountMenuItems.length - 1 && <Divider />}

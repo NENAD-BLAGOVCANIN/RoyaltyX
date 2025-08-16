@@ -149,3 +149,45 @@ def change_password(request):
     return Response(
         {"message": "Password changed successfully"}, status=status.HTTP_200_OK
     )
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def delete_account(request):
+    """Delete user account (soft delete)"""
+    user = request.user
+
+    # Check if user is already deleted
+    if user.is_deleted:
+        return Response(
+            {"error": "Account is already deleted"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    try:
+        # Cancel active subscription if any
+        if user.stripe_subscription_id:
+            from apps.payments.stripe_service import StripeService
+            StripeService.cancel_subscription(user.stripe_subscription_id)
+
+        # Update user to deleted status
+        user.is_deleted = True
+        user.is_active = False
+        user.subscription_plan = "free"
+        user.subscription_status = "canceled"
+        user.stripe_subscription_id = None
+        user.stripe_customer_id = None
+        user.subscription_current_period_end = None
+        user.grace_period_end = None
+        user.save()
+
+        return Response(
+            {"message": "Account deleted successfully"},
+            status=status.HTTP_200_OK,
+        )
+
+    except Exception as e:
+        return Response(
+            {"error": f"Failed to delete account: {str(e)}"},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )

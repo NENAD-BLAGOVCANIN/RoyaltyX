@@ -51,3 +51,28 @@ export const changePassword = async (currentPassword, newPassword) => {
     throw new Error(error.message || "Network error");
   }
 };
+
+export const deleteAccount = async () => {
+  const token = localStorage.getItem("accessToken");
+
+  try {
+    const response = await fetch(apiUrl + "/users/delete-account/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify({}),
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      return responseData;
+    } else {
+      throw new Error(responseData.error || "Failed to delete account");
+    }
+  } catch (error) {
+    throw new Error(error.message || "Network error");
+  }
+};

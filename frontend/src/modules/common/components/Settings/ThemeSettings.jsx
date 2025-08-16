@@ -26,7 +26,7 @@ const ThemeSettings = () => {
         Choose your preferred theme for the application
       </Typography>
 
-      <FormControl fullWidth sx={{ maxWidth: 300, mt: 3 }}>
+      <FormControl fullWidth sx={{ maxWidth: 300, mt: 5 }}>
         <InputLabel id="theme-select-label">Theme</InputLabel>
         <Select
           labelId="theme-select-label"

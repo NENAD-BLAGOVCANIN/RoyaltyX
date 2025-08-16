@@ -32,14 +32,14 @@ def admin_dashboard_stats(request):
         )
 
     # Total counts
-    total_users = User.objects.count()
+    total_users = User.objects.filter(is_deleted=False).count()
     total_projects = Project.objects.count()
     total_sources = Source.objects.count()
 
     # Users per month for the last 12 months
     twelve_months_ago = timezone.now() - timezone.timedelta(days=365)
     users_per_month = (
-        User.objects.filter(date_joined__gte=twelve_months_ago)
+        User.objects.filter(date_joined__gte=twelve_months_ago, is_deleted=False)
         .annotate(month=TruncMonth("date_joined"))
         .values("month")
         .annotate(count=Count("id"))
@@ -59,7 +59,9 @@ def admin_dashboard_stats(request):
 
     # Recent activity stats
     last_30_days = timezone.now() - timezone.timedelta(days=30)
-    new_users_last_30_days = User.objects.filter(date_joined__gte=last_30_days).count()
+    new_users_last_30_days = User.objects.filter(
+        date_joined__gte=last_30_days, is_deleted=False
+    ).count()
     new_projects_last_30_days = Project.objects.filter(
         created_at__gte=last_30_days
     ).count()
@@ -134,13 +136,15 @@ def users_stats(request):
             status=status.HTTP_403_FORBIDDEN,
         )
 
-    total_users = User.objects.count()
-    admin_users = User.objects.filter(role="admin").count()
-    regular_users = User.objects.filter(role="user").count()
+    total_users = User.objects.filter(is_deleted=False).count()
+    admin_users = User.objects.filter(role="admin", is_deleted=False).count()
+    regular_users = User.objects.filter(role="user", is_deleted=False).count()
 
     # Active users (logged in within last 30 days)
     last_30_days = timezone.now() - timezone.timedelta(days=30)
-    active_users = User.objects.filter(last_login__gte=last_30_days).count()
+    active_users = User.objects.filter(
+        last_login__gte=last_30_days, is_deleted=False
+    ).count()
 
     stats = {
         "total_users": total_users,

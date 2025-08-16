@@ -96,6 +96,10 @@ class StripeService:
             
             user = User.objects.get(id=user_id)
             
+            # Skip processing if user is deleted
+            if user.is_deleted:
+                raise Exception("Cannot process payment for deleted user")
+            
             # Get the subscription from the session
             subscription = stripe.Subscription.retrieve(session['subscription'])
             
@@ -127,6 +131,10 @@ class StripeService:
         try:
             subscription_id = invoice['subscription']
             user = User.objects.get(stripe_subscription_id=subscription_id)
+            
+            # Skip processing if user is deleted
+            if user.is_deleted:
+                raise Exception("Cannot process payment failure for deleted user")
             
             user.subscription_status = 'past_due'
             user.payment_failure_count += 1
