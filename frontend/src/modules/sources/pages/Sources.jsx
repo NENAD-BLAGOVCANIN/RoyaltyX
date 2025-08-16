@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Typography, Button, Grid } from "@mui/material";
 import PageHeader from "../../common/components/PageHeader";
-import { useSources } from "../api/sources";
+import { useSources, useUserProjectRole } from "../api/sources";
 import { SourceItem } from "../components/SourceItem";
 import { AddSourceModal } from "../components/AddSourceModal";
 import { WifiOff } from "react-bootstrap-icons";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 
 export const Sources = () => {
   const { sources, createSource, loading } = useSources();
+  const { canAddSources, loading: roleLoading } = useUserProjectRole();
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -27,22 +28,24 @@ export const Sources = () => {
         title="Sources"
         description="Manage your data sources and link your platforms of choice."
         action={
-          <Box sx={{display: "flex", gap: 3}}>
-            <Button
-              variant="outlined"
-              onClick={() => navigate("/sources/manual-import")}
-              sx={{ whiteSpace: "nowrap" }}
-            >
-              <Plus size={20} style={{ marginRight: 10 }} /> Manually import data
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleOpenModal}
-              sx={{ whiteSpace: "nowrap" }}
-            >
-              <Plus size={20} style={{ marginRight: 10 }} /> Add source
-            </Button>
-          </Box>
+          canAddSources && !roleLoading ? (
+            <Box sx={{display: "flex", gap: 3}}>
+              <Button
+                variant="outlined"
+                onClick={() => navigate("/sources/manual-import")}
+                sx={{ whiteSpace: "nowrap" }}
+              >
+                <Plus size={20} style={{ marginRight: 10 }} /> Manually import data
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleOpenModal}
+                sx={{ whiteSpace: "nowrap" }}
+              >
+                <Plus size={20} style={{ marginRight: 10 }} /> Add source
+              </Button>
+            </Box>
+          ) : null
         }
       />
 
@@ -67,15 +70,17 @@ export const Sources = () => {
               variant="body1"
               sx={{ color: "text.secondary", mb: 2, mt: 1 }}
             >
-              No sources connected.
+              {canAddSources ? "No sources connected." : "No sources connected. Contact your project owner to add sources."}
             </Typography>
-            <Button
-              variant="contained"
-              onClick={handleOpenModal}
-              sx={{ whiteSpace: "nowrap" }}
-            >
-              <Plus size={20} style={{ marginRight: 10 }} /> Add source
-            </Button>
+            {canAddSources && !roleLoading && (
+              <Button
+                variant="contained"
+                onClick={handleOpenModal}
+                sx={{ whiteSpace: "nowrap" }}
+              >
+                <Plus size={20} style={{ marginRight: 10 }} /> Add source
+              </Button>
+            )}
           </Grid>
         )}
       </Grid>

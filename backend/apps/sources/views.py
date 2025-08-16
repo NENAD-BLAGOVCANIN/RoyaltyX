@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.project.models import ProjectUser
 from apps.sources.utils.tiktok_service import TikTokService
 from apps.sources.utils.tiktok_sync import fetch_tiktok_stats, fetch_tiktok_videos
 from apps.sources.utils.twitch_service import TwitchService
@@ -41,6 +42,22 @@ class SourceListCreateView(APIView):
         request=SourceSerializer,
     )
     def post(self, request):
+        try:
+            project_user = ProjectUser.objects.get(
+                user=request.user,
+                project_id=request.user.currently_selected_project_id
+            )
+            if project_user.role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
+                return Response(
+                    {"detail": "Producers are not allowed to add new sources."},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+        except ProjectUser.DoesNotExist:
+            return Response(
+                {"detail": "You are not a member of this project."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         data = request.data.copy()
         data["project"] = request.user.currently_selected_project_id
         serializer = SourceSerializer(data=data)
@@ -125,6 +142,30 @@ class SourceListCreateView(APIView):
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserProjectRoleView(APIView):
+    """
+    GET: Returns the current user's role in the currently selected project
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            project_user = ProjectUser.objects.get(
+                user=request.user,
+                project_id=request.user.currently_selected_project_id
+            )
+            return Response({
+                "role": project_user.role,
+                "can_add_sources": project_user.role != ProjectUser.PROJECT_USER_ROLE_PRODUCER
+            }, status=status.HTTP_200_OK)
+        except ProjectUser.DoesNotExist:
+            return Response(
+                {"detail": "You are not a member of this project."},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
 
 class SourceDetailView(APIView):

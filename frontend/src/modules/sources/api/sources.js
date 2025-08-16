@@ -28,3 +28,13 @@ export const useSources = () => {
     refetch,
   };
 };
+
+export const useUserProjectRole = () => {
+  const { data: roleData, loading } = useFetch("/sources/user-role/");
+  
+  return {
+    role: roleData?.role,
+    canAddSources: roleData?.can_add_sources,
+    loading,
+  };
+};
