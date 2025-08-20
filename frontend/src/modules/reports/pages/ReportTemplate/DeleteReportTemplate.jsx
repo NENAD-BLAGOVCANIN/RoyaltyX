@@ -14,7 +14,7 @@ export default function DeleteReportTemplate() {
     useEffect(() => {
       getReportTemplateById(id).then(setInitialData).catch(() => {
         toast.error("Failed to load template.");
-        navigate("/report-templates");
+        navigate("/reports?tab=1");
       });
     }, [id, navigate])
 
@@ -23,7 +23,7 @@ export default function DeleteReportTemplate() {
     try {
       await deleteReportTemplate(id);
       toast.success("Template deleted successfully.");
-      navigate("/report-templates");
+      navigate("/reports?tab=1");
     } catch (err) {
       toast.error("Failed to delete template.");
     } finally {
@@ -52,7 +52,7 @@ export default function DeleteReportTemplate() {
       </Button>
       <Button
         variant="outlined"
-        onClick={() => navigate("/report-templates")}
+        onClick={() => navigate("/reports?tab=1")}
       >
         Cancel
       </Button>

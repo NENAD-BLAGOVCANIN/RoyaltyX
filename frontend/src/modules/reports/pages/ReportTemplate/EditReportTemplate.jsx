@@ -12,7 +12,7 @@ export default function EditReportTemplate() {
   useEffect(() => {
     getReportTemplateById(id).then(setInitialData).catch(() => {
       toast.error("Failed to load template.");
-      navigate("/report-templates");
+      navigate("/reports?tab=1");
     });
   }, [id, navigate])
 
@@ -20,7 +20,7 @@ export default function EditReportTemplate() {
     try {
       await updateReportTemplate(id, data);
       toast.success("Template updated successfully!");
-      navigate("/report-templates");
+      navigate("/reports?tab=1");
     } catch (err) {
       toast.error("Failed to update template.");
     }
