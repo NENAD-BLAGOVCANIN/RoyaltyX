@@ -40,6 +40,14 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
 
+        # Check if user account is deleted
+        if self.user.is_deleted:
+            raise serializers.ValidationError(
+                {
+                    "account_deleted": "This account has been deleted and cannot be accessed.",
+                }
+            )
+
         # Check if user's email is verified
         if not self.user.is_email_verified:
             raise serializers.ValidationError(

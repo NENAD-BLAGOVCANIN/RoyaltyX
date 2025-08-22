@@ -53,6 +53,14 @@ class GoogleAuthView(APIView):
             user_created = False
             try:
                 user = User.objects.get(email=email)
+                
+                # Check if user account is deleted
+                if user.is_deleted:
+                    return Response(
+                        {'error': 'This account has been deleted and cannot be accessed.'}, 
+                        status=status.HTTP_403_FORBIDDEN
+                    )
+                
                 # Update user info if needed
                 if name and user.name != name:
                     user.name = name

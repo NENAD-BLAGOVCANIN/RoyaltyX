@@ -17,7 +17,6 @@ import {
   FileText,
   Database,
   Package2,
-  LayoutPanelTop,
   LayoutDashboard,
   Users,
   Settings,
@@ -268,32 +267,6 @@ function Sidebar() {
                 primary="Reports"
                 primaryTypographyProps={{
                   variant: "body2",
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton
-              component={Link}
-              to="/report-templates"
-              selected={isActivePage("/report-templates")}
-              sx={{
-                borderRadius: 2,
-                mb: 0.5,
-                "&.Mui-selected": {
-                  backgroundColor: "action.selected",
-                },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 40 }}>
-                <LayoutPanelTop size={18} color="var(--color-text-lighter)" />
-              </ListItemIcon>
-              <ListItemText
-                primary="Report Templates"
-                primaryTypographyProps={{
-                  variant: "body2",
-                  noWrap: true,
                 }}
               />
             </ListItemButton>

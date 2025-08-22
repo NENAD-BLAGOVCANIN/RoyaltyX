@@ -10,7 +10,7 @@ export default function CreateNewReportTemplate() {
     try {
       await createReportTemplate(data);
       toast.success("Template created successfully!");
-      navigate("/report-templates");
+      navigate("/reports?tab=1");
     } catch (err) {
       toast.error(err || "Failed to create template.");
     }
