@@ -20,6 +20,7 @@ import {
   LayoutDashboard,
   Users,
   Settings,
+  Receipt,
 } from "lucide-react";
 import { UpgradePlanButton } from "../../components/UpgradePlanButton";
 import { ProjectSelector } from "../../../global/components/ProjectSelector";
@@ -265,6 +266,31 @@ function Sidebar() {
               </ListItemIcon>
               <ListItemText
                 primary="Reports"
+                primaryTypographyProps={{
+                  variant: "body2",
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton
+              component={Link}
+              to="/expenses"
+              selected={isActivePage("/expenses")}
+              sx={{
+                borderRadius: 2,
+                mb: 0.5,
+                "&.Mui-selected": {
+                  backgroundColor: "action.selected",
+                },
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 40 }}>
+                <Receipt size={18} color="var(--color-text-lighter)" />
+              </ListItemIcon>
+              <ListItemText
+                primary="Expenses"
                 primaryTypographyProps={{
                   variant: "body2",
                 }}

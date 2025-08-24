@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "apps.notifications",
     "apps.support",
     "apps.sources",
+    "apps.expenses",
     "apps.analytics",
     "apps.admin_panel",
     "apps.payments",

@@ -27,6 +27,7 @@ import { ProjectProvider } from "./modules/common/contexts/ProjectContext";
 import { SettingsProvider } from "./modules/common/contexts/SettingsContext";
 import { MUIThemeWrapper } from "./modules/global/components/MUIThemeWrapper";
 import sourceRoutes from "./modules/sources";
+import expenseRoutes from "./modules/expenses";
 import oauthRoutes from "./modules/oauth";
 import settingsRoutes from "./modules/settings";
 import InviteAcceptPage from "./modules/members/pages/InviteAcceptPage";
@@ -88,6 +89,7 @@ function App() {
                       ...accountRoutes,
                       ...contentRoutes,
                       ...sourceRoutes,
+                      ...expenseRoutes,
                       ...productRoutes,
                       ...settingsRoutes,
                       ...supportRoutes,
