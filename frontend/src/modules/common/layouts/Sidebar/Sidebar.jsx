@@ -20,7 +20,7 @@ import {
   LayoutDashboard,
   Users,
   Settings,
-  Receipt,
+  Landmark,
 } from "lucide-react";
 import { UpgradePlanButton } from "../../components/UpgradePlanButton";
 import { ProjectSelector } from "../../../global/components/ProjectSelector";
@@ -34,7 +34,6 @@ function Sidebar() {
   const location = useLocation();
 
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -109,7 +108,6 @@ function Sidebar() {
             boxSizing: "border-box",
           }}
         >
-
           <Typography
             variant="caption"
             sx={{
@@ -287,7 +285,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Receipt size={18} color="var(--color-text-lighter)" />
+                <Landmark size={18} color="var(--color-text-lighter)" />
               </ListItemIcon>
               <ListItemText
                 primary="Expenses"
@@ -327,7 +325,7 @@ function Sidebar() {
             <UpgradePlanButton />
           </ListItem>
         </List>
-        
+
         <SidebarProductList />
       </Box>
     </Box>

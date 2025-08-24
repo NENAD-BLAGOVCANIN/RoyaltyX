@@ -27,7 +27,7 @@ export const useExpenses = () => {
 
 export const useDeleteExpense = () => {
   const deleteExpense = async (expenseId) => {
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("accessToken");
     
     const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:8000'}/expenses/${expenseId}/`, {
       method: "DELETE",
