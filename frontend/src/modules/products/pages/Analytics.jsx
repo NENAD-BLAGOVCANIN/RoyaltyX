@@ -14,6 +14,7 @@ import { useSettings } from "../../common/contexts/SettingsContext";
 import { ReactComponent as ProductThumbnailPlaceholder } from "../../common/assets/img/vectors/product-thumbnail-placeholder.svg";
 import SalesStatsCard from "../../analytics/components/SalesStatsCard";
 import GeneralStatsCard from "../../analytics/components/GeneralStatsCard";
+import EarningsCard from "../../analytics/components/EarningsCard";
 import { Box, Grid } from "@mui/material";
 
 function Analytics() {
@@ -110,6 +111,7 @@ function Analytics() {
       <Grid container spacing={3}>
         <SalesStatsCard analytics={analytics} />
         <GeneralStatsCard analytics={analytics} showProductCount={false} />
+        <EarningsCard analytics={analytics} />
       </Grid>
 
       <h4 className="bold mt-4 mb-4">Sales</h4>

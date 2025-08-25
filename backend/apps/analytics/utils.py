@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional, Union
 from django.db.models import Count, DecimalField, ExpressionWrapper, F, QuerySet, Sum
 from django.db.models.functions import TruncDate, TruncHour, TruncMonth, TruncYear
 
+from apps.expenses.models import Expense
 from apps.product.models import Product, ProductImpressions, ProductSale
 from apps.project.models import ProducerProductAccess, ProjectUser
 from apps.sources.models import Source
@@ -440,6 +441,124 @@ def calculate_totals(
     return data
 
 
+def calculate_user_earnings(
+    project_id: int,
+    user_id: int,
+    product_id: int = None,
+    filters: Dict[str, Any] = None,
+) -> Dict[str, Union[int, float]]:
+    """
+    Calculate personal earnings for a user based on their expenses.
+    
+    Args:
+        project_id: The project ID
+        user_id: The user ID to calculate earnings for
+        product_id: Optional product ID to filter by specific product
+        filters: Optional filters for date range, etc.
+    
+    Returns:
+        Dictionary containing earnings information
+    """
+    # Get expenses for the user
+    expenses_qs = Expense.objects.filter(
+        user_id=user_id,
+        project_id=project_id,
+        is_deleted=False
+    )
+    
+    if product_id:
+        expenses_qs = expenses_qs.filter(product_id=product_id)
+    
+    # If no expenses found, return zero earnings
+    if not expenses_qs.exists():
+        return {
+            "total_earnings": 0,
+            "has_expenses": False,
+            "expense_count": 0
+        }
+    
+    total_earnings = 0
+    
+    for expense in expenses_qs:
+        if expense.type == Expense.TYPE_STATIC:
+            # Static amount - just add the value
+            total_earnings += float(expense.value)
+        elif expense.type == Expense.TYPE_PERCENTAGE:
+            # Percentage-based - calculate based on product revenue
+            if product_id:
+                # For specific product
+                product_revenue = calculate_product_revenue(product_id, filters)
+            else:
+                # For all products this expense applies to
+                product_revenue = calculate_product_revenue(expense.product_id, filters)
+            
+            # Calculate percentage of revenue
+            percentage_earnings = (float(expense.value) / 100) * product_revenue
+            total_earnings += percentage_earnings
+    
+    return {
+        "total_earnings": round(total_earnings, 2),
+        "has_expenses": True,
+        "expense_count": expenses_qs.count()
+    }
+
+
+def calculate_product_revenue(product_id: int, filters: Dict[str, Any] = None) -> float:
+    """
+    Calculate total revenue for a specific product.
+    
+    Args:
+        product_id: The product ID
+        filters: Optional filters for date range, etc.
+    
+    Returns:
+        Total revenue for the product
+    """
+    # Get sales for the product
+    sales_qs = ProductSale.objects.filter(product_id=product_id)
+    
+    # Get impressions for the product
+    impressions_qs = ProductImpressions.objects.filter(product_id=product_id)
+    
+    if filters:
+        sales_qs = sales_qs.filter(**filters)
+        impressions_qs = impressions_qs.filter(**filters)
+    
+    # Calculate royalty revenue
+    royalty_revenue = sales_qs.aggregate(
+        total=Sum("royalty_amount")
+    )["total"] or 0
+    
+    # Calculate impression revenue
+    impression_revenue = impressions_qs.annotate(
+        revenue_expr=ExpressionWrapper(
+            F("impressions") * F("ecpm") / 1000,
+            output_field=DecimalField(max_digits=30, decimal_places=18),
+        )
+    ).aggregate(total=Sum("revenue_expr"))["total"] or 0
+    
+    return float(royalty_revenue) + float(impression_revenue)
+
+
+def calculate_project_user_earnings(
+    project_id: int,
+    user_id: int,
+    filters: Dict[str, Any] = None,
+) -> Dict[str, Union[int, float]]:
+    """
+    Calculate total earnings for a user across all products in a project.
+    
+    Args:
+        project_id: The project ID
+        user_id: The user ID to calculate earnings for
+        filters: Optional filters for date range, etc.
+    
+    Returns:
+        Dictionary containing total earnings information
+    """
+    return calculate_user_earnings(project_id, user_id, None, filters)
+
+
 def calculate_analytics_per_source(
     project_id: int,
     impressions_qs: QuerySet,
@@ -644,6 +763,16 @@ def calculate_analytics(
 
     # Include granularity information in response
     data["granularity"] = granularity
+
+    # Calculate user earnings if user is provided
+    if user:
+        earnings_data = calculate_user_earnings(
+            project_id, 
+            user.id, 
+            product_id, 
+            filters
+        )
+        data["user_earnings"] = earnings_data
 
     if not product_id:
         source_analytics = calculate_analytics_per_source(
