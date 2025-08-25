@@ -20,6 +20,7 @@ import {
   LayoutDashboard,
   Users,
   Settings,
+  Landmark,
 } from "lucide-react";
 import { UpgradePlanButton } from "../../components/UpgradePlanButton";
 import { ProjectSelector } from "../../../global/components/ProjectSelector";
@@ -33,7 +34,6 @@ function Sidebar() {
   const location = useLocation();
 
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
-
 
   useEffect(() => {
     const handleResize = () => {
@@ -108,7 +108,6 @@ function Sidebar() {
             boxSizing: "border-box",
           }}
         >
-
           <Typography
             variant="caption"
             sx={{
@@ -275,6 +274,31 @@ function Sidebar() {
           <ListItem disablePadding>
             <ListItemButton
               component={Link}
+              to="/expenses"
+              selected={isActivePage("/expenses")}
+              sx={{
+                borderRadius: 2,
+                mb: 0.5,
+                "&.Mui-selected": {
+                  backgroundColor: "action.selected",
+                },
+              }}
+            >
+              <ListItemIcon sx={{ minWidth: 40 }}>
+                <Landmark size={18} color="var(--color-text-lighter)" />
+              </ListItemIcon>
+              <ListItemText
+                primary="Expenses"
+                primaryTypographyProps={{
+                  variant: "body2",
+                }}
+              />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding>
+            <ListItemButton
+              component={Link}
               to="/settings"
               selected={isActivePage("/settings")}
               sx={{
@@ -301,7 +325,7 @@ function Sidebar() {
             <UpgradePlanButton />
           </ListItem>
         </List>
-        
+
         <SidebarProductList />
       </Box>
     </Box>

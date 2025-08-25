@@ -14,7 +14,19 @@ import { useSettings } from "../../common/contexts/SettingsContext";
 import { ReactComponent as ProductThumbnailPlaceholder } from "../../common/assets/img/vectors/product-thumbnail-placeholder.svg";
 import SalesStatsCard from "../../analytics/components/SalesStatsCard";
 import GeneralStatsCard from "../../analytics/components/GeneralStatsCard";
-import { Box, Grid } from "@mui/material";
+import EarningsCard from "../../analytics/components/EarningsCard";
+import { 
+  Box, 
+  Grid, 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableContainer, 
+  TableHead, 
+  TableRow, 
+  Card,
+  Typography 
+} from "@mui/material";
 
 function Analytics() {
   const { id } = useParams();
@@ -110,39 +122,118 @@ function Analytics() {
       <Grid container spacing={3}>
         <SalesStatsCard analytics={analytics} />
         <GeneralStatsCard analytics={analytics} showProductCount={false} />
+        <EarningsCard analytics={analytics} />
       </Grid>
 
-      <h4 className="bold mt-4 mb-4">Sales</h4>
-      <table className="table table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Unit price</th>
-            <th>Unit price currency</th>
-            <th>Quantity</th>
-            <th>Is refund</th>
-            <th>Royalty amount</th>
-            <th>Royalty currency</th>
-            <th>Period start</th>
-            <th>Period end</th>
-          </tr>
-        </thead>
-        <tbody>
-          {product?.sales?.map((sale, index) => (
-            <tr key={index}>
-              <td>{sale.type}</td>
-              <td>{sale.unit_price}</td>
-              <td>{sale.unit_price_currency}</td>
-              <td>{sale.quantity}</td>
-              <td>{String(sale.is_refund)}</td>
-              <td>{sale.royalty_amount}</td>
-              <td>{sale.royalty_currency}</td>
-              <td>{new Date(sale.period_start)?.toLocaleString()}</td>
-              <td>{new Date(sale.period_end)?.toLocaleString()}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Typography variant="h4" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
+        Sales
+      </Typography>
+      <Card sx={{ p: 0 }} variant="outlined">
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Type
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Unit price
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Unit price currency
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Quantity
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Is refund
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Royalty amount
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Royalty currency
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Period start
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight="bold">
+                    Period end
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {product?.sales?.map((sale, index) => (
+                <TableRow key={index} hover>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {sale.type}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {sale.unit_price}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {sale.unit_price_currency}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {sale.quantity}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {String(sale.is_refund)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {sale.royalty_amount}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {sale.royalty_currency}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {new Date(sale.period_start)?.toLocaleString()}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {new Date(sale.period_end)?.toLocaleString()}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
     </>
   );
 }
