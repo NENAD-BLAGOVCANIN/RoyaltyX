@@ -25,6 +25,7 @@ import {
 import { UpgradePlanButton } from "../../components/UpgradePlanButton";
 import { ProjectSelector } from "../../../global/components/ProjectSelector";
 import SidebarProductList from "../../components/SidebarProductList";
+import { useProject } from "../../contexts/ProjectContext";
 
 const SIDEBAR_WIDTH = 242;
 
@@ -32,8 +33,18 @@ function Sidebar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const location = useLocation();
+  const { project, currentUserRole } = useProject();
 
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
+
+  // Check if Members menu should be shown
+  const shouldShowMembersMenu = () => {
+    // Always show for owners
+    if (currentUserRole === "owner") return true;
+    
+    // For non-owners, show only if members_can_see_other_members is true (default)
+    return project?.members_can_see_other_members !== false;
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -171,30 +182,32 @@ function Sidebar() {
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding>
-            <ListItemButton
-              component={Link}
-              to="/members"
-              selected={isActivePage("/members")}
-              sx={{
-                borderRadius: 2,
-                mb: 0.5,
-                "&.Mui-selected": {
-                  backgroundColor: "action.selected",
-                },
-              }}
-            >
-              <ListItemIcon sx={{ minWidth: 40 }}>
-                <Users size={18} color="var(--color-text-lighter)" />
-              </ListItemIcon>
-              <ListItemText
-                primary="Members"
-                primaryTypographyProps={{
-                  variant: "body2",
+          {shouldShowMembersMenu() && (
+            <ListItem disablePadding>
+              <ListItemButton
+                component={Link}
+                to="/members"
+                selected={isActivePage("/members")}
+                sx={{
+                  borderRadius: 2,
+                  mb: 0.5,
+                  "&.Mui-selected": {
+                    backgroundColor: "action.selected",
+                  },
                 }}
-              />
-            </ListItemButton>
-          </ListItem>
+              >
+                <ListItemIcon sx={{ minWidth: 40 }}>
+                  <Users size={18} color="var(--color-text-lighter)" />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Members"
+                  primaryTypographyProps={{
+                    variant: "body2",
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
 
           <ListItem disablePadding>
             <ListItemButton
