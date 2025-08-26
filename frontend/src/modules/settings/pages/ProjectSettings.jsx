@@ -57,7 +57,6 @@ function ProjectSettings() {
     description: "",
     members_can_see_other_members: true,
   });
-  const [userRole, setUserRole] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -91,14 +90,8 @@ function ProjectSettings() {
         description: projectData.description || "",
         members_can_see_other_members:
           projectData.members_can_see_other_members ?? true,
-      });
-
-      // Get current user's role in the project
-      const currentUser = JSON.parse(localStorage.getItem("user"));
-      const currentUserInProject = projectData.users?.find(
-        (user) => user.user_details.id === currentUser?.id
-      );
-      setUserRole(currentUserInProject?.role || "");
+        users: projectData.users || [],
+      });      
     } catch (error) {
       setError("Failed to load project information");
       console.error("Error fetching project info:", error);
@@ -192,8 +185,6 @@ function ProjectSettings() {
     setTabValue(newValue);
   };
 
-  const isOwner = userRole === "owner";
-
   if (loading) {
     return (
       <Container sx={{ pt: 3 }}>
@@ -240,7 +231,7 @@ function ProjectSettings() {
         >
           <Tab label="General" {...a11yProps(0)} />
           <Tab label="View Management" {...a11yProps(1)} />
-          {isOwner && <Tab label="Danger Zone" {...a11yProps(2)} />}
+          <Tab label="Danger Zone" {...a11yProps(2)} />
         </Tabs>
       </Box>
 
@@ -371,49 +362,47 @@ function ProjectSettings() {
         </Grid>
       </TabPanel>
 
-      {isOwner && (
-        <TabPanel value={tabValue} index={2}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={8}>
-              <Card>
-                <CardContent sx={{ p: 4 }}>
-                  <Typography variant="h6" gutterBottom color="error">
-                    Danger Zone
+      <TabPanel value={tabValue} index={2}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} lg={8}>
+            <Card>
+              <CardContent sx={{ p: 4 }}>
+                <Typography variant="h6" gutterBottom color="error">
+                  Danger Zone
+                </Typography>
+
+                <Divider sx={{ mb: 3 }} />
+
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="body1" sx={{ mb: 3 }} gutterBottom>
+                    Delete Project
                   </Typography>
-
-                  <Divider sx={{ mb: 3 }} />
-
-                  <Box sx={{ mb: 2 }}>
-                    <Typography variant="body1" sx={{ mb: 3 }} gutterBottom>
-                      Delete Project
-                    </Typography>
-                    <br />
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ pb: 3 }}
-                    >
-                      Once you delete a project, there is no going back. This
-                      action cannot be undone. All data associated with this
-                      project will be permanently deleted.
-                    </Typography>
-                    <br />
-                    <br />
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={openDeleteDialog}
-                      startIcon={<Trash2 size={18} />}
-                    >
-                      Delete Project
-                    </Button>
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
+                  <br />
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ pb: 3 }}
+                  >
+                    Once you delete a project, there is no going back. This
+                    action cannot be undone. All data associated with this
+                    project will be permanently deleted.
+                  </Typography>
+                  <br />
+                  <br />
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={openDeleteDialog}
+                    startIcon={<Trash2 size={18} />}
+                  >
+                    Delete Project
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
           </Grid>
-        </TabPanel>
-      )}
+        </Grid>
+      </TabPanel>
 
       <Dialog
         open={deleteDialogOpen}
