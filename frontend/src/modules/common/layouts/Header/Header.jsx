@@ -17,7 +17,26 @@ import { useProject } from "../../contexts/ProjectContext";
 
 function Header() {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
-  const { project } = useProject();
+  const { project, currentUserRole } = useProject();
+
+  // Check if current user can see other members
+  const canSeeOtherMembers = () => {
+    if (currentUserRole === "owner") return true;
+    return project?.members_can_see_other_members ?? true;
+  };
+
+  // Filter users based on visibility settings
+  const getVisibleUsers = () => {
+    if (!project?.users) return [];
+    
+    if (canSeeOtherMembers()) {
+      return project.users;
+    } else {
+      // Only show current user
+      const currentUser = JSON.parse(localStorage.getItem('user'));
+      return project.users.filter(user => user.user_details.id === currentUser?.id);
+    }
+  };
 
   return (
     <>
@@ -37,37 +56,43 @@ function Header() {
             <Breadcrumbs />
           </Box>
 
-          {project?.users && project.users.length > 0 && (
-            <Box sx={{ display: "flex", alignItems: "center", mr: 4 }}>
-              <AvatarGroup
-                max={5}
-                sx={{
-                  "& .MuiAvatar-root": {
-                    width: 23,
-                    height: 23,
-                    fontSize: "0.875rem",
-                    border: "2px solid",
-                    borderColor: "divider",
-                  },
-                }}
-              >
-                {project.users.map((user) => (
-                  <Tooltip
-                    key={user.id}
-                    title={`${user?.user_details?.name || "Unknown"} (${user?.role || "Member"})`}
-                    arrow
-                  >
-                    <Avatar
-                      src={user?.user_details?.avatar}
-                      sx={{
-                        cursor: "pointer",
-                      }}
-                    />
-                  </Tooltip>
-                ))}
-              </AvatarGroup>
-            </Box>
-          )}
+          {(() => {
+            const visibleUsers = getVisibleUsers();
+            return visibleUsers.length > 0 && (
+              <Box sx={{ display: "flex", alignItems: "center", mr: 4 }}>
+                <AvatarGroup
+                  max={5}
+                  sx={{
+                    "& .MuiAvatar-root": {
+                      width: 23,
+                      height: 23,
+                      fontSize: "0.875rem",
+                      border: "2px solid",
+                      borderColor: "divider",
+                    },
+                  }}
+                >
+                  {visibleUsers.map((user) => (
+                    <Tooltip
+                      key={user.id}
+                      title={canSeeOtherMembers() 
+                        ? `${user?.user_details?.name || "Unknown"} (${user?.role || "Member"})`
+                        : `${user?.user_details?.name || "Unknown"}`
+                      }
+                      arrow
+                    >
+                      <Avatar
+                        src={user?.user_details?.avatar}
+                        sx={{
+                          cursor: "pointer",
+                        }}
+                      />
+                    </Tooltip>
+                  ))}
+                </AvatarGroup>
+              </Box>
+            );
+          })()}
 
           {/* Right side - Actions */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>

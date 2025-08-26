@@ -1,7 +1,25 @@
 import { Card, CardActionArea, Grid } from "@mui/material";
 import { ReactComponent as FolderSVG } from "../../common/assets/img/vectors/folder.svg";
+import { useAuth } from "../../common/contexts/AuthContext";
 
 function ProjectCard({ project, handleSwitchProject }) {
+  const canSeeOtherMembers = () => {
+    if (getCurrentUserRole() === "owner") {
+      return true;
+    }
+    return project.members_can_see_other_members;
+  };
+
+  const { user } = useAuth();
+
+  const getCurrentUserRole = () => {
+    const currentUserInProject = project?.users?.find(
+      (projectUser) => projectUser.user_details?.id === user.id
+    );
+
+    return currentUserInProject?.role || null;
+  };
+
   return (
     <Grid size={{ xs: 12, md: 4 }}>
       <Card
@@ -41,24 +59,26 @@ function ProjectCard({ project, handleSwitchProject }) {
               {project.description}
             </span>
 
-            <div className="d-flex align-items-center flex-wrap">
-              {project?.users?.map((user) => {
-                return (
-                  <img
-                    src={user?.user_details?.avatar}
-                    key={user?.id}
-                    className="rounded me-2"
-                    alt=""
-                    style={{
-                      maxHeight: 22,
-                      aspectRatio: 1,
-                      objectFit: "cover",
-                      height: "100%",
-                    }}
-                  />
-                );
-              })}
-            </div>
+            {canSeeOtherMembers() && (
+              <div className="d-flex align-items-center flex-wrap">
+                {project?.users?.map((user) => {
+                  return (
+                    <img
+                      src={user?.user_details?.avatar}
+                      key={user?.id}
+                      className="rounded me-2"
+                      alt=""
+                      style={{
+                        maxHeight: 22,
+                        aspectRatio: 1,
+                        objectFit: "cover",
+                        height: "100%",
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
         </CardActionArea>
       </Card>

@@ -103,7 +103,7 @@ const Reports = () => {
           sx={{
             '& .MuiTab-root': {
               textTransform: 'none',
-              fontSize: '16px',
+              fontSize: '14px',
               fontWeight: 500,
               minWidth: 'auto',
               px: 0,
