@@ -9,8 +9,8 @@ const EarningsCard = ({ analytics }) => {
   }
 
   return (
-    <Grid size={{ md: 6, xs: 12 }}>
-      <Card sx={{ mb: 3, borderRadius: 2, boxShadow: 2, mt: 4 }}>
+    <Grid size={{ xs: 12 }}>
+      <Card sx={{ borderRadius: 2, boxShadow: 2, mt: 4 }}>
         <CardContent sx={{ p: 3 }}>
           <Typography variant="h5" sx={{ mb: 4, fontWeight: 600 }}>
             Your Earnings
@@ -31,11 +31,7 @@ const EarningsCard = ({ analytics }) => {
               >
                 TOTAL EARNINGS
               </Typography>
-              <Typography
-                variant="h6"
-                fontWeight="bold"
-                color="success.main"
-              >
+              <Typography variant="h6" fontWeight="bold" color="success.main">
                 ${earnings?.total_earnings?.toLocaleString() || "0.00"}
               </Typography>
             </Box>

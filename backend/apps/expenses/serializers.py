@@ -60,6 +60,7 @@ class ExpenseListSerializer(serializers.ModelSerializer):
     """Simplified serializer for list views"""
     user_name = serializers.CharField(source='user.name', read_only=True)
     product_title = serializers.CharField(source='product.title', read_only=True)
+    product_id = serializers.IntegerField(source='product.id', read_only=True)
     
     class Meta:
         model = Expense
@@ -70,5 +71,6 @@ class ExpenseListSerializer(serializers.ModelSerializer):
             'type',
             'user_name',
             'product_title',
+            'product_id',
             'created_at'
         ]

@@ -15,6 +15,7 @@ import { SourceAnalytics } from "../components/SourceAnalytics";
 import SalesStatsCard from "../components/SalesStatsCard";
 import GeneralStatsCard from "../components/GeneralStatsCard";
 import EarningsCard from "../components/EarningsCard";
+import ExpenseListCard from "../components/ExpenseListCard";
 import { Grid, Typography } from "@mui/material";
 
 function Analytics() {
@@ -81,13 +82,12 @@ function Analytics() {
       <Grid container spacing={3}>
         <SalesStatsCard analytics={analytics} />
         <GeneralStatsCard analytics={analytics} showProductCount={true} />
-        <EarningsCard analytics={analytics} />
       </Grid>
+      <EarningsCard analytics={analytics} />
+      <ExpenseListCard title="Project Expenses" />
 
       <SourceAnalytics analytics={analytics} />
-
       <TopPerfomingContentByImpressions />
-
       <TopPerfomingContentBySales />
     </>
   );
