@@ -15,9 +15,16 @@ import {
   Alert,
 } from "@mui/material";
 import { useExpenses } from "../../expenses/api/expenses";
+import { useProject } from "../../common/contexts/ProjectContext";
 
 const ExpenseListCard = ({ productId = null, title = "All Expenses" }) => {
   const { expenses, loading, error } = useExpenses();
+  const { currentUserRole } = useProject();
+
+  // Only show this component to project owners
+  if (currentUserRole !== "owner") {
+    return null;
+  }
 
   const filteredExpenses = productId
     ? expenses?.filter(
