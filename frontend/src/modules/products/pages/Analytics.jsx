@@ -15,6 +15,7 @@ import { ReactComponent as ProductThumbnailPlaceholder } from "../../common/asse
 import SalesStatsCard from "../../analytics/components/SalesStatsCard";
 import GeneralStatsCard from "../../analytics/components/GeneralStatsCard";
 import EarningsCard from "../../analytics/components/EarningsCard";
+import ExpenseListCard from "../../analytics/components/ExpenseListCard";
 import { 
   Box, 
   Grid, 
@@ -123,6 +124,10 @@ function Analytics() {
         <SalesStatsCard analytics={analytics} />
         <GeneralStatsCard analytics={analytics} showProductCount={false} />
         <EarningsCard analytics={analytics} />
+      </Grid>
+
+      <Grid container spacing={3}>
+        <ExpenseListCard productId={id} title="Product Expenses" />
       </Grid>
 
       <Typography variant="h4" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
