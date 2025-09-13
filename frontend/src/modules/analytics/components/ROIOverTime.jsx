@@ -14,6 +14,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { InfoPopover } from "../../common/components/InfoPopover";
 import { EllipsisVertical } from "lucide-react";
 import {
   getBaseLineChartOptions,
@@ -119,17 +120,20 @@ const ROIOverTime = ({ analytics, productId = null }) => {
                   alignItems: "center",
                 }}
               >
-                <Typography
-                  variant="h6"
-                  sx={{
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                    fontSize: "0.875rem",
-                    color: "text.secondary",
-                  }}
-                >
-                  ROI (Royalty Earnings - Expenses)
-                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      textTransform: "uppercase",
+                      fontWeight: 500,
+                      fontSize: "0.875rem",
+                      color: "text.secondary",
+                    }}
+                  >
+                    ROI (Royalty Earnings - Expenses)
+                  </Typography>
+                  <InfoPopover text="Shows your Return on Investment over time, calculated as total earnings minus all assigned expenses for each time period" />
+                </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <IconButton onClick={handleMenuOpen} size="sm">
                     <EllipsisVertical size={16} color="var(--color-text)" />

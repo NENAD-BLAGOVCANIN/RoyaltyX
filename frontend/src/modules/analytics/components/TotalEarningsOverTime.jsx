@@ -13,6 +13,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { InfoPopover } from "../../common/components/InfoPopover";
 import { EllipsisVertical } from "lucide-react";
 import {
   getBaseLineChartOptions,
@@ -81,17 +82,20 @@ const TotalEarningsOverTime = ({ analytics }) => {
                   alignItems: "center",
                 }}
               >
-                <Typography
-                  variant="h6"
-                  sx={{
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                    fontSize: "0.875rem",
-                    color: "text.secondary",
-                  }}
-                >
-                  TOTAL EARNINGS
-                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      textTransform: "uppercase",
+                      fontWeight: 500,
+                      fontSize: "0.875rem",
+                      color: "text.secondary",
+                    }}
+                  >
+                    TOTAL EARNINGS
+                  </Typography>
+                  <InfoPopover text="Shows your total earnings over time, calculated as the sum of royalty revenue and impression revenue for each time period" />
+                </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <IconButton onClick={handleMenuOpen} size="sm">
                     <EllipsisVertical size={16} color="var(--color-text)" />
