@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { LinkedAccountsSection } from "../components/LinkedAccountsSection";
-import { useProducts } from "../../products/api/products";
+import { useProducts } from "../../products/contexts/ProductsContext";
 import { ProductsList } from "../components/ProductsList";
 import { useSources } from "../../sources/api/sources";
 import { getProjectAnalytics } from "../../analytics/api/analytics";

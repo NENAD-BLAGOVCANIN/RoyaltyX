@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { confirmColumnMappings, getExpectedFields } from "../api/files";
+import { useProducts } from "../../products/contexts/ProductsContext";
 import {
   Dialog,
   DialogTitle,
@@ -33,6 +34,7 @@ const ColumnMappingModal = ({
   const [mappings, setMappings] = useState({});
   const [expectedFields, setExpectedFields] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { refetch: refetchProducts } = useProducts();
 
   useEffect(() => {
     if (open && fileData) {
@@ -66,7 +68,9 @@ const ColumnMappingModal = ({
     try {
       const response = await confirmColumnMappings(fileData.file.id, mappings);
       toast.success(response.report.message);
-      onMappingConfirmed(response);
+      onMappingConfirmed(response);      
+      await refetchProducts();
+      
       onClose();
     } catch (error) {
       // Handle validation errors with more detailed messaging
