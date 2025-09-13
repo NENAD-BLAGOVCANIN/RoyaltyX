@@ -31,6 +31,11 @@ export const GraphColorPalette = ({
     "#F87168",
     "#AE2E24",
     "#E774BB",
+    "#FFFFFF",
+    "#D3D3D3",
+    "#808080",
+    "#404040",
+    "#000000",
   ];
   const theme = useTheme();
 
