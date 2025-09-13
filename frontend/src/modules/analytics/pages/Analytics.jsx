@@ -16,6 +16,8 @@ import SalesStatsCard from "../components/SalesStatsCard";
 import GeneralStatsCard from "../components/GeneralStatsCard";
 import EarningsCard from "../components/EarningsCard";
 import ExpenseListCard from "../components/ExpenseListCard";
+import TotalEarningsOverTime from "../components/TotalEarningsOverTime";
+import ROIOverTime from "../components/ROIOverTime";
 import { Grid, Typography } from "@mui/material";
 
 function Analytics() {
@@ -25,6 +27,8 @@ function Analytics() {
     showRentalsOverTime,
     showImpressionsOverTime,
     showImpressionRevenueOverTime,
+    showTotalEarningsOverTime,
+    showROIOverTime,
   } = useSettings();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -68,6 +72,7 @@ function Analytics() {
       </div>
 
 
+      {/* Over Time Charts Grid */}
       <Grid container columnSpacing={3}>
         {showSalesOverTime && <SalesOverTime analytics={analytics} />}
         {showRentalsOverTime && <RentalsOverTime analytics={analytics} />}
@@ -77,12 +82,19 @@ function Analytics() {
         {showImpressionRevenueOverTime && (
           <ImpressionRevenueOverTime analytics={analytics} />
         )}
+        {showTotalEarningsOverTime && (
+          <TotalEarningsOverTime analytics={analytics} />
+        )}
+        {showROIOverTime && (
+          <ROIOverTime analytics={analytics} />
+        )}
       </Grid>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ mt: 2 }}>
         <SalesStatsCard analytics={analytics} />
         <GeneralStatsCard analytics={analytics} showProductCount={true} />
       </Grid>
+
       <EarningsCard analytics={analytics} />
       <ExpenseListCard title="Project Expenses" />
 

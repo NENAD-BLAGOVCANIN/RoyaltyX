@@ -67,6 +67,24 @@ export const SettingsProvider = ({ children }) => {
       : true;
   });
 
+  const [showTotalEarningsOverTime, setShowTotalEarningsOverTime] = useState(() => {
+    const savedShowTotalEarningsOverTimePreference = localStorage.getItem(
+      "showTotalEarningsOverTime",
+    );
+    return savedShowTotalEarningsOverTimePreference !== null
+      ? savedShowTotalEarningsOverTimePreference === "true"
+      : true;
+  });
+
+  const [showROIOverTime, setShowROIOverTime] = useState(() => {
+    const savedShowROIOverTimePreference = localStorage.getItem(
+      "showROIOverTime",
+    );
+    return savedShowROIOverTimePreference !== null
+      ? savedShowROIOverTimePreference === "true"
+      : true;
+  });
+
   const [
     impressionsGraphColor,
     setimpressionsGraphColor,
@@ -139,6 +157,33 @@ export const SettingsProvider = ({ children }) => {
     return savedImpressionRevenueOverTimeGraphColor !== null
       ? savedImpressionRevenueOverTimeGraphColor
       : "#009efd";
+  });
+
+  const [totalEarningsOverTimeGraphColor, setTotalEarningsOverTimeGraphColor] = useState(() => {
+    const savedTotalEarningsOverTimeGraphColor = localStorage.getItem(
+      "totalEarningsOverTimeGraphColor",
+    );
+    return savedTotalEarningsOverTimeGraphColor !== null
+      ? savedTotalEarningsOverTimeGraphColor
+      : "#009efd";
+  });
+
+  const [roiGraphColor, setRoiGraphColor] = useState(() => {
+    const savedRoiGraphColor = localStorage.getItem(
+      "roiGraphColor",
+    );
+    return savedRoiGraphColor !== null
+      ? savedRoiGraphColor
+      : "#28a745";
+  });
+
+  const [roiOverTimeGraphColor, setRoiOverTimeGraphColor] = useState(() => {
+    const savedRoiOverTimeGraphColor = localStorage.getItem(
+      "roiOverTimeGraphColor",
+    );
+    return savedRoiOverTimeGraphColor !== null
+      ? savedRoiOverTimeGraphColor
+      : "#28a745";
   });
 
   useEffect(() => {
@@ -234,6 +279,26 @@ export const SettingsProvider = ({ children }) => {
     );
   }, [impressionRevenueOverTimeGraphColor]);
 
+  useEffect(() => {
+    localStorage.setItem("showTotalEarningsOverTime", showTotalEarningsOverTime.toString());
+  }, [showTotalEarningsOverTime]);
+
+  useEffect(() => {
+    localStorage.setItem("showROIOverTime", showROIOverTime.toString());
+  }, [showROIOverTime]);
+
+  useEffect(() => {
+    localStorage.setItem("totalEarningsOverTimeGraphColor", totalEarningsOverTimeGraphColor);
+  }, [totalEarningsOverTimeGraphColor]);
+
+  useEffect(() => {
+    localStorage.setItem("roiGraphColor", roiGraphColor);
+  }, [roiGraphColor]);
+
+  useEffect(() => {
+    localStorage.setItem("roiOverTimeGraphColor", roiOverTimeGraphColor);
+  }, [roiOverTimeGraphColor]);
+
   return (
     <SettingsContext.Provider
       value={{
@@ -251,6 +316,10 @@ export const SettingsProvider = ({ children }) => {
         setShowTotalSalesCard,
         showTotalRevenueCard,
         setShowTotalRevenueCard,
+        showTotalEarningsOverTime,
+        setShowTotalEarningsOverTime,
+        showROIOverTime,
+        setShowROIOverTime,
         impressionsGraphColor,
         setimpressionsGraphColor,
         salesGraphColor,
@@ -265,6 +334,12 @@ export const SettingsProvider = ({ children }) => {
         setImpressionsOverTimeGraphColor,
         impressionRevenueOverTimeGraphColor,
         setImpressionRevenueOverTimeGraphColor,
+        totalEarningsOverTimeGraphColor,
+        setTotalEarningsOverTimeGraphColor,
+        roiGraphColor,
+        setRoiGraphColor,
+        roiOverTimeGraphColor,
+        setRoiOverTimeGraphColor,
       }}
     >
       {children}
