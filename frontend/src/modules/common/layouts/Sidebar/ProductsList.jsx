@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { apiUrl } from "../../api/config";
 import { ReactComponent as ProductThumbnailPlaceholder } from "../../assets/img/vectors/product-thumbnail-placeholder.svg";
-import { useProducts } from "../../../products/api/products";
+import { useProducts } from "../../../products/contexts/ProductsContext";
 
 const ProductsList = () => {
   const { products, loading } = useProducts();

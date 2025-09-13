@@ -17,7 +17,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   IconButton,
   Box,
   Typography,
@@ -137,7 +136,7 @@ const ImportData = () => {
           <Typography variant="h6" sx={{ pb: 3 }}>
             Uploaded Files
           </Typography>
-          <TableContainer component={Paper}>
+          <TableContainer>
             <Table sx={{ minWidth: 650 }} aria-label="uploaded files table">
               <TableHead>
                 <TableRow>

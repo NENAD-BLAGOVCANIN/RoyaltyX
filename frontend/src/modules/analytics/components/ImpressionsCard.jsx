@@ -1,5 +1,4 @@
 import { ImpressionsChart } from "./ImpressionsChart";
-import { InfoPopover } from "../../common/components/InfoPopover";
 import { useState } from "react";
 import { EyeSlash, Palette } from "react-bootstrap-icons";
 import { useSettings } from "../../common/contexts/SettingsContext";
@@ -48,8 +47,8 @@ export const ImpressionsCard = ({ analytics }) => {
             flexDirection: "column",
           }}
         >
-          <CardContent sx={{ flexGrow: 1, pb: '12px !important' }}>
-          <Box
+          <CardContent sx={{ flexGrow: 1, pb: "12px !important" }}>
+            <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -67,11 +66,6 @@ export const ImpressionsCard = ({ analytics }) => {
                 }}
               >
                 Impressions in last 5 months
-                <InfoPopover
-                  title="Monthly impressions"
-                  text="Impressions represent the number of times your content has been
-          displayed to users counted separately for each month."
-                />
               </Typography>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <IconButton onClick={handleMenuOpen} size="sm">
@@ -127,8 +121,8 @@ export const ImpressionsCard = ({ analytics }) => {
                 sx={{
                   textTransform: "none",
                   color: "primary.main",
-                  py: .3,
-                  fontSize: "1rem"
+                  py: 0.3,
+                  fontSize: "1rem",
                 }}
                 endIcon={<ArrowRight size={18} />}
               >

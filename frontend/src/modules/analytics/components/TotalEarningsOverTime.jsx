@@ -19,17 +19,16 @@ import {
   getBaseLineChartOptions,
   getBaseLineDataset,
   formatChartLabels,
-  getChartTitle,
   CHART_CONFIGS,
 } from "../../common/config/chartConfig";
 
-const ImpressionRevenueOverTime = ({ analytics }) => {
+const TotalEarningsOverTime = ({ analytics }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { setShowImpressionRevenueOverTime } = useSettings();
+  const { setShowTotalEarningsOverTime } = useSettings();
   const [showGraphColorPalette, setShowGraphColorPalette] = useState(false);
   const {
-    setImpressionRevenueOverTimeGraphColor,
-    impressionRevenueOverTimeGraphColor,
+    setTotalEarningsOverTimeGraphColor,
+    totalEarningsOverTimeGraphColor,
   } = useSettings();
 
   const handleMenuOpen = (event) => {
@@ -41,20 +40,20 @@ const ImpressionRevenueOverTime = ({ analytics }) => {
   };
 
   const onSelectColor = (color) => {
-    setImpressionRevenueOverTimeGraphColor(color);
+    setTotalEarningsOverTimeGraphColor(color);
   };
 
   if (!analytics || !analytics.time_stats)
     return <Typography>Loading...</Typography>;
 
   const granularity = analytics.granularity || "monthly";
-  const impressionRevenueData = analytics.time_stats;
+  const timeStats = analytics.time_stats;
 
-  const labels = formatChartLabels(impressionRevenueData, granularity);
-  const dataValues = impressionRevenueData.map(
-    (item) => item.impression_revenue
+  const labels = formatChartLabels(timeStats, granularity);
+  const dataValues = timeStats.map(
+    (item) => (item.royalty_revenue || 0) + (item.impression_revenue || 0)
   );
-  const chartTitle = getChartTitle("impression_revenue", granularity);
+  const chartTitle = "Total Earnings";
 
   const data = {
     labels,
@@ -62,7 +61,7 @@ const ImpressionRevenueOverTime = ({ analytics }) => {
       getBaseLineDataset(
         chartTitle,
         dataValues,
-        impressionRevenueOverTimeGraphColor
+        totalEarningsOverTimeGraphColor
       ),
     ],
   };
@@ -84,18 +83,18 @@ const ImpressionRevenueOverTime = ({ analytics }) => {
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Typography 
-                    variant="h6" 
-                    sx={{ 
-                      textTransform: 'uppercase',
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      textTransform: "uppercase",
                       fontWeight: 500,
-                      fontSize: '0.875rem',
-                      color: 'text.secondary'
+                      fontSize: "0.875rem",
+                      color: "text.secondary",
                     }}
                   >
-                    IMPRESSION REVENUE
+                    TOTAL REVENUE
                   </Typography>
-                  <InfoPopover text="Shows the revenue generated from content impressions over time, typically from advertising or view-based monetization" />
+                  <InfoPopover text="Shows the total revenue over time, calculated as the sum of royalty revenue of the product(s) for each time period" />
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <IconButton onClick={handleMenuOpen} size="sm">
@@ -116,7 +115,7 @@ const ImpressionRevenueOverTime = ({ analytics }) => {
                   >
                     <MenuItem
                       onClick={() => {
-                        setShowImpressionRevenueOverTime(false);
+                        setShowTotalEarningsOverTime(false);
                         handleMenuClose();
                       }}
                       sx={{ py: 1 }}
@@ -137,21 +136,27 @@ const ImpressionRevenueOverTime = ({ analytics }) => {
                   </Menu>
                 </Box>
               </Box>
-              
+
               {/* Total Value Display */}
               <Box sx={{ mb: 3 }}>
-                <Typography 
-                  variant="h3" 
-                  sx={{ 
-                    fontWeight: 'bold',
-                    fontSize: '2.5rem',
-                    color: 'text.primary'
+                <Typography
+                  variant="h3"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "2.5rem",
+                    color: "text.primary",
                   }}
                 >
-                  ${dataValues.reduce((sum, value) => sum + (value || 0), 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  $
+                  {dataValues
+                    .reduce((sum, value) => sum + (value || 0), 0)
+                    .toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                 </Typography>
               </Box>
-              
+
               <Line data={data} options={options} />
             </Box>
           </CardContent>
@@ -167,4 +172,4 @@ const ImpressionRevenueOverTime = ({ analytics }) => {
   );
 };
 
-export default ImpressionRevenueOverTime;
+export default TotalEarningsOverTime;

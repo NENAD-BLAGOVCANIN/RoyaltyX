@@ -1,26 +1,47 @@
-import { InfoCircleFill } from "react-bootstrap-icons";
-import { OverlayTrigger, Popover } from "react-bootstrap";
+import { InfoOutlined } from "@mui/icons-material";
+import { Tooltip, IconButton } from "@mui/material";
 
-export const InfoPopover = ({ title = "", text }) => {
-  const popover = (
-    <Popover>
-      {title && (
-        <Popover.Header as="h3" className="text-dark">
-          {title}
-        </Popover.Header>
-      )}
-      <Popover.Body>{text}</Popover.Body>
-    </Popover>
-  );
+export const InfoPopover = ({ 
+  title = "", 
+  text, 
+  size = "small", 
+  placement = "top",
+  sx = {} 
+}) => {
+  const tooltipContent = title ? `${title}: ${text}` : text;
 
   return (
-    <OverlayTrigger
-      placement="bottom"
-      delay={{ show: 200, hide: 100 }}
-      overlay={popover}
-      trigger={["hover", "focus"]}
+    <Tooltip 
+      title={tooltipContent} 
+      arrow 
+      placement={placement}
+      componentsProps={{
+        tooltip: {
+          sx: {
+            maxWidth: 300,
+            fontSize: '0.875rem',
+            lineHeight: 1.4,
+            padding: '8px 12px',
+            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+            ...sx
+          }
+        }
+      }}
     >
-      <InfoCircleFill className="ms-2" role="button" />
-    </OverlayTrigger>
+      <IconButton 
+        size={size} 
+        sx={{ 
+          ml: 1, 
+          p: 0.5,
+          color: 'text.secondary',
+          '&:hover': {
+            color: 'primary.main',
+            backgroundColor: 'rgba(0, 0, 0, 0.04)'
+          }
+        }}
+      >
+        <InfoOutlined fontSize="small" />
+      </IconButton>
+    </Tooltip>
   );
 };
