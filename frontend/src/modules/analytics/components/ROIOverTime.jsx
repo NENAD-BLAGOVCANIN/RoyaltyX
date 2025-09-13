@@ -128,7 +128,7 @@ const ROIOverTime = ({ analytics, productId = null }) => {
                     color: "text.secondary",
                   }}
                 >
-                  ROI
+                  ROI (Royalty Earnings - Expenses)
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <IconButton onClick={handleMenuOpen} size="sm">
