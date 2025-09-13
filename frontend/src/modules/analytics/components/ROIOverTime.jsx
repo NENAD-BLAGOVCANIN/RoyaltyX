@@ -130,9 +130,9 @@ const ROIOverTime = ({ analytics, productId = null }) => {
                       color: "text.secondary",
                     }}
                   >
-                    ROI (Royalty Earnings - Expenses)
+                    ROI
                   </Typography>
-                  <InfoPopover text="Shows your Return on Investment over time, calculated as total earnings minus all assigned expenses for each time period" />
+                  <InfoPopover text="Shows your Return on Investment over time, calculated as total royalty revenue minus the expenses you may have added on the Expenses page. If you didn't include any expenses, the ROI value will be the same as the Total Revenue value." />
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <IconButton onClick={handleMenuOpen} size="sm">

@@ -92,9 +92,9 @@ const TotalEarningsOverTime = ({ analytics }) => {
                       color: "text.secondary",
                     }}
                   >
-                    TOTAL EARNINGS
+                    TOTAL REVENUE
                   </Typography>
-                  <InfoPopover text="Shows your total earnings over time, calculated as the sum of royalty revenue and impression revenue for each time period" />
+                  <InfoPopover text="Shows the total revenue over time, calculated as the sum of royalty revenue of the product(s) for each time period" />
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <IconButton onClick={handleMenuOpen} size="sm">
