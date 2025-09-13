@@ -1,5 +1,4 @@
 import { SalesChart } from "./SalesChart";
-import { InfoPopover } from "../../common/components/InfoPopover";
 import { useState } from "react";
 import { EyeSlash, Palette } from "react-bootstrap-icons";
 import { useSettings } from "../../common/contexts/SettingsContext";
@@ -48,8 +47,8 @@ export const SalesCard = ({ analytics }) => {
             flexDirection: "column",
           }}
         >
-          <CardContent sx={{ flexGrow: 1, pb: '12px !important' }}>
-          <Box
+          <CardContent sx={{ flexGrow: 1, pb: "12px !important" }}>
+            <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -67,10 +66,6 @@ export const SalesCard = ({ analytics }) => {
                 }}
               >
                 Sales in last 5 months
-                <InfoPopover
-                  title="Sales over time"
-                  text="Total number of sales during the selected period for the analytics"
-                />
               </Typography>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <IconButton onClick={handleMenuOpen} size="sm">
@@ -126,7 +121,7 @@ export const SalesCard = ({ analytics }) => {
                 sx={{
                   textTransform: "none",
                   color: "primary.main",
-                  py: .3,
+                  py: 0.3,
                   fontSize: "1rem",
                 }}
                 endIcon={<ArrowRight size={18} />}
