@@ -59,3 +59,48 @@ class SourcesConfig(AppConfig):
             },
         )
 
+        PeriodicTask.objects.get_or_create(
+            name="Fetch Twitch Videos",
+            defaults={
+                "interval": schedule,
+                "task": "apps.sources.tasks.task_fetch_twitch_videos",
+                "args": json.dumps([]),
+            },
+        )
+
+        PeriodicTask.objects.get_or_create(
+            name="Fetch Twitch Stats",
+            defaults={
+                "interval": schedule,
+                "task": "apps.sources.tasks.task_fetch_twitch_stats",
+                "args": json.dumps([]),
+            },
+        )
+
+        PeriodicTask.objects.get_or_create(
+            name="Fetch Vimeo Videos and Stats",
+            defaults={
+                "interval": schedule,
+                "task": "apps.sources.tasks.task_fetch_vimeo_videos_and_stats",
+                "args": json.dumps([]),
+            },
+        )
+
+        PeriodicTask.objects.get_or_create(
+            name="Fetch Instagram Stats",
+            defaults={
+                "interval": schedule,
+                "task": "apps.sources.tasks.task_fetch_instagram_videos",
+                "args": json.dumps([]),
+            },
+        )
+        
+
+        PeriodicTask.objects.get_or_create(
+            name="Fetch Instagram Stats",
+            defaults={
+                "interval": schedule,
+                "task": "apps.sources.tasks.task_fetch_instagram_stats",
+                "args": json.dumps([]),
+            },
+        )
