@@ -19,8 +19,11 @@ describe('Dashboard Tests', () => {
     cy.visit('/');
     
     // Should be logged in and see user-specific content
-    // Adjust these selectors based on your actual app structure
-    cy.get('body').should('contain.text', 'Test User').or('contain.text', 'Dashboard').or('contain.text', 'Welcome');
+    // Check for any of the expected texts that indicate successful login
+    cy.get('body').should('satisfy', ($body) => {
+      const text = $body.text();
+      return text.includes('Test User') || text.includes('Dashboard') || text.includes('Welcome') || text.includes('Projects');
+    });
   });
 
   it('should be able to logout', () => {

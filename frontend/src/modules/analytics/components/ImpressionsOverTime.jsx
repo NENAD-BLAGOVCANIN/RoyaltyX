@@ -13,6 +13,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { InfoPopover } from "../../common/components/InfoPopover";
 import { EllipsisVertical } from "lucide-react";
 import {
   getBaseLineChartOptions,
@@ -74,17 +75,20 @@ const ImpressionsOverTime = ({ analytics }) => {
                   alignItems: "center",
                 }}
               >
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    textTransform: 'uppercase',
-                    fontWeight: 500,
-                    fontSize: '0.875rem',
-                    color: 'text.secondary'
-                  }}
-                >
-                  IMPRESSIONS
-                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      textTransform: 'uppercase',
+                      fontWeight: 500,
+                      fontSize: '0.875rem',
+                      color: 'text.secondary'
+                    }}
+                  >
+                    IMPRESSIONS
+                  </Typography>
+                  <InfoPopover text="Shows the total number of times your content has been viewed or displayed over time across all platforms" />
+                </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <IconButton onClick={handleMenuOpen} size="sm">
                     <EllipsisVertical size={16} color="var(--color-text)" />

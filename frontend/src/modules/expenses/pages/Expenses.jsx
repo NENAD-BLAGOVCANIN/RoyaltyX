@@ -9,7 +9,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Chip,
   IconButton,
   Alert,
@@ -23,6 +22,7 @@ import {
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { useExpenses, useDeleteExpense } from "../api/expenses";
 import AddExpenseModal from "../components/AddExpenseModal";
+import PageHeader from "../../common/components/PageHeader";
 
 const Expenses = () => {
   const { expenses, loading, refetch } = useExpenses();
@@ -51,7 +51,7 @@ const Expenses = () => {
   const handleDeleteConfirm = async () => {
     try {
       setError(null);
-      
+
       await deleteExpense(expenseToDelete.id);
       await refetch(); // Refresh the list
       setDeleteDialogOpen(false);
@@ -84,7 +84,12 @@ const Expenses = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="400px"
+      >
         <CircularProgress />
       </Box>
     );
@@ -92,18 +97,19 @@ const Expenses = () => {
 
   return (
     <Box>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" component="h1">
-          Expenses
-        </Typography>
-        <Button
-          variant="contained"
-          startIcon={<Plus size={20} />}
-          onClick={handleAddExpense}
-        >
-          Add Expense
-        </Button>
-      </Box>
+      <PageHeader
+        title="Expenses"
+        description="Manage and track all your expenses, including their values, types, associated members, and products. Add, edit, or delete expenses as needed."
+        action={
+          <Button
+            variant="contained"
+            startIcon={<Plus size={20} />}
+            onClick={handleAddExpense}
+          >
+            Add Expense
+          </Button>
+        }
+      />
 
       {error && (
         <Alert severity="error" sx={{ mb: 3 }}>
@@ -111,88 +117,91 @@ const Expenses = () => {
         </Alert>
       )}
 
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer>
-          <Table stickyHeader>
-            <TableHead>
+      <TableContainer>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Value</TableCell>
+              <TableCell>Type</TableCell>
+              <TableCell>Member</TableCell>
+              <TableCell>Product</TableCell>
+              <TableCell>Created</TableCell>
+              <TableCell align="right">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {expenses.length === 0 ? (
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Value</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Member</TableCell>
-                <TableCell>Product</TableCell>
-                <TableCell>Created</TableCell>
-                <TableCell align="right">Actions</TableCell>
+                <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    No expenses found. Click "Add Expense" to create your first
+                    expense.
+                  </Typography>
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {expenses.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
-                    <Typography variant="body2" color="text.secondary">
-                      No expenses found. Click "Add Expense" to create your first expense.
+            ) : (
+              expenses.map((expense) => (
+                <TableRow key={expense.id} hover>
+                  <TableCell>
+                    <Typography variant="body2" fontWeight="medium">
+                      {expense.name}
                     </Typography>
                   </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {formatValue(expense)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Chip
+                      label={
+                        expense.type === "percentage"
+                          ? "Percentage"
+                          : "Static Amount"
+                      }
+                      size="small"
+                      color={
+                        expense.type === "percentage" ? "primary" : "secondary"
+                      }
+                      variant="outlined"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">{expense.user_name}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">
+                      {expense.product_title}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" color="text.secondary">
+                      {formatDate(expense.created_at)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <IconButton
+                      size="small"
+                      onClick={() => handleEditExpense(expense)}
+                      sx={{ mr: 1 }}
+                    >
+                      <Edit size={16} />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => handleDeleteClick(expense)}
+                      color="error"
+                    >
+                      <Trash2 size={16} />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
-              ) : (
-                expenses.map((expense) => (
-                  <TableRow key={expense.id} hover>
-                    <TableCell>
-                      <Typography variant="body2" fontWeight="medium">
-                        {expense.name}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="body2">
-                        {formatValue(expense)}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        label={expense.type === "percentage" ? "Percentage" : "Static Amount"}
-                        size="small"
-                        color={expense.type === "percentage" ? "primary" : "secondary"}
-                        variant="outlined"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="body2">
-                        {expense.user_name}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="body2">
-                        {expense.product_title}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Typography variant="body2" color="text.secondary">
-                        {formatDate(expense.created_at)}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton
-                        size="small"
-                        onClick={() => handleEditExpense(expense)}
-                        sx={{ mr: 1 }}
-                      >
-                        <Edit size={16} />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleDeleteClick(expense)}
-                        color="error"
-                      >
-                        <Trash2 size={16} />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       <AddExpenseModal
         open={addModalOpen}
@@ -208,12 +217,17 @@ const Expenses = () => {
         <DialogTitle>Delete Expense</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete "{expenseToDelete?.name}"? This action cannot be undone.
+            Are you sure you want to delete "{expenseToDelete?.name}"? This
+            action cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
+          <Button
+            onClick={handleDeleteConfirm}
+            color="error"
+            variant="contained"
+          >
             Delete
           </Button>
         </DialogActions>

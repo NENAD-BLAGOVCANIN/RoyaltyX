@@ -7,10 +7,12 @@ import { AddSourceModal } from "../components/AddSourceModal";
 import { WifiOff } from "react-bootstrap-icons";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useProducts } from "../../products/contexts/ProductsContext";
 
 export const Sources = () => {
   const { sources, createSource, loading } = useSources();
   const { canAddSources, loading: roleLoading } = useUserProjectRole();
+  const { refetch: refetchProducts } = useProducts();
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -18,7 +20,9 @@ export const Sources = () => {
   const handleCloseModal = () => setModalOpen(false);
 
   const handleCreateSource = async (source) => {
-    await createSource(source);
+    await createSource(source);    
+    await refetchProducts();
+    
     handleCloseModal();
   };
 

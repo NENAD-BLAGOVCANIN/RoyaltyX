@@ -13,6 +13,7 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { InfoPopover } from "../../common/components/InfoPopover";
 import { EllipsisVertical } from "lucide-react";
 import {
   getBaseLineChartOptions,
@@ -73,17 +74,20 @@ const SalesOverTime = ({ analytics }) => {
                   alignItems: "center",
                 }}
               >
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    textTransform: 'uppercase',
-                    fontWeight: 500,
-                    fontSize: '0.875rem',
-                    color: 'text.secondary'
-                  }}
-                >
-                  SALES
-                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      textTransform: 'uppercase',
+                      fontWeight: 500,
+                      fontSize: '0.875rem',
+                      color: 'text.secondary'
+                    }}
+                  >
+                    SALES
+                  </Typography>
+                  <InfoPopover text="Shows the total number of sales (purchases and rentals) over time for your content" />
+                </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <IconButton onClick={handleMenuOpen} size="sm">
                     <EllipsisVertical size={16} color="var(--color-text)" />

@@ -58,7 +58,7 @@ Cypress.Commands.add('loginViaAPI', () => {
   }).then((response) => {
     // Store the authentication token or session data
     if (response.body.access_token) {
-      window.localStorage.setItem('access_token', response.body.access_token);
+      window.localStorage.setItem('accessToken', response.body.access_token);
     }
     if (response.body.refresh_token) {
       window.localStorage.setItem('refresh_token', response.body.refresh_token);
@@ -68,12 +68,12 @@ Cypress.Commands.add('loginViaAPI', () => {
 
 // Command to logout
 Cypress.Commands.add('logout', () => {
-  // Clear any stored tokens
+  // Clear any stored tokens (using the correct key names)
   cy.window().then((win) => {
-    win.localStorage.removeItem('access_token');
+    win.localStorage.removeItem('accessToken');
     win.localStorage.removeItem('refresh_token');
   });
   
-  // Visit logout endpoint or home page
+  // Visit home page to trigger authentication check
   cy.visit('/');
 });

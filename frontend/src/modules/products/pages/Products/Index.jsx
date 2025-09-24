@@ -1,5 +1,5 @@
 import { Spinner } from "react-bootstrap";
-import { useProducts } from "../../api/products";
+import { useProducts } from "../../contexts/ProductsContext";
 import { Box, Grid, Typography, TextField, InputAdornment } from "@mui/material";
 import { Shredder, Search } from "lucide-react";
 import PageHeader from "../../../common/components/PageHeader";

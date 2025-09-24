@@ -16,6 +16,8 @@ import SalesStatsCard from "../../analytics/components/SalesStatsCard";
 import GeneralStatsCard from "../../analytics/components/GeneralStatsCard";
 import EarningsCard from "../../analytics/components/EarningsCard";
 import ExpenseListCard from "../../analytics/components/ExpenseListCard";
+import TotalEarningsOverTime from "../../analytics/components/TotalEarningsOverTime";
+import ROIOverTime from "../../analytics/components/ROIOverTime";
 import { 
   Box, 
   Grid, 
@@ -37,6 +39,8 @@ function Analytics() {
     showRentalsOverTime,
     showImpressionsOverTime,
     showImpressionRevenueOverTime,
+    showTotalEarningsOverTime,
+    showROIOverTime,
   } = useSettings();
 
   const [analytics, setAnalytics] = useState(null);
@@ -110,6 +114,7 @@ function Analytics() {
         </Box>
       </div>
 
+      {/* Over Time Charts Grid */}
       <Grid container columnSpacing={3}>
         {showSalesOverTime && <SalesOverTime analytics={analytics} />}
         {showRentalsOverTime && <RentalsOverTime analytics={analytics} />}
@@ -119,13 +124,20 @@ function Analytics() {
         {showImpressionRevenueOverTime && (
           <ImpressionRevenueOverTime analytics={analytics} />
         )}
-      </Grid>
-      <Grid container spacing={3}>
-        <SalesStatsCard analytics={analytics} />
-        <GeneralStatsCard analytics={analytics} showProductCount={false} />
-        <EarningsCard analytics={analytics} />
+        {showTotalEarningsOverTime && (
+          <TotalEarningsOverTime analytics={analytics} />
+        )}
+        {showROIOverTime && (
+          <ROIOverTime analytics={analytics} productId={id} />
+        )}
       </Grid>
 
+      <Grid container spacing={3} sx={{ mt: 2 }}>
+        <SalesStatsCard analytics={analytics} />
+        <GeneralStatsCard analytics={analytics} showProductCount={false} />
+      </Grid>
+
+      <EarningsCard analytics={analytics} />
       <Grid container spacing={3}>
         <ExpenseListCard productId={id} title="Product Expenses" />
       </Grid>

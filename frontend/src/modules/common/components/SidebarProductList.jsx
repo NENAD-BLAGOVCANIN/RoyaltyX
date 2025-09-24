@@ -9,7 +9,7 @@ import {
   Avatar,
 } from "@mui/material";
 import { Inventory2 } from "@mui/icons-material";
-import { useProducts } from "../../products/api/products";
+import { useProducts } from "../../products/contexts/ProductsContext";
 import { apiUrl } from "../api/config";
 
 const SidebarProductList = () => {
