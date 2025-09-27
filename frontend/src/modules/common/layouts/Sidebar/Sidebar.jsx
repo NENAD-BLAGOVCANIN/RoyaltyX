@@ -10,6 +10,7 @@ import {
   ListItemText,
   useTheme as useMuiTheme,
   useMediaQuery,
+  Typography,
 } from "@mui/material";
 import {
   Gauge,
@@ -26,6 +27,7 @@ import { ProjectSelector } from "../../../global/components/ProjectSelector";
 import SidebarProductList from "../../components/SidebarProductList";
 import { useProject } from "../../contexts/ProjectContext";
 import { useTheme } from "../../contexts/ThemeContext";
+import icon from "../../assets/img/brand/icon-3.png";
 
 const SIDEBAR_WIDTH = 275;
 
@@ -93,10 +95,50 @@ function Sidebar() {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
+        paddingLeft: "16px",
+        paddingRight: "16px",
       }}
     >
+      {/* Logo Section */}
       <Box
         sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          py: 2,
+          minHeight: 64,
+        }}
+      >
+        <Box
+          component={Link}
+          to="/"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            textDecoration: "none",
+            px: 0.5,
+          }}
+        >
+          <img
+            src={icon}
+            alt="Logo"
+            style={{
+              width: 38,
+              border: "2px solid white",
+              borderRadius: "4px",
+              padding: "4px 2px",
+              backgroundColor: "white",
+            }}
+          />
+          <Typography variant="h3" sx={{ color: "text.primary", pl: 1 }}>
+            RoyaltyX
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          borderBottom: "1px solid",
           borderColor: "divider",
           flexShrink: 0,
           overflow: "hidden",
@@ -114,7 +156,6 @@ function Sidebar() {
       >
         <List
           sx={{
-            px: 2,
             width: "100%",
             boxSizing: "border-box",
           }}

@@ -41,7 +41,7 @@ export const ProjectSelector = () => {
   }, []);
 
   return (
-    <Box sx={{ p: 2, width: "100%", boxSizing: "border-box" }}>
+    <Box sx={{ py: 2, width: "100%", boxSizing: "border-box" }}>
       <Box
         sx={{
           display: "flex",
