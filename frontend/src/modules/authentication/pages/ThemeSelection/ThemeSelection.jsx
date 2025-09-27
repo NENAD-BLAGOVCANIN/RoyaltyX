@@ -21,7 +21,7 @@ import styles from "./ThemeSelection.module.css";
 export default function ThemeSelection() {
   const [selectedTheme, setSelectedTheme] = useState("light");
   const [loading, setLoading] = useState(false);
-  const { setTheme } = useTheme();
+  const { changeTheme } = useTheme();
   const { authenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ export default function ThemeSelection() {
     setLoading(true);
 
     try {
-      setTheme(selectedTheme);
+      changeTheme(selectedTheme);
       // Clear the new user flag since they've completed theme selection
       localStorage.removeItem("newUserThemeSelection");
       navigate("/my-projects");

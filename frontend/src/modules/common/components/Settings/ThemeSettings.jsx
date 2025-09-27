@@ -10,10 +10,10 @@ import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
 
 const ThemeSettings = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, changeTheme } = useTheme();
 
   const handleThemeChange = (event) => {
-    setTheme(event.target.value);
+    changeTheme(event.target.value);
   };
 
   return (
