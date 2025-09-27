@@ -97,7 +97,6 @@ function Sidebar() {
     >
       <Box
         sx={{
-          borderBottom: "1px solid",
           borderColor: "divider",
           flexShrink: 0,
           overflow: "hidden",
