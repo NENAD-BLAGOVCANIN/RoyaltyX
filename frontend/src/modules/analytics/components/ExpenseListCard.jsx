@@ -47,7 +47,7 @@ const ExpenseListCard = ({ productId = null, title = "All Expenses" }) => {
   if (loading) {
     return (
       <Grid size={{ xs: 12 }}>
-        <Card sx={{ mb: 3, borderRadius: 2, boxShadow: 2 }}>
+        <Card sx={{ mb: 3, borderRadius: 2, boxShadow: 0 }}>
           <CardContent sx={{ p: 3 }}>
             <Box
               display="flex"
@@ -82,7 +82,7 @@ const ExpenseListCard = ({ productId = null, title = "All Expenses" }) => {
 
   return (
     <Grid size={{ xs: 12 }}>
-      <Card sx={{ borderRadius: 2, boxShadow: 2, mt: 4 }}>
+      <Card sx={{ borderRadius: 2, boxShadow: 0, mt: 4 }}>
         <CardContent sx={{ p: 3 }}>
           <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
             {title}
@@ -130,12 +130,12 @@ const ExpenseListCard = ({ productId = null, title = "All Expenses" }) => {
                 {filteredExpenses.map((expense) => (
                   <TableRow key={expense.id} hover>
                     <TableCell>
-                      <Typography variant="body2" fontWeight="medium">
+                      <Typography variant="bodySm" fontWeight="medium">
                         {expense.name}
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="body2">
+                      <Typography variant="bodySm">
                         {formatValue(expense)}
                       </Typography>
                     </TableCell>
@@ -156,19 +156,19 @@ const ExpenseListCard = ({ productId = null, title = "All Expenses" }) => {
                       />
                     </TableCell>
                     <TableCell>
-                      <Typography variant="body2">
+                      <Typography variant="bodySm">
                         {expense.user_name}
                       </Typography>
                     </TableCell>
                     {!productId && (
                       <TableCell>
-                        <Typography variant="body2">
+                        <Typography variant="bodySm">
                           {expense.product_title}
                         </Typography>
                       </TableCell>
                     )}
                     <TableCell>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography variant="bodySm" color="text.secondary">
                         {formatDate(expense.created_at)}
                       </Typography>
                     </TableCell>
@@ -179,7 +179,7 @@ const ExpenseListCard = ({ productId = null, title = "All Expenses" }) => {
           </TableContainer>
 
           <Box sx={{ mt: 2, pt: 2, borderTop: 1, borderColor: "divider" }}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="bodySm" color="text.secondary">
               Total expenses: {filteredExpenses.length}
             </Typography>
           </Box>

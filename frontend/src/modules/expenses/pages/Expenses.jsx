@@ -100,7 +100,7 @@ const Expenses = () => {
       <PageHeader
         title="Expenses"
         description="Manage and track all your expenses, including their values, types, associated members, and products. Add, edit, or delete expenses as needed."
-        action={
+        appendActions={
           <Button
             variant="contained"
             startIcon={<Plus size={20} />}
@@ -117,7 +117,7 @@ const Expenses = () => {
         </Alert>
       )}
 
-      <TableContainer>
+      <TableContainer sx={{ mt: 3 }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
@@ -134,7 +134,7 @@ const Expenses = () => {
             {expenses.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="bodySm" color="text.secondary">
                     No expenses found. Click "Add Expense" to create your first
                     expense.
                   </Typography>
@@ -144,12 +144,12 @@ const Expenses = () => {
               expenses.map((expense) => (
                 <TableRow key={expense.id} hover>
                   <TableCell>
-                    <Typography variant="body2" fontWeight="medium">
+                    <Typography variant="bodySm" fontWeight="medium">
                       {expense.name}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {formatValue(expense)}
                     </Typography>
                   </TableCell>
@@ -168,15 +168,17 @@ const Expenses = () => {
                     />
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">{expense.user_name}</Typography>
+                    <Typography variant="bodySm">
+                      {expense.user_name}
+                    </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {expense.product_title}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="bodySm" color="text.secondary">
                       {formatDate(expense.created_at)}
                     </Typography>
                   </TableCell>

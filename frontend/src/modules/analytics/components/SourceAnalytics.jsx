@@ -50,7 +50,7 @@ export const SourceAnalytics = ({ analytics }) => {
 
   return (
     <Box>
-      <Typography variant="h4" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
+      <Typography variant="h2" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
         Source Analytics
       </Typography>
       {!analytics?.source_analytics ||
@@ -65,7 +65,7 @@ export const SourceAnalytics = ({ analytics }) => {
               py: 4,
             }}
           >
-            <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodyMd" sx={{ color: "text.secondary" }}>
               No source data available for the selected period.
             </Typography>
           </Box>
@@ -135,7 +135,7 @@ export const SourceAnalytics = ({ analytics }) => {
                             alt={`${source.platform} Logo`}
                             style={{ height: "24px", objectFit: "contain" }}
                           />
-                          <Typography variant="body2" fontWeight="medium">
+                          <Typography variant="bodySm" fontWeight="medium">
                             {source.account_name}
                           </Typography>
                         </Box>
@@ -148,17 +148,17 @@ export const SourceAnalytics = ({ analytics }) => {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        <Typography variant="body2">
+                        <Typography variant="bodySm">
                           {formatNumber(source.analytics.product_count)}
                         </Typography>
                       </TableCell>
                       <TableCell align="right">
-                        <Typography variant="body2">
+                        <Typography variant="bodySm">
                           {formatNumber(source.analytics.total_impressions)}
                         </Typography>
                       </TableCell>
                       <TableCell align="right">
-                        <Typography variant="body2" color="success.main">
+                        <Typography variant="bodySm" color="success.main">
                           {formatCurrency(
                             source.analytics.total_impression_revenue
                           )}
@@ -166,13 +166,13 @@ export const SourceAnalytics = ({ analytics }) => {
                       </TableCell>
                       <TableCell align="right">
                         <Box>
-                          <Typography variant="body2">
+                          <Typography variant="bodySm">
                             {formatNumber(source.analytics.total_sales_count)}
                           </Typography>
                         </Box>
                       </TableCell>
                       <TableCell align="right">
-                        <Typography variant="body2" color="success.main">
+                        <Typography variant="bodySm" color="success.main">
                           {formatCurrency(
                             source.analytics.total_royalty_revenue
                           )}
@@ -180,7 +180,7 @@ export const SourceAnalytics = ({ analytics }) => {
                       </TableCell>
                       <TableCell align="right">
                         <Typography
-                          variant="body2"
+                          variant="bodySm"
                           fontWeight="bold"
                           color="success.main"
                         >

@@ -159,7 +159,7 @@ function EditMemberModal({
             <Typography variant="h6" sx={{ fontWeight: 500 }}>
               {selectedMember?.user_details?.name || "Unknown User"}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="bodySm" color="text.secondary">
               {selectedMember?.user_details?.email}
             </Typography>
           </Box>

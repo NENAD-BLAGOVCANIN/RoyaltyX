@@ -8,9 +8,9 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Typography,
-  useTheme,
+  useTheme as useMuiTheme,
   useMediaQuery,
+  Typography,
 } from "@mui/material";
 import {
   Gauge,
@@ -26,12 +26,15 @@ import { UpgradePlanButton } from "../../components/UpgradePlanButton";
 import { ProjectSelector } from "../../../global/components/ProjectSelector";
 import SidebarProductList from "../../components/SidebarProductList";
 import { useProject } from "../../contexts/ProjectContext";
+import { useTheme } from "../../contexts/ThemeContext";
+import icon from "../../assets/img/brand/icon-3.png";
 
-const SIDEBAR_WIDTH = 242;
+const SIDEBAR_WIDTH = 275;
 
 function Sidebar() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { colors } = useTheme();
+  const muiTheme = useMuiTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down("md"));
   const location = useLocation();
   const { project, currentUserRole } = useProject();
 
@@ -41,7 +44,7 @@ function Sidebar() {
   const shouldShowMembersMenu = () => {
     // Always show for owners
     if (currentUserRole === "owner") return true;
-    
+
     // For non-owners, show only if members_can_see_other_members is true (default)
     return project?.members_can_see_other_members !== false;
   };
@@ -92,8 +95,41 @@ function Sidebar() {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
+        paddingLeft: "16px",
+        paddingRight: "16px",
       }}
     >
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          py: 2,
+        }}
+      >
+        <Box
+          component={Link}
+          to="/"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            textDecoration: "none",
+            px: 0.5,
+          }}
+        >
+          <img
+            src={icon}
+            alt="Logo"
+            style={{
+              width: 32,
+            }}
+          />
+          <Typography variant="h3" sx={{ color: "text.primary", pl: 2, mt: .4 }}>
+            RoyaltyX
+          </Typography>
+        </Box>
+      </Box>
+
       <Box
         sx={{
           borderBottom: "1px solid",
@@ -114,24 +150,10 @@ function Sidebar() {
       >
         <List
           sx={{
-            px: 2,
             width: "100%",
             boxSizing: "border-box",
           }}
         >
-          <Typography
-            variant="caption"
-            sx={{
-              color: "text.secondary",
-              px: 2,
-              pt: 2,
-              pb: 1,
-              display: "block",
-            }}
-          >
-            Project
-          </Typography>
-
           <ListItem disablePadding>
             <ListItemButton
               component={Link}
@@ -146,12 +168,12 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <LayoutDashboard size={18} color="var(--color-text-lighter)" />
+                <LayoutDashboard size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Dashboard"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>
@@ -171,12 +193,12 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Database size={18} color="var(--color-text-lighter)" />
+                <Database size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Sources"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>
@@ -197,12 +219,12 @@ function Sidebar() {
                 }}
               >
                 <ListItemIcon sx={{ minWidth: 40 }}>
-                  <Users size={18} color="var(--color-text-lighter)" />
+                  <Users size={18} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Members"
                   primaryTypographyProps={{
-                    variant: "body2",
+                    variant: "bodySm",
                   }}
                 />
               </ListItemButton>
@@ -223,12 +245,12 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Package2 size={18} color="var(--color-text-lighter)" />
+                <Package2 size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Products"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>
@@ -248,12 +270,12 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Gauge size={18} color="var(--color-text-lighter)" />
+                <Gauge size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Analytics"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>
@@ -273,12 +295,12 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <FileText size={18} color="var(--color-text-lighter)" />
+                <FileText size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Reports"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>
@@ -298,12 +320,12 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Landmark size={18} color="var(--color-text-lighter)" />
+                <Landmark size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Expenses"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>
@@ -323,12 +345,12 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Settings size={18} color="var(--color-text-lighter)" />
+                <Settings size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Settings"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>
@@ -354,11 +376,13 @@ function Sidebar() {
           keepMounted: true,
         }}
         sx={{
+          display: { xs: "block", sm: "none" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: SIDEBAR_WIDTH,
-            pb: 0,
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: colors.pageSecondary,
+            border: "none",
+            borderRight: "none",
           },
         }}
       >
@@ -380,9 +404,11 @@ function Sidebar() {
           minWidth: SIDEBAR_WIDTH,
           maxWidth: SIDEBAR_WIDTH,
           boxSizing: "border-box",
-          backgroundColor: theme.palette.background.default,
           overflow: "hidden",
           overflowY: "auto",
+          backgroundColor: colors.pageSecondary,
+          border: "none",
+          borderRight: "none",
         },
       }}
     >

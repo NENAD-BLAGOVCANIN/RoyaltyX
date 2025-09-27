@@ -10,10 +10,10 @@ import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../../contexts/ThemeContext";
 
 const ThemeSettings = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, changeTheme } = useTheme();
 
   const handleThemeChange = (event) => {
-    setTheme(event.target.value);
+    changeTheme(event.target.value);
   };
 
   return (
@@ -22,7 +22,7 @@ const ThemeSettings = () => {
         Theme Settings
       </Typography>
 
-      <Typography variant="body1" sx={{color: "text.secondary" }}>
+      <Typography variant="bodyMd" sx={{color: "text.secondary" }}>
         Choose your preferred theme for the application
       </Typography>
 

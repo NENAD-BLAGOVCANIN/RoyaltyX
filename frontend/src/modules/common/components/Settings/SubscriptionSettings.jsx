@@ -77,7 +77,7 @@ function SubscriptionSettings() {
               <Typography variant="h6" sx={{ fontWeight: 600 }}>
                 Current Plan: {currentPlanDetails.name}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 {currentPlanDetails.description}
               </Typography>
             </Box>
@@ -99,7 +99,7 @@ function SubscriptionSettings() {
                   <Check size={16} color="green" />
                 </ListItemIcon>
                 <ListItemText
-                  primary={<Typography variant="body2">{feature}</Typography>}
+                  primary={<Typography variant="bodySm">{feature}</Typography>}
                 />
               </ListItem>
             ))}
@@ -107,7 +107,7 @@ function SubscriptionSettings() {
 
           {currentPlan !== "premium" && (
             <Alert severity="info" sx={{ mb: 2 }}>
-              <Typography variant="body2">
+              <Typography variant="bodySm">
                 Upgrade your plan to unlock more features and increase your
                 limits.
               </Typography>
@@ -130,7 +130,7 @@ function SubscriptionSettings() {
           <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
             Plan Comparison
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="bodySm" color="text.secondary">
             Compare all available plans and choose the one that best fits your
             needs.
           </Typography>

@@ -41,7 +41,7 @@ export const ProjectSelector = () => {
   }, []);
 
   return (
-    <Box sx={{ p: 2, width: "100%", boxSizing: "border-box" }}>
+    <Box sx={{ py: 2, width: "100%", boxSizing: "border-box" }}>
       <Box
         sx={{
           display: "flex",
@@ -83,11 +83,10 @@ export const ProjectSelector = () => {
           >
             <Folder
               size={18}
-              color="var(--color-text-lighter)"
               style={{ marginRight: 8, flexShrink: 0 }}
             />
             <Typography
-              variant="body2"
+              variant="bodySm"
               sx={{
                 fontWeight: 500,
                 overflow: "hidden",

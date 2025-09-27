@@ -194,7 +194,7 @@ function Dashboard() {
                 <Typography variant="h4" sx={{ fontWeight: 600 }}>
                   {stats?.recent_activity?.new_users_last_30_days || 0}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="bodySm">
                   New users in last 30 days
                 </Typography>
               </Box>
@@ -210,7 +210,7 @@ function Dashboard() {
                 <Typography variant="h4" sx={{ fontWeight: 600 }}>
                   {stats?.recent_activity?.new_projects_last_30_days || 0}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="bodySm">
                   New projects in last 30 days
                 </Typography>
               </Box>
@@ -226,7 +226,7 @@ function Dashboard() {
                 <Typography variant="h4" sx={{ fontWeight: 600 }}>
                   {stats?.recent_activity?.new_sources_last_30_days || 0}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="bodySm">
                   New sources in last 30 days
                 </Typography>
               </Box>
@@ -249,7 +249,7 @@ function Dashboard() {
               <CardContent sx={{ textAlign: "center", py: 3 }}>
                 <Users size={32} color="#1976d2" style={{ marginBottom: 8 }} />
                 <Typography variant="h6">Manage Users</Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   View and manage user accounts
                 </Typography>
               </CardContent>
@@ -264,7 +264,7 @@ function Dashboard() {
                   style={{ marginBottom: 8 }}
                 />
                 <Typography variant="h6">View Projects</Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   Monitor project activity
                 </Typography>
               </CardContent>
@@ -279,7 +279,7 @@ function Dashboard() {
                   style={{ marginBottom: 8 }}
                 />
                 <Typography variant="h6">Data Sources</Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   Manage data connections
                 </Typography>
               </CardContent>
@@ -294,7 +294,7 @@ function Dashboard() {
                   style={{ marginBottom: 8 }}
                 />
                 <Typography variant="h6">Analytics</Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   View detailed analytics
                 </Typography>
               </CardContent>

@@ -7,7 +7,6 @@ import {
   Avatar,
   Chip,
   Button,
-  Paper,
   List,
   ListItem,
   ListItemIcon,
@@ -30,7 +29,6 @@ import { useAuth } from "../../common/contexts/AuthContext";
 function Overview() {
   const navigate = useNavigate();
   const { subscriptionPlan, user } = useAuth();
-
 
   const accountMenuItems = [
     {
@@ -65,10 +63,6 @@ function Overview() {
 
   return (
     <Box>
-      <Typography variant="h3" sx={{ mb: 4, fontWeight: 600 }}>
-        Account Overview
-      </Typography>
-
       <Grid container spacing={3}>
         {/* Profile Card */}
         <Grid size={{ xs: 12, md: 4 }}>
@@ -87,16 +81,20 @@ function Overview() {
               <Typography variant="h5" sx={{ mb: 1, fontWeight: 500 }}>
                 {user?.name || "User"}
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              <Typography
+                variant="bodySm"
+                color="text.secondary"
+                sx={{ mb: 2 }}
+              >
                 {user?.email || "user@example.com"}
               </Typography>
               <Box sx={{ mt: 2 }}>
                 <Chip
-                  icon={<Mail size={16} />}
+                  icon={<Mail size={16} style={{ marginRight: .5 }} />}
                   label={user?.is_email_verified ? "Verified" : "Not Verified"}
-                  color={user?.is_email_verified ? "success" : "error"}
+                  color={user?.is_email_verified ? "primary" : "error"}
                   size="small"
-                  sx={{ mr: 1, mb: 1 }}
+                  sx={{ mb: 1, px: 1, py: 2 }}
                 />
               </Box>
             </CardContent>
@@ -112,7 +110,7 @@ function Overview() {
               </Typography>
               <Grid container spacing={2}>
                 <Grid size={{ xs: 12, sm: 6 }}>
-                  <Paper
+                  <Box
                     sx={{
                       p: 2,
                       bgcolor: "background.default",
@@ -130,13 +128,13 @@ function Overview() {
                         Full Name
                       </Typography>
                     </Box>
-                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    <Typography variant="bodyMd" sx={{ fontWeight: 500 }}>
                       {user?.name || "Not provided"}
                     </Typography>
-                  </Paper>
+                  </Box>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>
-                  <Paper
+                  <Box
                     sx={{
                       p: 2,
                       bgcolor: "background.default",
@@ -154,13 +152,13 @@ function Overview() {
                         Email Address
                       </Typography>
                     </Box>
-                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    <Typography variant="bodyMd" sx={{ fontWeight: 500 }}>
                       {user?.email || "Not provided"}
                     </Typography>
-                  </Paper>
+                  </Box>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>
-                  <Paper
+                  <Box
                     sx={{
                       p: 2,
                       bgcolor: "background.default",
@@ -178,13 +176,13 @@ function Overview() {
                         Member Since
                       </Typography>
                     </Box>
-                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    <Typography variant="bodyMd" sx={{ fontWeight: 500 }}>
                       {formatDate(user?.created_at)}
                     </Typography>
-                  </Paper>
+                  </Box>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>
-                  <Paper
+                  <Box
                     sx={{
                       p: 2,
                       bgcolor: "background.default",
@@ -208,10 +206,10 @@ function Overview() {
                       size="small"
                       sx={{ fontWeight: 500 }}
                     />
-                  </Paper>
+                  </Box>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 6 }}>
-                  <Paper
+                  <Box
                     sx={{
                       p: 2,
                       bgcolor: "background.default",
@@ -246,7 +244,7 @@ function Overview() {
                       size="small"
                       sx={{ fontWeight: 500 }}
                     />
-                  </Paper>
+                  </Box>
                 </Grid>
               </Grid>
             </CardContent>
@@ -257,7 +255,7 @@ function Overview() {
         <Grid size={{ xs: 12 }}>
           <Card>
             <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" sx={{ mb: 3, fontWeight: 500 }}>
+              <Typography variant="h3" sx={{ mb: 3 }}>
                 Account Settings
               </Typography>
               <List sx={{ p: 0 }}>
@@ -270,23 +268,27 @@ function Overview() {
                         borderRadius: 1,
                       }}
                     >
-                      <ListItemIcon sx={{ 
-                        minWidth: 40,
-                        color: item.danger ? "error.main" : "inherit"
-                      }}>
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 40,
+                          color: item.danger ? "error.main" : "inherit",
+                        }}
+                      >
                         {item.icon}
                       </ListItemIcon>
                       <ListItemText
                         primary={
-                          <Typography 
+                          <Typography
                             variant="subtitle1"
-                            sx={{ color: item.danger ? "error.main" : "inherit" }}
+                            sx={{
+                              color: item.danger ? "error.main" : "inherit",
+                            }}
                           >
                             {item.title}
                           </Typography>
                         }
                         secondary={
-                          <Typography variant="body2" color="text.secondary">
+                          <Typography variant="bodySm" color="text.secondary">
                             {item.description}
                           </Typography>
                         }

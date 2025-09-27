@@ -87,7 +87,7 @@ const SidebarProductList = () => {
               <ListItemText
                 primary={product.title}
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                   noWrap: true,
                   sx: {
                     fontWeight: 500,

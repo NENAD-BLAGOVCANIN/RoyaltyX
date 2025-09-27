@@ -56,7 +56,7 @@ export const LinkInstagramCard = ({ createSource }) => {
 
   return (
     <Grid size={{ xs: 12, md: 4 }}>
-      <Card sx={{ p: 3, borderRadius: 2, boxShadow: 2, height: "100%", mt: 1 }}>
+      <Card sx={{ p: 3, height: "100%", mt: 1 }}>
         <Box
           sx={{
             display: "flex",
@@ -74,7 +74,7 @@ export const LinkInstagramCard = ({ createSource }) => {
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
               Instagram
             </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
               Connect your Instagram account to analyze post performance, audience
               engagement, and optimize your social media strategy.
             </Typography>

@@ -4,9 +4,10 @@ import { getMyProjects } from "../api/project";
 import { switchProject } from "../api/project";
 import CreateNewProjectCard from "../components/CreateNewProjectCard";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Plus } from "lucide-react";
+import PageHeader from "../../common/components/PageHeader";
 
 function MyProjects() {
   const [projects, setProjects] = useState([]);
@@ -36,26 +37,24 @@ function MyProjects() {
   };
 
   return (
-    <div className="container pt-3">
-      <div className="d-flex justify-content-between align-items-center mt-5 px-2 mb-4">
-        <div>
-          <h4 className="bold">Projects</h4>
-          <p className="txt-lighter">
-            Find all your personal and shared projects
-          </p>
-        </div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            navigate("/projects/create");
-          }}
-        >
-          <Plus size={18} className="me-2" /> Create
-        </Button>
-      </div>
+    <Container maxWidth="lg" sx={{ mt: 10 }}>
+      <PageHeader
+        title="My Projects"
+        description="Find all your personal and shared projects"
+        appendActions={
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              navigate("/projects/create");
+            }}
+          >
+            <Plus size={18} className="me-2" /> Create
+          </Button>
+        }
+      />
 
-      <Grid container spacing={4} sx={{ display: "flex", pb: 5 }} >
+      <Grid container spacing={4} sx={{ display: "flex", pb: 5, mt: 3 }}>
         <CreateNewProjectCard />
         {projects.map((project) => (
           <ProjectCard
@@ -65,7 +64,7 @@ function MyProjects() {
           />
         ))}
       </Grid>
-    </div>
+    </Container>
   );
 }
 

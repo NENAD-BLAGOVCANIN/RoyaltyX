@@ -40,7 +40,7 @@ export const TopPerfomingContentBySales = () => {
 
   return (
     <Box>
-      <Typography variant="h4" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
+      <Typography variant="h2" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
         Top Performing Content (by sales)
       </Typography>
       {!products || products.length === 0 ? (
@@ -54,7 +54,7 @@ export const TopPerfomingContentBySales = () => {
               py: 4,
             }}
           >
-            <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodyMd" sx={{ color: "text.secondary" }}>
               No content data available for sales.
             </Typography>
           </Box>
@@ -91,15 +91,15 @@ export const TopPerfomingContentBySales = () => {
                   return (
                     <TableRow key={product.id} hover>
                       <TableCell>
-                        <Typography variant="body2" fontWeight="medium">
+                        <Typography variant="bodySm" fontWeight="medium">
                           {index + 1}
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2">{product.title}</Typography>
+                        <Typography variant="bodySm">{product.title}</Typography>
                       </TableCell>
                       <TableCell align="right">
-                        <Typography variant="body2" color="success.main">
+                        <Typography variant="bodySm" color="success.main">
                           {formatCurrency(totalSales)}
                         </Typography>
                       </TableCell>

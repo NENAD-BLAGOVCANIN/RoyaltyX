@@ -156,7 +156,7 @@ const ProductCard = ({ product }) => {
           </Box>
 
           <Typography 
-            variant="body2" 
+            variant="bodySm" 
             color="textSecondary" 
             sx={{ 
               mt: 2,

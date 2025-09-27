@@ -156,8 +156,6 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
         <Card
           sx={{
             p: 3,
-            borderRadius: 2,
-            boxShadow: 2,
             height: "100%",
             mt: 1,
             opacity: 0.7,
@@ -214,7 +212,7 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
               <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
                 {source.name}
               </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
                 {source.description}
               </Typography>
             </Box>
@@ -229,7 +227,7 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth>
+    <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <DialogTitle
         sx={{
           display: "flex",
@@ -238,7 +236,7 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
           pb: 2,
         }}
       >
-        <Typography variant="h4">Add new source</Typography>
+        <Typography variant="h2">Add new source</Typography>
         <IconButton onClick={onClose}>
           <X size={25} />
         </IconButton>
@@ -246,7 +244,7 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
 
       <DialogContent sx={{ pb: 3 }}>
         {/* Search Input */}
-        <Box sx={{ mb: 3, display: "flex", justifyContent: "flex-end" }}>
+        <Box sx={{ mt: 3, mb: 3, display: "flex", justifyContent: "flex-end" }}>
           <TextField
             placeholder="Search sources..."
             value={searchTerm}
@@ -277,7 +275,7 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
             <Typography variant="h6" color="text.secondary">
               No sources found for "{searchTerm}"
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <Typography variant="bodySm" color="text.secondary" sx={{ mt: 1 }}>
               Try searching for platforms like TikTok, Instagram, YouTube, or
               others.
             </Typography>

@@ -52,7 +52,7 @@ export const LinkYoutubeCard = ({ createSource }) => {
 
   return (
     <Grid size={{ xs: 12, md: 4 }}>
-      <Card sx={{ p: 3, borderRadius: 2, boxShadow: 2, height: "100%", mt: 1 }}>
+      <Card sx={{ p: 3, height: "100%", mt: 1 }}>
         <Box
           sx={{
             display: "flex",
@@ -70,7 +70,7 @@ export const LinkYoutubeCard = ({ createSource }) => {
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
               YouTube
             </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
               Link your YouTube account to fetch analytics data. This will allow
               you to monitor your channel's performance and gain insights into
               your audience.

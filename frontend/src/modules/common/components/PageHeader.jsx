@@ -1,23 +1,48 @@
-const PageHeader = ({ title, description = "", action = null }) => {
+import { Box, Typography } from "@mui/material";
+
+const PageHeader = ({ title, description, appendActions }) => {
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: "flex",
-        justifyContent: "space-between",
         alignItems: "flex-start",
+        justifyContent: "space-between",
       }}
     >
-      <div>
-        <h4 className="bold mb-2">{title}</h4>
-        <p className="mb-4 txt-lighter" style={{ maxWidth: 500 }}>
-          {description}
-        </p>
-      </div>
-      {action && (
-        <div style={{ marginLeft: "16px", flexShrink: 0 }}>{action}</div>
+      <Box
+        style={{
+          gap: "14px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          maxWidth: 500,
+        }}
+      >
+        {typeof title === "string" ? (
+          <Typography variant="h1">{title}</Typography>
+        ) : (
+          title
+        )}
+        {description && (
+          <Typography variant="bodyMd" component="p">
+            {description}
+          </Typography>
+        )}
+      </Box>
+      {appendActions && (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          {appendActions}
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
+
 
 export default PageHeader;

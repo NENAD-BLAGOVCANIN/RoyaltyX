@@ -252,7 +252,7 @@ const ColumnMappingModal = ({
     >
       <DialogTitle>
         Map CSV Columns to Expected Fields
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+        <Typography variant="bodySm" color="text.secondary" sx={{ mt: 1 }}>
           File: {fileData.file.name}
         </Typography>
       </DialogTitle>
@@ -289,7 +289,7 @@ const ColumnMappingModal = ({
                   >
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Typography variant="body2" fontWeight="medium">
+                        <Typography variant="bodySm" fontWeight="medium">
                           {field.label}
                         </Typography>
                         {getRequirementChip(field.key)}
@@ -331,7 +331,7 @@ const ColumnMappingModal = ({
                       </FormControl>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography variant="bodySm" color="text.secondary">
                         {field.description}
                       </Typography>
                     </TableCell>

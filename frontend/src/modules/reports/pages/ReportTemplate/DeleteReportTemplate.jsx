@@ -37,7 +37,7 @@ export default function DeleteReportTemplate() {
     <Typography variant="h5" mb={2}>
       Delete Report Template: {initialData.template_name}
     </Typography>
-    <Typography variant="body1" mb={3}>
+    <Typography variant="bodyMd" mb={3}>
       Are you sure you want to proceed with the deletion?
     </Typography>
 

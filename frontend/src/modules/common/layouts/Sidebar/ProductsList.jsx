@@ -81,7 +81,7 @@ const ProductsList = () => {
                 <ListItemText 
                   primary={product.title}
                   primaryTypographyProps={{ 
-                    variant: 'body2', 
+                    variant: 'bodySm', 
                     fontWeight: 500,
                     noWrap: true 
                   }}

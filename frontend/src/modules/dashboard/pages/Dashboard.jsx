@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { LinkedAccountsSection } from "../components/LinkedAccountsSection";
+import { LinkedSourcesSection } from "../components/LinkedSourcesSection";
 import { useProducts } from "../../products/contexts/ProductsContext";
 import { ProductsList } from "../components/ProductsList";
 import { useSources } from "../../sources/api/sources";
@@ -54,7 +54,7 @@ function Dashboard() {
         </Grid>
       )}
       
-      <LinkedAccountsSection sources={sources} loading={loading} />
+      <LinkedSourcesSection sources={sources} loading={loading} />
       <ProductsList products={products} loading={loading} />
     </>
   );

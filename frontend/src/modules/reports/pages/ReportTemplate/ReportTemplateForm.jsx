@@ -95,7 +95,7 @@ export default function ReportTemplateForm({
           alignItems: "flex-start",
           gap: 1,
         }}>
-          <Typography variant="body2" gutterBottom>Logo Preview:</Typography>
+          <Typography variant="bodySm" gutterBottom>Logo Preview:</Typography>
           <img
             src={
               typeof formData.logo === "string"
@@ -119,7 +119,7 @@ export default function ReportTemplateForm({
           accept="image/*"
         />
       </Button>
-      {errors.logo && <Typography variant="body2" color="error" sx={{ mt: 1 }}>{errors.logo[0]}</Typography>}
+      {errors.logo && <Typography variant="bodySm" color="error" sx={{ mt: 1 }}>{errors.logo[0]}</Typography>}
 
       <Box sx={{ display: "flex", flexDirection: "column", mt: 2, gap: 1 }}>
 

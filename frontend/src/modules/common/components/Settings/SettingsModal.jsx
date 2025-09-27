@@ -127,7 +127,7 @@ function SettingsModal({ showSettingsModal, setShowSettingsModal }) {
                     <ListItemText
                       primary={tab.label}
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                       }}
                     />
                   </ListItemButton>

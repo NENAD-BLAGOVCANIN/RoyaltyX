@@ -96,11 +96,11 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <LayoutDashboard size={18} color="var(--color-text-lighter)" />
+                <LayoutDashboard size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Dashboard"
-                primaryTypographyProps={{ variant: "body2" }}
+                primaryTypographyProps={{ variant: "bodySm" }}
               />
             </ListItemButton>
           </ListItem>
@@ -119,11 +119,11 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Users size={18} color="var(--color-text-lighter)" />
+                <Users size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Users"
-                primaryTypographyProps={{ variant: "body2" }}
+                primaryTypographyProps={{ variant: "bodySm" }}
               />
             </ListItemButton>
           </ListItem>
@@ -142,12 +142,12 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <MessageSquare size={18} color="var(--color-text-lighter)" />
+                <MessageSquare size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Support Tickets"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>
@@ -167,12 +167,12 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <HelpCircle size={18} color="var(--color-text-lighter)" />
+                <HelpCircle size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Help Documentation"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>

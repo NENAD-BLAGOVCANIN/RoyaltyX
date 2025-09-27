@@ -35,7 +35,7 @@ const Details = () => {
             {product.title}
           </Typography>
 
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant="bodyMd" color="textSecondary">
             {product.description || "No description available."}
           </Typography>
 
@@ -55,28 +55,28 @@ const Details = () => {
             </MUIButton>
           </Box>
 
-          <Card sx={{ mt: 5, borderRadius: 3, boxShadow: 1 }}>
+          <Card sx={{ mt: 5, boxShadow: 0 }}>
             <CardContent style={{ display: "flex", flexDirection: "column" }}>
               <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
                 Product Metadata
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2 }}>
+              <Typography variant="bodyMd" sx={{ mb: 2 }}>
                 <span style={{ fontWeight: 500, paddingRight: 6 }}>Type:</span>
                 Video
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2 }}>
+              <Typography variant="bodyMd" sx={{ mb: 2 }}>
                 <span style={{ fontWeight: 500, paddingRight: 6 }}>
                   Platform:
                 </span>
                 {capitalize(product?.source?.platform || "Unknown")}
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2 }}>
+              <Typography variant="bodyMd" sx={{ mb: 2 }}>
                 <span style={{ fontWeight: 500, paddingRight: 6 }}>
                   Author:
                 </span>
                 Unknown
               </Typography>
-              <Typography variant="body1">
+              <Typography variant="bodyMd">
                 <span style={{ fontWeight: 500, paddingRight: 6 }}>
                   Created at:
                 </span>

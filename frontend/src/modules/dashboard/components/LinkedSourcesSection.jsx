@@ -1,10 +1,11 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { ArrowRight, WifiOff } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
 import { SourceItem } from "./SourceItem";
+import { MissingSourcesPlaceholder } from "../../sources/components/MissingSourcesPlaceholder";
 
-export const LinkedAccountsSection = ({ sources, loading }) => {
+export const LinkedSourcesSection = ({ sources, loading }) => {
   const navigate = useNavigate();
 
   return (
@@ -13,11 +14,12 @@ export const LinkedAccountsSection = ({ sources, loading }) => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          mt: 5,
-          mb: 5,
+          alignItems: "center",
+          mb: 2,
+          mt: 6,
         }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 600 }}>
+        <Typography variant="h2" sx={{ fontWeight: 600 }}>
           Sources
         </Typography>
         <Button variant="outlined" onClick={() => navigate("/sources")}>
@@ -36,30 +38,7 @@ export const LinkedAccountsSection = ({ sources, loading }) => {
           ))}
         </Grid>
       ) : (
-        <Grid
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            justifyContent: "center",
-            mt: 4,
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              py: 10,
-            }}
-          >
-            <WifiOff size={60} color="var(--color-subtle)" />
-            <Typography sx={{ mt: 1, color: "text.secondary" }}>
-              No sources linked yet.
-            </Typography>
-          </Box>
-        </Grid>
+        <MissingSourcesPlaceholder />
       )}
     </Box>
   );

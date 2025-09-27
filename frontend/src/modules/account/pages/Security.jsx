@@ -101,7 +101,7 @@ function SecurityPage() {
                   Password
                 </Typography>
               </Box>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Keep your account secure with a strong password
               </Typography>
               <Button

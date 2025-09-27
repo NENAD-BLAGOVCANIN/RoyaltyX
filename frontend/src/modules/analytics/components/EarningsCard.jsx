@@ -10,7 +10,7 @@ const EarningsCard = ({ analytics }) => {
 
   return (
     <Grid size={{ xs: 12 }}>
-      <Card sx={{ borderRadius: 2, boxShadow: 2, mt: 4 }}>
+      <Card sx={{ borderRadius: 2, boxShadow: 0, mt: 4 }}>
         <CardContent sx={{ p: 3 }}>
           <Typography variant="h5" sx={{ mb: 4, fontWeight: 600 }}>
             Your Earnings
@@ -25,7 +25,7 @@ const EarningsCard = ({ analytics }) => {
               }}
             >
               <Typography
-                variant="body2"
+                variant="bodySm"
                 color="text.primary"
                 sx={{ fontWeight: 500 }}
               >
@@ -43,14 +43,14 @@ const EarningsCard = ({ analytics }) => {
               }}
             >
               <Typography
-                variant="body2"
+                variant="bodySm"
                 color="text.primary"
                 sx={{ fontWeight: 500 }}
               >
                 EXPENSE ASSIGNMENTS
               </Typography>
               <Typography
-                variant="body2"
+                variant="bodySm"
                 fontWeight="bold"
                 color="primary.main"
               >

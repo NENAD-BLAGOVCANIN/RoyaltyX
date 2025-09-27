@@ -79,7 +79,7 @@ export default function Login() {
         {/* Divider */}
         <Box sx={{ display: "flex", alignItems: "center", my: 3 }}>
           <Divider sx={{ flex: 1 }} />
-          <Typography variant="body2" sx={{ px: 2, color: "text.secondary" }}>
+          <Typography variant="bodySm" sx={{ px: 2, color: "text.secondary" }}>
             or
           </Typography>
           <Divider sx={{ flex: 1 }} />
@@ -94,7 +94,7 @@ export default function Login() {
                   to={`/verify-email${userEmail ? `?email=${encodeURIComponent(userEmail)}` : ''}`}
                   className="text-decoration-none"
                 >
-                  <Typography variant="body2" color="primary" sx={{ fontWeight: 500 }}>
+                  <Typography variant="bodySm" color="primary" sx={{ fontWeight: 500 }}>
                     Click here to verify your email
                   </Typography>
                 </Link>
@@ -128,7 +128,7 @@ export default function Login() {
           {/* Forgot Password Link */}
           <div className="d-flex justify-content-end py-2">
             <Link to="/forgot-password" className="text-decoration-none">
-              <Typography variant="body2" color="primary" sx={{ fontSize: "0.875rem" }}>
+              <Typography variant="bodySm" color="primary" sx={{ fontSize: "0.875rem" }}>
                 Forgot your password?
               </Typography>
             </Link>
@@ -143,11 +143,11 @@ export default function Login() {
 
         {/* Sign up link */}
         <div className="d-flex justify-content-center align-items-center py-4">
-          <Typography variant="body1" className="px-1 txt-lighter">
+          <Typography variant="bodyMd" className="px-1 txt-lighter">
             Don't have an account?
           </Typography>
           <Link to="/register" className="px-1 fw-500 text-decoration-none">
-            <Typography variant="body1" color="primary">
+            <Typography variant="bodyMd" color="primary">
               Sign Up
             </Typography>
           </Link>

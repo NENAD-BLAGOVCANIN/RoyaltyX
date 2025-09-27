@@ -24,6 +24,7 @@ import { useAuth } from "../../common/contexts/AuthContext";
 import { changeSubscriptionPlan } from "../api/subscription";
 import { createCheckoutSession } from "../api/payments";
 import { verifySession } from "../api/payments";
+import PageHeader from "../../common/components/PageHeader";
 
 function MembershipPage() {
   const { subscriptionPlan, setSubscriptionPlan } = useAuth();
@@ -266,10 +267,8 @@ function MembershipPage() {
   return (
     <Container>
       <Box>
-        <Typography variant="h3" sx={{ mb: 5, fontWeight: "bold" }}>
-          Available Plans
-        </Typography>
-        <Grid container spacing={3}>
+        <PageHeader title="Available Plans" />
+        <Grid container spacing={3} sx={{ mt: 3 }}>
           {plans.map((plan) => (
             <Grid size={{ xs: 12, md: 4 }} key={plan.name}>
               <Card
@@ -319,7 +318,7 @@ function MembershipPage() {
                       )}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="bodySm"
                       color="text.secondary"
                       sx={{ mb: 2 }}
                     >
@@ -328,7 +327,7 @@ function MembershipPage() {
                     <Typography variant="h4" sx={{ fontWeight: 600, mb: 1 }}>
                       {plan.price}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="bodySm" color="text.secondary">
                       {plan.period}
                     </Typography>
                   </Box>
@@ -341,7 +340,7 @@ function MembershipPage() {
                         </ListItemIcon>
                         <ListItemText
                           primary={
-                            <Typography variant="body2">{feature}</Typography>
+                            <Typography variant="bodySm">{feature}</Typography>
                           }
                         />
                       </ListItem>
@@ -353,7 +352,7 @@ function MembershipPage() {
                         </ListItemIcon>
                         <ListItemText
                           primary={
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="bodySm" color="text.secondary">
                               {limitation}
                             </Typography>
                           }
@@ -428,12 +427,12 @@ function MembershipPage() {
         <DialogContent>
           {selectedPlan && (
             <Box>
-              <Typography variant="body1">
+              <Typography variant="bodyMd">
                 You're about to change to the {selectedPlan.displayName} plan
                 for <strong>{selectedPlan.price}</strong> {selectedPlan.period}.
               </Typography>
               <Alert severity="info" sx={{ my: 2 }}>
-                <Typography variant="body2">
+                <Typography variant="bodySm">
                   Your new plan will be active immediately, and you'll be
                   charged a prorated amount for the remainder of your current
                   billing cycle.
@@ -450,7 +449,7 @@ function MembershipPage() {
                     </ListItemIcon>
                     <ListItemText
                       primary={
-                        <Typography variant="body1">{feature}</Typography>
+                        <Typography variant="bodyMd">{feature}</Typography>
                       }
                     />
                   </ListItem>
@@ -481,12 +480,12 @@ function MembershipPage() {
         <DialogTitle>Change to Free Plan</DialogTitle>
         <DialogContent>
           <Alert severity="warning" sx={{ mb: 2 }}>
-            <Typography variant="body2">
+            <Typography variant="bodySm">
               Are you sure you want to downgrade to the Free plan? You'll lose
               access to premium features immediately.
             </Typography>
           </Alert>
-          <Typography variant="body2">
+          <Typography variant="bodySm">
             Your account will be downgraded to the Free plan and you'll lose
             access to:
           </Typography>
@@ -497,7 +496,7 @@ function MembershipPage() {
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <Typography variant="body2">Advanced analytics</Typography>
+                  <Typography variant="bodySm">Advanced analytics</Typography>
                 }
               />
             </ListItem>
@@ -507,7 +506,7 @@ function MembershipPage() {
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <Typography variant="body2">Priority support</Typography>
+                  <Typography variant="bodySm">Priority support</Typography>
                 }
               />
             </ListItem>
@@ -517,7 +516,7 @@ function MembershipPage() {
               </ListItemIcon>
               <ListItemText
                 primary={
-                  <Typography variant="body2">Additional storage</Typography>
+                  <Typography variant="bodySm">Additional storage</Typography>
                 }
               />
             </ListItem>

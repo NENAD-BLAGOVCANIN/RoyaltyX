@@ -21,7 +21,7 @@ import styles from "./ThemeSelection.module.css";
 export default function ThemeSelection() {
   const [selectedTheme, setSelectedTheme] = useState("light");
   const [loading, setLoading] = useState(false);
-  const { setTheme } = useTheme();
+  const { changeTheme } = useTheme();
   const { authenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ export default function ThemeSelection() {
     setLoading(true);
 
     try {
-      setTheme(selectedTheme);
+      changeTheme(selectedTheme);
       // Clear the new user flag since they've completed theme selection
       localStorage.removeItem("newUserThemeSelection");
       navigate("/my-projects");
@@ -92,7 +92,7 @@ export default function ThemeSelection() {
                 Choose Your Theme
               </Typography>
               <Typography
-                variant="body1"
+                variant="bodyMd"
                 sx={{ color: "text.secondary", mb: 4 }}
               >
                 Personalize your experience by selecting your preferred theme.
@@ -155,7 +155,7 @@ export default function ThemeSelection() {
                 <Typography variant="h5" sx={{ mb: 1, fontWeight: 500 }}>
                   Light Theme
                 </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
                   Clean and bright interface perfect for daytime use
                 </Typography>
               </Box>
@@ -283,7 +283,7 @@ export default function ThemeSelection() {
                 <Typography variant="h5" sx={{ mb: 1, fontWeight: 500 }}>
                   Dark Theme
                 </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
                   Easy on the eyes with reduced strain for extended use
                 </Typography>
               </Box>
@@ -385,7 +385,7 @@ export default function ThemeSelection() {
 
         {/* Additional Info */}
         <Box sx={{ textAlign: "center", mt: 3 }}>
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
             💡 You can change your theme preference anytime in your account
             settings
           </Typography>

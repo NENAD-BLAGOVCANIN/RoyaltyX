@@ -35,7 +35,7 @@ export const TopPerfomingContentByImpressions = () => {
 
   return (
     <Box>
-      <Typography variant="h4" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
+      <Typography variant="h2" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
         Top Performing Content (by impressions)
       </Typography>
       {!products || products.length === 0 ? (
@@ -49,7 +49,7 @@ export const TopPerfomingContentByImpressions = () => {
               py: 4,
             }}
           >
-            <Typography variant="body1" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodyMd" sx={{ color: "text.secondary" }}>
               No content data available for impressions.
             </Typography>
           </Box>
@@ -86,17 +86,17 @@ export const TopPerfomingContentByImpressions = () => {
                   return (
                     <TableRow key={product.id} hover>
                       <TableCell>
-                        <Typography variant="body2" fontWeight="medium">
+                        <Typography variant="bodySm" fontWeight="medium">
                           {index + 1}
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography variant="body2">
+                        <Typography variant="bodySm">
                           {product.title}
                         </Typography>
                       </TableCell>
                       <TableCell align="right">
-                        <Typography variant="body2">
+                        <Typography variant="bodySm">
                           {formatNumber(totalImpressions)}
                         </Typography>
                       </TableCell>

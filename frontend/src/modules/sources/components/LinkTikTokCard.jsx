@@ -55,7 +55,7 @@ export const LinkTikTokCard = ({ createSource }) => {
 
   return (
     <Grid size={{ xs: 12, md: 4 }}>
-      <Card sx={{ p: 3, borderRadius: 2, boxShadow: 2, height: "100%", mt: 1 }}>
+      <Card sx={{ p: 3, height: "100%", mt: 1 }}>
         <Box
           sx={{
             display: "flex",
@@ -73,7 +73,7 @@ export const LinkTikTokCard = ({ createSource }) => {
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
               TikTok
             </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
               Connect your TikTok account to analyze video performance, audience
               engagement, and optimize your content strategy for better reach.
             </Typography>

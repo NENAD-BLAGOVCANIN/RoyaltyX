@@ -88,10 +88,10 @@ function DeleteAccount() {
           </Box>
 
           <Alert severity="error" sx={{ mb: 3 }}>
-            <Typography variant="body1" component="p"  sx={{ fontWeight: 500, mb: 1 }}>
+            <Typography variant="bodyMd" component="p"  sx={{ fontWeight: 500, mb: 1 }}>
               This action cannot be undone!
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="bodySm">
               Once you delete your account, all your data will be permanently removed
               from our servers. Please make sure you have backed up any important
               information before proceeding.
@@ -116,7 +116,7 @@ function DeleteAccount() {
                       </Typography>
                     }
                     secondary={
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography variant="bodySm" color="text.secondary">
                         {item.description}
                       </Typography>
                     }
@@ -129,7 +129,7 @@ function DeleteAccount() {
 
           {user?.subscription_plan !== "free" && (
             <Alert severity="warning" sx={{ mb: 3 }}>
-              <Typography variant="body2">
+              <Typography variant="bodySm">
                 <strong>Subscription Notice:</strong> Your {user?.subscription_plan} subscription
                 will be cancelled immediately. You will not be charged for future billing cycles.
               </Typography>
@@ -138,7 +138,7 @@ function DeleteAccount() {
 
           {error && (
             <Alert severity="error" sx={{ mb: 3 }}>
-              <Typography variant="body2">{error}</Typography>
+              <Typography variant="bodySm">{error}</Typography>
             </Alert>
           )}
 
@@ -174,10 +174,10 @@ function DeleteAccount() {
           Final Confirmation
         </DialogTitle>
         <DialogContent>
-          <Typography variant="body1" component="p" sx={{ mb: 2 }}>
+          <Typography variant="bodyMd" component="p" sx={{ mb: 2 }}>
             Are you absolutely sure you want to delete your account?
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="bodySm" color="text.secondary">
             This will permanently delete your account for{" "}
             <strong>{user?.email}</strong> and all associated data. This action
             cannot be undone.

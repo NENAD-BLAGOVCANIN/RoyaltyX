@@ -3,9 +3,9 @@ import { Typography, Card, CardContent, Box, Grid } from "@mui/material";
 const SalesStatsCard = ({ analytics }) => {
   return (
     <Grid size={{ md: 6, xs: 12 }}>
-      <Card sx={{ borderRadius: 2, boxShadow: 2, mt: 4 }}>
+      <Card sx={{ borderRadius: 2, boxShadow: 0, mt: 4 }}>
         <CardContent sx={{ p: 3 }}>
-          <Typography variant="h5" sx={{ mb: 4, fontWeight: 600 }}>
+          <Typography variant="h2" sx={{ mb: 4, fontWeight: 600 }}>
             Sales Stats
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
@@ -17,14 +17,14 @@ const SalesStatsCard = ({ analytics }) => {
               }}
             >
               <Typography
-                variant="body2"
+                variant="bodySm"
                 color="text.primary"
                 sx={{ fontWeight: 500 }}
               >
                 NUMBER OF RENTALS
               </Typography>
               <Typography
-                variant="body2"
+                variant="bodySm"
                 fontWeight="bold"
                 color="primary.main"
               >
@@ -39,14 +39,14 @@ const SalesStatsCard = ({ analytics }) => {
               }}
             >
               <Typography
-                variant="body2"
+                variant="bodySm"
                 color="text.primary"
                 sx={{ fontWeight: 500 }}
               >
                 NUMBER OF PURCHASES
               </Typography>
               <Typography
-                variant="body2"
+                variant="bodySm"
                 fontWeight="bold"
                 color="primary.main"
               >
@@ -61,14 +61,14 @@ const SalesStatsCard = ({ analytics }) => {
               }}
             >
               <Typography
-                variant="body2"
+                variant="bodySm"
                 color="text.primary"
                 sx={{ fontWeight: 500 }}
               >
                 EARNINGS FROM RENTALS
               </Typography>
               <Typography
-                variant="body2"
+                variant="bodySm"
                 fontWeight="bold"
                 color="primary.main"
               >
@@ -83,14 +83,14 @@ const SalesStatsCard = ({ analytics }) => {
               }}
             >
               <Typography
-                variant="body2"
+                variant="bodySm"
                 color="text.primary"
                 sx={{ fontWeight: 500 }}
               >
                 EARNINGS FROM PURCHASES
               </Typography>
               <Typography
-                variant="body2"
+                variant="bodySm"
                 fontWeight="bold"
                 color="primary.main"
               >

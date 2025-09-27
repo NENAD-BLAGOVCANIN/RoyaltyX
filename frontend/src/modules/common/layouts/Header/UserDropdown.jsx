@@ -68,7 +68,7 @@ function UserDropdown() {
                 />
                 <Box sx={{ ml: 1.5, display: "flex", flexDirection: "column" }}>
                   <Typography
-                    variant="body2"
+                    variant="bodySm"
                     sx={{
                       color: "text.primary",
                     }}
@@ -103,12 +103,12 @@ function UserDropdown() {
                       }}
                     >
                       <ListItemIcon sx={{ minWidth: 40 }}>
-                        <Grid size={18} color="var(--color-text-lighter)" />
+                        <Grid size={18} />
                       </ListItemIcon>
                       <ListItemText
                         primary="Admin Panel"
                         primaryTypographyProps={{
-                          variant: "body2",
+                          variant: "bodySm",
                         }}
                       />
                     </ListItemButton>
@@ -129,12 +129,12 @@ function UserDropdown() {
                     }}
                   >
                     <ListItemIcon sx={{ minWidth: 40 }}>
-                      <User size={18} color="var(--color-text-lighter)" />
+                      <User size={18} />
                     </ListItemIcon>
                     <ListItemText
                       primary="My Account"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                       }}
                     />
                   </ListItemButton>
@@ -154,12 +154,12 @@ function UserDropdown() {
                     }}
                   >
                     <ListItemIcon sx={{ minWidth: 40 }}>
-                      <Folder size={18} color="var(--color-text-lighter)" />
+                      <Folder size={18} />
                     </ListItemIcon>
                     <ListItemText
                       primary="My Projects"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                       }}
                     />
                   </ListItemButton>
@@ -179,12 +179,12 @@ function UserDropdown() {
                     }}
                   >
                     <ListItemIcon sx={{ minWidth: 40 }}>
-                      <HelpCircle size={18} color="var(--color-text-lighter)" />
+                      <HelpCircle size={18} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Contact Support"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                       }}
                     />
                   </ListItemButton>
@@ -203,12 +203,12 @@ function UserDropdown() {
                     }}
                   >
                     <ListItemIcon sx={{ minWidth: 40 }}>
-                      <Flame size={18} color="var(--color-text-lighter)" />
+                      <Flame size={18} />
                     </ListItemIcon>
                     <ListItemText
                       primary="Explore Premium"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                       }}
                     />
                   </ListItemButton>
@@ -238,7 +238,7 @@ function UserDropdown() {
                     <ListItemText
                       primary="Logout"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                         color: "#dc3545",
                       }}
                     />
