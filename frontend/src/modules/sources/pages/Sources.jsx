@@ -71,7 +71,7 @@ export const Sources = () => {
           >
             <WifiOff size={80} color="var(--color-subtle)" />
             <Typography
-              variant="body1"
+              variant="bodyMd"
               sx={{ color: "text.secondary", mb: 2, mt: 1 }}
             >
               {canAddSources ? "No sources connected." : "No sources connected. Contact your project owner to add sources."}

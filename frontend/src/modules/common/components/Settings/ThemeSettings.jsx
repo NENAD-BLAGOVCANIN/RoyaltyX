@@ -22,7 +22,7 @@ const ThemeSettings = () => {
         Theme Settings
       </Typography>
 
-      <Typography variant="body1" sx={{color: "text.secondary" }}>
+      <Typography variant="bodyMd" sx={{color: "text.secondary" }}>
         Choose your preferred theme for the application
       </Typography>
 

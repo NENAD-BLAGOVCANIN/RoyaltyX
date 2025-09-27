@@ -84,7 +84,7 @@ export const LinkVimeoCard = ({ createSource }) => {
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
               Vimeo
             </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
               Connect your Vimeo account to analyze video performance, audience
               engagement, and optimize your content strategy for better reach.
             </Typography>

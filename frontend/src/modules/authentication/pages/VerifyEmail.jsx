@@ -131,7 +131,7 @@ const VerifyEmail = () => {
             <Typography variant="h4" gutterBottom color="success.main">
               Email Verified!
             </Typography>
-            <Typography variant="body1" color="text.secondary" mb={3}>
+            <Typography variant="bodyMd" color="text.secondary" mb={3}>
               {message} Redirecting you to theme selection...
             </Typography>
           </CardContent>
@@ -154,10 +154,10 @@ const VerifyEmail = () => {
             <Typography variant="h4" gutterBottom>
               Verify Your Email
             </Typography>
-            <Typography variant="body1" color="text.secondary" mb={1}>
+            <Typography variant="bodyMd" color="text.secondary" mb={1}>
               We've sent a verification code to{" "}
               <Typography
-                variant="body1"
+                variant="bodyMd"
                 color="primary.main"
                 fontWeight="medium"
               >
@@ -165,7 +165,7 @@ const VerifyEmail = () => {
               </Typography>
             </Typography>
             <br />
-            <Typography variant="body2" color="text.secondary" mt={1}>
+            <Typography variant="bodySm" color="text.secondary" mt={1}>
               Enter the 6-digit code below to verify your account.
             </Typography>
           </Box>
@@ -214,7 +214,7 @@ const VerifyEmail = () => {
             </Button>
 
             <Box textAlign="center">
-              <Typography variant="body2" color="text.secondary" mb={1}>
+              <Typography variant="bodySm" color="text.secondary" mb={1}>
                 Didn't receive the code?
               </Typography>
               <Button

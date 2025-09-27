@@ -73,7 +73,7 @@ export const LinkTwitchCard = ({ createSource }) => {
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
               Twitch
             </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
               Link your Twitch account to track streaming analytics, viewer
               engagement, and monetization metrics.
             </Typography>

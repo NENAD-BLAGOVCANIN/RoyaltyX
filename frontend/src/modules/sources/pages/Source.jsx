@@ -90,31 +90,31 @@ export const Source = () => {
                 <Typography variant="subtitle1" fontWeight={500}>
                   Platform
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="bodyMd">
                   {source.platform || "Unknown"}
                 </Typography>
                 <Typography variant="subtitle1" fontWeight={500} sx={{ mt: 2 }}>
                   Account name
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="bodyMd">
                   {source.account_name || "Unknown"}
                 </Typography>
                 <Typography variant="subtitle1" fontWeight={500} sx={{ mt: 2 }}>
                  Imported videos
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="bodyMd">
                   {source.imported_video_count || "0"}
                 </Typography>
                 <Typography variant="subtitle1" fontWeight={500} sx={{ mt: 2 }}>
                   Created At
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="bodyMd">
                   {new Date(source.created_at).toLocaleString()}
                 </Typography>
                 <Typography variant="subtitle1" fontWeight={500} sx={{ mt: 2 }}>
                   Last Fetched At
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="bodyMd">
                   {source.last_fetched_at
                     ? new Date(source.last_fetched_at).toLocaleString()
                     : "Never"}
@@ -122,11 +122,11 @@ export const Source = () => {
                 <Typography variant="subtitle1" fontWeight={500} sx={{ mt: 2 }}>
                   Fetch Frequency
                 </Typography>
-                <Typography variant="body1">24 hours</Typography>
+                <Typography variant="bodyMd">24 hours</Typography>
                 <Typography variant="subtitle1" fontWeight={500} sx={{ mt: 2 }}>
                   Status
                 </Typography>
-                <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>
+                <Typography variant="bodyMd" sx={{ textTransform: 'capitalize' }}>
                   {source.status || 'active'}
                 </Typography>
               </CardContent>

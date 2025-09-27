@@ -78,11 +78,11 @@ export const SourceItem = ({ source }) => {
                 {source.account_name}
               </Typography>
               <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
                   <span className="fw-500">Last fetch:</span>{" "}
                   {formatLastFetchedTime(source.last_fetched_at)}
                 </Typography>
-                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
                   <span className="fw-500">Platform:</span> {capitalize(source.platform)}
                 </Typography>
               </Box>

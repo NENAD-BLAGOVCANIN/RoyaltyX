@@ -123,7 +123,7 @@ export default function ResetPassword() {
             <Typography variant="h4" sx={{ mb: 2, fontWeight: 600, color: "success.main" }}>
               Password Reset Successfully!
             </Typography>
-            <Typography variant="body1" sx={{ mb: 3, color: "text.secondary" }}>
+            <Typography variant="bodyMd" sx={{ mb: 3, color: "text.secondary" }}>
               Your password has been updated successfully. You can now log in with your new password.
             </Typography>
           </Box>
@@ -174,7 +174,7 @@ export default function ResetPassword() {
             <Typography variant="h4" sx={{ mb: 2, fontWeight: 600, color: "error.main" }}>
               Invalid Reset Link
             </Typography>
-            <Typography variant="body1" sx={{ mb: 3, color: "text.secondary" }}>
+            <Typography variant="bodyMd" sx={{ mb: 3, color: "text.secondary" }}>
               This password reset link is invalid or has expired. Please request a new password reset.
             </Typography>
           </Box>
@@ -189,7 +189,7 @@ export default function ResetPassword() {
 
           <Box sx={{ textAlign: "center", mt: 3 }}>
             <Link to="/login" className="text-decoration-none">
-              <Typography variant="body2" color="primary">
+              <Typography variant="bodySm" color="primary">
                 Back to Login
               </Typography>
             </Link>
@@ -232,7 +232,7 @@ export default function ResetPassword() {
           <Typography variant="h3" sx={{ mb: 2, fontWeight: 600 }}>
             Reset Your Password
           </Typography>
-          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+          <Typography variant="bodyMd" sx={{ color: "text.secondary" }}>
             Enter your new password below. Make sure it's strong and secure.
           </Typography>
         </Box>
@@ -299,7 +299,7 @@ export default function ResetPassword() {
           </div>
 
           <Box sx={{ mt: 2, mb: 3 }}>
-            <Typography variant="body2" sx={{ color: "text.secondary", fontSize: "0.875rem" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary", fontSize: "0.875rem" }}>
               Password requirements:
             </Typography>
             <ul style={{ margin: "8px 0", paddingLeft: "20px", color: "#666", fontSize: "0.875rem" }}>
@@ -317,11 +317,11 @@ export default function ResetPassword() {
 
         {/* Back to login link */}
         <div className="d-flex justify-content-center align-items-center py-4">
-          <Typography variant="body1" className="px-1 txt-lighter">
+          <Typography variant="bodyMd" className="px-1 txt-lighter">
             Remember your password?
           </Typography>
           <Link to="/login" className="px-1 fw-500 text-decoration-none">
-            <Typography variant="body1" color="primary">
+            <Typography variant="bodyMd" color="primary">
               Back to Login
             </Typography>
           </Link>

@@ -68,7 +68,7 @@ function UserDropdown() {
                 />
                 <Box sx={{ ml: 1.5, display: "flex", flexDirection: "column" }}>
                   <Typography
-                    variant="body2"
+                    variant="bodySm"
                     sx={{
                       color: "text.primary",
                     }}
@@ -108,7 +108,7 @@ function UserDropdown() {
                       <ListItemText
                         primary="Admin Panel"
                         primaryTypographyProps={{
-                          variant: "body2",
+                          variant: "bodySm",
                         }}
                       />
                     </ListItemButton>
@@ -134,7 +134,7 @@ function UserDropdown() {
                     <ListItemText
                       primary="My Account"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                       }}
                     />
                   </ListItemButton>
@@ -159,7 +159,7 @@ function UserDropdown() {
                     <ListItemText
                       primary="My Projects"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                       }}
                     />
                   </ListItemButton>
@@ -184,7 +184,7 @@ function UserDropdown() {
                     <ListItemText
                       primary="Contact Support"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                       }}
                     />
                   </ListItemButton>
@@ -208,7 +208,7 @@ function UserDropdown() {
                     <ListItemText
                       primary="Explore Premium"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                       }}
                     />
                   </ListItemButton>
@@ -238,7 +238,7 @@ function UserDropdown() {
                     <ListItemText
                       primary="Logout"
                       primaryTypographyProps={{
-                        variant: "body2",
+                        variant: "bodySm",
                         color: "#dc3545",
                       }}
                     />

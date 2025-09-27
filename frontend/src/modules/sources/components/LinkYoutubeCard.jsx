@@ -70,7 +70,7 @@ export const LinkYoutubeCard = ({ createSource }) => {
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
               YouTube
             </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
               Link your YouTube account to fetch analytics data. This will allow
               you to monitor your channel's performance and gain insights into
               your audience.

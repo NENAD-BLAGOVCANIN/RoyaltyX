@@ -121,7 +121,7 @@ function InviteAcceptPage() {
           <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
             Invalid Invite
           </Typography>
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+          <Typography variant="bodyMd" color="text.secondary" sx={{ mb: 3 }}>
             {error}
           </Typography>
           <Button
@@ -151,7 +151,7 @@ function InviteAcceptPage() {
           <Typography variant="h4" sx={{ fontWeight: 600, mb: 1 }}>
             You're Invited!
           </Typography>
-          <Typography variant="body1" color="text.secondary">
+          <Typography variant="bodyMd" color="text.secondary">
             You've been invited to join a project on RoyaltyX
           </Typography>
         </Box>
@@ -162,21 +162,21 @@ function InviteAcceptPage() {
           </Typography>
           
           <Box sx={{ mb: 3 }}>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            <Typography variant="bodySm" color="text.secondary" sx={{ mb: 1 }}>
               Project:
             </Typography>
             <Typography variant="h6" sx={{ fontWeight: 500 }}>
               {invite?.project_name}
             </Typography>
             {invite?.project_description && (
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              <Typography variant="bodySm" color="text.secondary" sx={{ mt: 1 }}>
                 {invite.project_description}
               </Typography>
             )}
           </Box>
 
           <Box sx={{ mb: 3 }}>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            <Typography variant="bodySm" color="text.secondary" sx={{ mb: 1 }}>
               Invited by:
             </Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -184,10 +184,10 @@ function InviteAcceptPage() {
                 <PersonIcon />
               </Avatar>
               <Box>
-                <Typography variant="body1" component="p" sx={{ fontWeight: 500 }}>
+                <Typography variant="bodyMd" component="p" sx={{ fontWeight: 500 }}>
                   {invite?.invited_by_name}
                 </Typography>
-                <Typography variant="body2" component="p" color="text.secondary">
+                <Typography variant="bodySm" component="p" color="text.secondary">
                   {invite?.invited_by_email}
                 </Typography>
               </Box>
@@ -196,7 +196,7 @@ function InviteAcceptPage() {
 
           {invite?.product_access && invite.product_access.length > 0 && (
             <Box sx={{ mb: 3 }}>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+              <Typography variant="bodySm" color="text.secondary" sx={{ mb: 1 }}>
                 Product Access:
               </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -213,10 +213,10 @@ function InviteAcceptPage() {
           )}
 
           <Box sx={{ mb: 3 }}>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            <Typography variant="bodySm" color="text.secondary" sx={{ mb: 1 }}>
               Invited Email:
             </Typography>
-            <Typography variant="body1" component="p" sx={{ fontWeight: 500 }}>
+            <Typography variant="bodyMd" component="p" sx={{ fontWeight: 500 }}>
               {invite?.email}
             </Typography>
           </Box>
@@ -256,7 +256,7 @@ function InviteAcceptPage() {
         ) : (
           <Box>
             <Alert severity="success" sx={{ mb: 3 }}>
-              <Typography variant="body2">
+              <Typography variant="bodySm">
                 You're logged in as <strong>{user?.email}</strong> - ready to accept this invite!
               </Typography>
             </Alert>
@@ -274,7 +274,7 @@ function InviteAcceptPage() {
         )}
 
         <Box sx={{ mt: 3, textAlign: "center" }}>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="bodySm" color="text.secondary">
             This invite expires on {new Date(invite?.expires_at).toLocaleDateString()}
           </Typography>
         </Box>

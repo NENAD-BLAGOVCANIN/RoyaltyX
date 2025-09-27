@@ -59,7 +59,7 @@ function CreateNewProject() {
           <Typography variant="h2" sx={{ mt: 10, mb: 1, fontWeight: 600 }}>
             Create new project
           </Typography>
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant="bodyMd" color="textSecondary">
             Empower your projects with ease. Streamline creation and management
             effortlessly.
           </Typography>

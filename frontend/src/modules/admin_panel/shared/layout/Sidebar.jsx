@@ -100,7 +100,7 @@ function Sidebar() {
               </ListItemIcon>
               <ListItemText
                 primary="Dashboard"
-                primaryTypographyProps={{ variant: "body2" }}
+                primaryTypographyProps={{ variant: "bodySm" }}
               />
             </ListItemButton>
           </ListItem>
@@ -123,7 +123,7 @@ function Sidebar() {
               </ListItemIcon>
               <ListItemText
                 primary="Users"
-                primaryTypographyProps={{ variant: "body2" }}
+                primaryTypographyProps={{ variant: "bodySm" }}
               />
             </ListItemButton>
           </ListItem>
@@ -147,7 +147,7 @@ function Sidebar() {
               <ListItemText
                 primary="Support Tickets"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>
@@ -172,7 +172,7 @@ function Sidebar() {
               <ListItemText
                 primary="Help Documentation"
                 primaryTypographyProps={{
-                  variant: "body2",
+                  variant: "bodySm",
                 }}
               />
             </ListItemButton>

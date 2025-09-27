@@ -142,7 +142,7 @@ const NotificationsDropdown = () => {
                       primary={
                         <Typography
                           fontWeight={notification.is_read ? "normal" : "bold"}
-                          variant="body1"
+                          variant="bodyMd"
                         >
                           {notification.title}
                         </Typography>
@@ -165,10 +165,10 @@ const NotificationsDropdown = () => {
                   sx={{ cursor: "pointer", color: "primary.main" }}
                 >
                   <MailOutline fontSize="small" />
-                  <Typography variant="body2">Inbox</Typography>
+                  <Typography variant="bodySm">Inbox</Typography>
                 </Stack>
                 <Typography
-                  variant="body2"
+                  variant="bodySm"
                   sx={{ cursor: "pointer", color: "primary.main" }}
                   onClick={handleMarkAllAsRead}
                 >

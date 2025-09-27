@@ -12,7 +12,6 @@ import authRoutes from "./modules/authentication";
 import adminRoutes from "./modules/admin_panel";
 import { AuthProvider, useAuth } from "./modules/common/contexts/AuthContext";
 import AdminLayout from "./modules/admin_panel/shared/layout/AdminLayout";
-import { ThemeProvider } from "./modules/common/contexts/ThemeContext";
 import dashboardRoutes from "./modules/dashboard";
 import projectRoutes from "./modules/projects";
 import Layout from "./modules/projects/layout/Layout";
@@ -26,12 +25,14 @@ import productRoutes from "./modules/products";
 import { ProjectProvider } from "./modules/common/contexts/ProjectContext";
 import { SettingsProvider } from "./modules/common/contexts/SettingsContext";
 import { ProductsProvider } from "./modules/products/contexts/ProductsContext";
-import { MUIThemeWrapper } from "./modules/global/components/MUIThemeWrapper";
 import sourceRoutes from "./modules/sources";
 import expenseRoutes from "./modules/expenses";
 import oauthRoutes from "./modules/oauth";
 import settingsRoutes from "./modules/settings";
 import InviteAcceptPage from "./modules/members/pages/InviteAcceptPage";
+import { useTheme } from "./modules/common/contexts/ThemeContext";
+import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
+import getTheme from "./theme";
 
 const PrivateRoutes = () => {
   const { authenticated, loading } = useAuth();
@@ -65,61 +66,62 @@ const renderRoutes = (routes) => {
 };
 
 function App() {
+  const { theme } = useTheme();
+  const muiTheme = getTheme(theme);
   return (
     <Router>
-      <SettingsProvider>
-        <AuthProvider>
-          <ThemeProvider>
-            <MUIThemeWrapper>
-              <ScrollToTop />
-              <Routes>
-                <Route path="/" element={<PrivateRoutes />}>
-                  <Route
-                    path="/"
-                    element={
-                      <ProjectProvider>
-                        <ProductsProvider>
-                          <AppLayout />
-                        </ProductsProvider>
-                      </ProjectProvider>
-                    }
-                  >
-                    {renderRoutes([
-                      ...dashboardRoutes,
-                      ...analyticsRoutes,
-                      ...memberRoutes,
-                      ...reportRoutes,
-                      ...accountRoutes,
-                      ...contentRoutes,
-                      ...sourceRoutes,
-                      ...expenseRoutes,
-                      ...productRoutes,
-                      ...settingsRoutes,
-                      ...supportRoutes,
-                    ])}
-                  </Route>
-
-                  <Route path="/" element={<Layout />}>
-                    {renderRoutes([...projectRoutes])}
-                  </Route>
+      <MuiThemeProvider theme={muiTheme}>
+        <CssBaseline />
+        <SettingsProvider>
+          <AuthProvider>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<PrivateRoutes />}>
+                <Route
+                  path="/"
+                  element={
+                    <ProjectProvider>
+                      <ProductsProvider>
+                        <AppLayout />
+                      </ProductsProvider>
+                    </ProjectProvider>
+                  }
+                >
+                  {renderRoutes([
+                    ...dashboardRoutes,
+                    ...analyticsRoutes,
+                    ...memberRoutes,
+                    ...reportRoutes,
+                    ...accountRoutes,
+                    ...contentRoutes,
+                    ...sourceRoutes,
+                    ...expenseRoutes,
+                    ...productRoutes,
+                    ...settingsRoutes,
+                    ...supportRoutes,
+                  ])}
                 </Route>
 
-                <Route path="/admin" element={<PrivateRoutes />}>
-                  <Route path="/admin" element={<AdminLayout />}>
-                    {renderRoutes([...adminRoutes])}
-                  </Route>
+                <Route path="/" element={<Layout />}>
+                  {renderRoutes([...projectRoutes])}
                 </Route>
+              </Route>
 
-                {renderRoutes([...authRoutes, ...oauthRoutes])}
+              <Route path="/admin" element={<PrivateRoutes />}>
+                <Route path="/admin" element={<AdminLayout />}>
+                  {renderRoutes([...adminRoutes])}
+                </Route>
+              </Route>
 
-                <Route path="/invite/:inviteId" element={<InviteAcceptPage />} />
+              {renderRoutes([...authRoutes, ...oauthRoutes])}
 
-                <Route path="*" element={<PageNotFound />} />
-              </Routes>
-            </MUIThemeWrapper>
-          </ThemeProvider>
-        </AuthProvider>
-      </SettingsProvider>
+              <Route path="/invite/:inviteId" element={<InviteAcceptPage />} />
+
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </AuthProvider>
+        </SettingsProvider>
+      </MuiThemeProvider>
     </Router>
   );
 }

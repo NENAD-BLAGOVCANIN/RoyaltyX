@@ -244,12 +244,12 @@ function AddMemberModal({
                   <ListItemText
                     sx={{ flexDirection: "column", display: "flex" }}
                     primary={
-                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                      <Typography variant="bodyMd" sx={{ fontWeight: 500 }}>
                         {user.name}
                       </Typography>
                     }
                     secondary={
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography variant="bodySm" color="text.secondary">
                         {user.email}
                       </Typography>
                     }
@@ -341,7 +341,7 @@ function AddMemberModal({
             <Typography variant="h6" color="text.secondary" gutterBottom>
               No available users
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="bodySm" color="text.secondary">
               All users are already members of this project or no users exist in
               the system.
             </Typography>

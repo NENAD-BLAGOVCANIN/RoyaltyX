@@ -87,7 +87,7 @@ function Overview() {
               <Typography variant="h5" sx={{ mb: 1, fontWeight: 500 }}>
                 {user?.name || "User"}
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              <Typography variant="bodySm" color="text.secondary" sx={{ mb: 2 }}>
                 {user?.email || "user@example.com"}
               </Typography>
               <Box sx={{ mt: 2 }}>
@@ -130,7 +130,7 @@ function Overview() {
                         Full Name
                       </Typography>
                     </Box>
-                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    <Typography variant="bodyMd" sx={{ fontWeight: 500 }}>
                       {user?.name || "Not provided"}
                     </Typography>
                   </Paper>
@@ -154,7 +154,7 @@ function Overview() {
                         Email Address
                       </Typography>
                     </Box>
-                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    <Typography variant="bodyMd" sx={{ fontWeight: 500 }}>
                       {user?.email || "Not provided"}
                     </Typography>
                   </Paper>
@@ -178,7 +178,7 @@ function Overview() {
                         Member Since
                       </Typography>
                     </Box>
-                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    <Typography variant="bodyMd" sx={{ fontWeight: 500 }}>
                       {formatDate(user?.created_at)}
                     </Typography>
                   </Paper>
@@ -286,7 +286,7 @@ function Overview() {
                           </Typography>
                         }
                         secondary={
-                          <Typography variant="body2" color="text.secondary">
+                          <Typography variant="bodySm" color="text.secondary">
                             {item.description}
                           </Typography>
                         }

@@ -280,13 +280,13 @@ function InviteUserModal({ showInviteModal, setShowInviteModal }) {
           <Box sx={{ mt: 2 }}>
             <Alert severity="success" sx={{ mb: 3 }}>
               <Typography
-                variant="body1"
+                variant="bodyMd"
                 component="p"
                 sx={{ fontWeight: 500 }}
               >
                 Invite sent successfully!
               </Typography>
-              <Typography variant="body2" sx={{ mt: 1 }}>
+              <Typography variant="bodySm" sx={{ mt: 1 }}>
                 An email has been sent to <strong>{inviteData?.email}</strong>{" "}
                 with the invite link.
               </Typography>
@@ -305,20 +305,20 @@ function InviteUserModal({ showInviteModal, setShowInviteModal }) {
               </Typography>
 
               <Box sx={{ mb: 2 }}>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   Email:{" "}
                 </Typography>
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                <Typography variant="bodySm" sx={{ fontWeight: 500 }}>
                   {inviteData?.email}
                 </Typography>
               </Box>
 
               <Box sx={{ mb: 2 }}>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   Role:{" "}
                 </Typography>
                 <Typography
-                  variant="body2"
+                  variant="bodySm"
                   sx={{ fontWeight: 500, textTransform: "capitalize" }}
                 >
                   {inviteData?.role}
@@ -329,7 +329,7 @@ function InviteUserModal({ showInviteModal, setShowInviteModal }) {
                 inviteData.product_access.length > 0 && (
                   <Box sx={{ mb: 2 }}>
                     <Typography
-                      variant="body2"
+                      variant="bodySm"
                       color="text.secondary"
                       sx={{ mb: 1 }}
                     >
@@ -351,7 +351,7 @@ function InviteUserModal({ showInviteModal, setShowInviteModal }) {
 
               <Divider sx={{ my: 2 }} />
 
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+              <Typography variant="bodySm" color="text.secondary" sx={{ mb: 1 }}>
                 Invite Link:
               </Typography>
               <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>

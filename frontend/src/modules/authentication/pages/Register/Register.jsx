@@ -105,7 +105,7 @@ export default function Register() {
         {/* Divider */}
         <Box sx={{ display: "flex", alignItems: "center", my: 3 }}>
           <Divider sx={{ flex: 1 }} />
-          <Typography variant="body2" sx={{ px: 2, color: "text.secondary" }}>
+          <Typography variant="bodySm" sx={{ px: 2, color: "text.secondary" }}>
             or
           </Typography>
           <Divider sx={{ flex: 1 }} />
@@ -160,11 +160,11 @@ export default function Register() {
 
         {/* Sign in link */}
         <div className="d-flex justify-content-center align-items-center py-4">
-          <Typography variant="body1" className="px-1 txt-lighter">
+          <Typography variant="bodyMd" className="px-1 txt-lighter">
             Already have an account?
           </Typography>
           <Link to="/login" className="px-1 fw-500 text-decoration-none">
-            <Typography variant="body1" color="primary">
+            <Typography variant="bodyMd" color="primary">
               Log In
             </Typography>
           </Link>

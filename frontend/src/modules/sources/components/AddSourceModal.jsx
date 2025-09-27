@@ -214,7 +214,7 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
               <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
                 {source.name}
               </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
                 {source.description}
               </Typography>
             </Box>
@@ -277,7 +277,7 @@ export const AddSourceModal = ({ open, onClose, createSource }) => {
             <Typography variant="h6" color="text.secondary">
               No sources found for "{searchTerm}"
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            <Typography variant="bodySm" color="text.secondary" sx={{ mt: 1 }}>
               Try searching for platforms like TikTok, Instagram, YouTube, or
               others.
             </Typography>

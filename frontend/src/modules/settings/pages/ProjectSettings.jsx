@@ -336,7 +336,7 @@ function ProjectSettings() {
                     label="Allow project members to see other members' information"
                   />
                   <Typography
-                    variant="body2"
+                    variant="bodySm"
                     component="p"
                     color="text.secondary"
                     sx={{ mt: 1, ml: 6 }}
@@ -374,12 +374,12 @@ function ProjectSettings() {
                 <Divider sx={{ mb: 3 }} />
 
                 <Box sx={{ mb: 2 }}>
-                  <Typography variant="body1" sx={{ mb: 3 }} gutterBottom>
+                  <Typography variant="bodyMd" sx={{ mb: 3 }} gutterBottom>
                     Delete Project
                   </Typography>
                   <br />
                   <Typography
-                    variant="body2"
+                    variant="bodySm"
                     color="text.secondary"
                     sx={{ pb: 3 }}
                   >
@@ -416,14 +416,14 @@ function ProjectSettings() {
           </Typography>
         </DialogTitle>
         <DialogContent>
-          <Typography variant="body1" sx={{ mb: 2 }}>
+          <Typography variant="bodyMd" sx={{ mb: 2 }}>
             This action cannot be undone. This will permanently delete the
             project
             <strong> "{project.name}" </strong>
             and all of its data.
           </Typography>
           <br /> <br />
-          <Typography variant="body2">
+          <Typography variant="bodySm">
             Please type <strong>{project.name}</strong> to confirm:
           </Typography>
           <br />

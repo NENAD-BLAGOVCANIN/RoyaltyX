@@ -93,7 +93,7 @@ function PageNotFound() {
                 Oops! Page Not Found
               </Typography>
               <Typography
-                variant="body1"
+                variant="bodyMd"
                 sx={{
                   color: theme.palette.text.secondary,
                   fontSize: { xs: '1rem', md: '1.1rem' },

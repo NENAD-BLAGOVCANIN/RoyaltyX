@@ -186,7 +186,7 @@ function CustomerSupport() {
               >
                 {stats.total_tickets || 0}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Total Tickets
               </Typography>
             </CardContent>
@@ -201,7 +201,7 @@ function CustomerSupport() {
               >
                 {stats.open_tickets || 0}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Open Tickets
               </Typography>
             </CardContent>
@@ -216,7 +216,7 @@ function CustomerSupport() {
               >
                 {stats.resolved_tickets || 0}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Resolved
               </Typography>
             </CardContent>
@@ -231,7 +231,7 @@ function CustomerSupport() {
               >
                 {stats.closed_tickets || 0}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Closed
               </Typography>
             </CardContent>
@@ -282,7 +282,7 @@ function CustomerSupport() {
                       secondary={
                         <Box>
                           <Typography
-                            variant="body2"
+                            variant="bodySm"
                             color="text.secondary"
                             sx={{ mb: 1 }}
                           >
@@ -350,7 +350,7 @@ function CustomerSupport() {
               <Typography variant="h6" gutterBottom>
                 No support tickets yet
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              <Typography variant="bodySm" color="text.secondary" sx={{ mb: 3 }}>
                 Create your first support ticket to get help from our team
               </Typography>
 

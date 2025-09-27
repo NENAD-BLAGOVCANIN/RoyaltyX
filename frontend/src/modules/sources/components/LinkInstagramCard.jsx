@@ -74,7 +74,7 @@ export const LinkInstagramCard = ({ createSource }) => {
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
               Instagram
             </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
               Connect your Instagram account to analyze post performance, audience
               engagement, and optimize your social media strategy.
             </Typography>

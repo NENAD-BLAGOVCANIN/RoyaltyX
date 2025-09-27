@@ -71,10 +71,10 @@ export default function ForgotPassword() {
             <Typography variant="h4" sx={{ mb: 2, fontWeight: 600, color: "success.main" }}>
               Email Sent!
             </Typography>
-            <Typography variant="body1" sx={{ mb: 3, color: "text.secondary" }}>
+            <Typography variant="bodyMd" sx={{ mb: 3, color: "text.secondary" }}>
               We've sent a password reset link to <strong>{email}</strong>
             </Typography>
-            <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ mb: 3, color: "text.secondary" }}>
               Please check your email and click the link to reset your password. 
               The link will expire in 1 hour for security reasons.
             </Typography>
@@ -89,7 +89,7 @@ export default function ForgotPassword() {
           </Box>
 
           <Box sx={{ textAlign: "center", mt: 3 }}>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
               Didn't receive the email? Check your spam folder or{" "}
               <button
                 type="button"
@@ -149,7 +149,7 @@ export default function ForgotPassword() {
           <Typography variant="h3" sx={{ mb: 2, fontWeight: 600 }}>
             Forgot Password?
           </Typography>
-          <Typography variant="body1" sx={{ color: "text.secondary" }}>
+          <Typography variant="bodyMd" sx={{ color: "text.secondary" }}>
             No worries! Enter your email address and we'll send you a link to reset your password.
           </Typography>
         </Box>
@@ -184,11 +184,11 @@ export default function ForgotPassword() {
 
         {/* Back to login link */}
         <div className="d-flex justify-content-center align-items-center py-4">
-          <Typography variant="body1" className="px-1 txt-lighter">
+          <Typography variant="bodyMd" className="px-1 txt-lighter">
             Remember your password?
           </Typography>
           <Link to="/login" className="px-1 fw-500 text-decoration-none">
-            <Typography variant="body1" color="primary">
+            <Typography variant="bodyMd" color="primary">
               Back to Login
             </Typography>
           </Link>

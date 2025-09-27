@@ -87,7 +87,7 @@ export const ProjectSelector = () => {
               style={{ marginRight: 8, flexShrink: 0 }}
             />
             <Typography
-              variant="body2"
+              variant="bodySm"
               sx={{
                 fontWeight: 500,
                 overflow: "hidden",

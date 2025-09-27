@@ -201,47 +201,47 @@ function Analytics() {
               {product?.sales?.map((sale, index) => (
                 <TableRow key={index} hover>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {sale.type}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {sale.unit_price}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {sale.unit_price_currency}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {sale.quantity}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {String(sale.is_refund)}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {sale.royalty_amount}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {sale.royalty_currency}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {new Date(sale.period_start)?.toLocaleString()}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="bodySm">
                       {new Date(sale.period_end)?.toLocaleString()}
                     </Typography>
                   </TableCell>

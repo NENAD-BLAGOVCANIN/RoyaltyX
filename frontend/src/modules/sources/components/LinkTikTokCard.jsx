@@ -73,7 +73,7 @@ export const LinkTikTokCard = ({ createSource }) => {
             <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
               TikTok
             </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="bodySm" sx={{ color: "text.secondary" }}>
               Connect your TikTok account to analyze video performance, audience
               engagement, and optimize your content strategy for better reach.
             </Typography>

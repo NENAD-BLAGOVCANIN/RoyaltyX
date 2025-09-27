@@ -5,25 +5,27 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/600.css";
+import { ThemeProvider } from "./modules/common/contexts/ThemeContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
-    <App />
-    <ToastContainer
-      position="bottom-right"
-      hideProgressBar={true}
-      closeOnClick={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="colored"
-      transition={Bounce}
-    />
+    <ThemeProvider>
+      <App />
+      <ToastContainer
+        position="top-right"
+        closeOnClick={false}
+        pauseOnFocusLoss
+        pauseOnHover
+        transition={Bounce}
+        style={{
+          top: '98px', // Header height (66px) + AppLayout padding (32px)
+          right: '48px', // Match AppLayout horizontal padding
+        }}
+      />
+    </ThemeProvider>
   </>
 );
 

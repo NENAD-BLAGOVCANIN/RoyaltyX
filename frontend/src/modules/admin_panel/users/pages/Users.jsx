@@ -154,7 +154,7 @@ function Users() {
               <Typography variant="h4" sx={{ fontWeight: 600 }}>
                 {totalCount}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Total Users
               </Typography>
             </CardContent>
@@ -171,7 +171,7 @@ function Users() {
               <Typography variant="h4" sx={{ fontWeight: 600 }}>
                 {users.filter((user) => user.is_active).length}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Active Users
               </Typography>
             </CardContent>
@@ -184,7 +184,7 @@ function Users() {
               <Typography variant="h4" sx={{ fontWeight: 600 }}>
                 {users.filter((user) => user.is_email_verified).length}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Verified Emails
               </Typography>
             </CardContent>
@@ -197,7 +197,7 @@ function Users() {
               <Typography variant="h4" sx={{ fontWeight: 600 }}>
                 {users.filter((user) => user.role === "admin").length}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Admin Users
               </Typography>
             </CardContent>
@@ -271,7 +271,7 @@ function Users() {
                         </TableCell>
                         <TableCell>
                           <Box>
-                            <Typography variant="body2">
+                            <Typography variant="bodySm">
                               {user.email}
                             </Typography>
                             {user.is_email_verified && (
@@ -304,12 +304,12 @@ function Users() {
                           />
                         </TableCell>
                         <TableCell>
-                          <Typography variant="body2">
+                          <Typography variant="bodySm">
                             {formatDate(user.date_joined)}
                           </Typography>
                         </TableCell>
                         <TableCell>
-                          <Typography variant="body2" color="text.secondary">
+                          <Typography variant="bodySm" color="text.secondary">
                             {formatDate(user.last_login)}
                           </Typography>
                         </TableCell>

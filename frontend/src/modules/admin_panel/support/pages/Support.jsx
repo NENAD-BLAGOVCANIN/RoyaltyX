@@ -183,7 +183,7 @@ function Support() {
                 <Typography variant="h4" sx={{ fontWeight: 600 }}>
                   {stats.total_tickets || 0}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   Total Tickets
                 </Typography>
               </Box>
@@ -198,7 +198,7 @@ function Support() {
                 <Typography variant="h4" sx={{ fontWeight: 600 }}>
                   {stats.open_tickets || 0}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   Open Tickets
                 </Typography>
               </Box>
@@ -213,7 +213,7 @@ function Support() {
                 <Typography variant="h4" sx={{ fontWeight: 600 }}>
                   {stats.unassigned_tickets || 0}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   Unassigned
                 </Typography>
               </Box>
@@ -228,7 +228,7 @@ function Support() {
                 <Typography variant="h4" sx={{ fontWeight: 600 }}>
                   {stats.my_tickets || 0}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="bodySm" color="text.secondary">
                   My Tickets
                 </Typography>
               </Box>
@@ -373,7 +373,7 @@ function Support() {
                           sx={{ width: 32, height: 32 }}
                         />
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                          <Typography variant="bodySm" sx={{ fontWeight: 500 }}>
                             {ticket.customer?.name}
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
@@ -412,7 +412,7 @@ function Support() {
                             src={ticket.assigned_admin?.avatar}
                             sx={{ width: 24, height: 24 }}
                           />
-                          <Typography variant="body2">
+                          <Typography variant="bodySm">
                             {ticket.assigned_admin?.name}
                           </Typography>
                         </Box>
@@ -425,7 +425,7 @@ function Support() {
                       )}
                     </TableCell>
                     <TableCell>
-                      <Typography variant="body2">
+                      <Typography variant="bodySm">
                         {formatDate(ticket.created_at)}
                       </Typography>
                     </TableCell>
@@ -449,7 +449,7 @@ function Support() {
               <Typography variant="h6" color="text.secondary">
                 No tickets found
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="bodySm" color="text.secondary">
                 Try adjusting your filters or check back later
               </Typography>
             </Box>

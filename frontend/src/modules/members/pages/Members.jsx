@@ -145,13 +145,13 @@ function Members() {
                           fontWeight: 600,
                         }}
                       />
-                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                      <Typography variant="bodyMd" sx={{ fontWeight: 500 }}>
                         {user?.user_details?.name || "Unknown User"}
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="bodySm" color="text.secondary">
                       {user?.user_details?.email}
                     </Typography>
                   </TableCell>
@@ -193,7 +193,7 @@ function Members() {
           <Typography variant="h6" color="text.secondary" gutterBottom>
             No members found
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          <Typography variant="bodySm" color="text.secondary" sx={{ mb: 3 }}>
             {currentUserRole === "owner" 
               ? "Add members to your project to start collaborating"
               : "No members have been added to this project yet"

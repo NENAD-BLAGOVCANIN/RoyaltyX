@@ -25,7 +25,7 @@ const EarningsCard = ({ analytics }) => {
               }}
             >
               <Typography
-                variant="body2"
+                variant="bodySm"
                 color="text.primary"
                 sx={{ fontWeight: 500 }}
               >
@@ -43,14 +43,14 @@ const EarningsCard = ({ analytics }) => {
               }}
             >
               <Typography
-                variant="body2"
+                variant="bodySm"
                 color="text.primary"
                 sx={{ fontWeight: 500 }}
               >
                 EXPENSE ASSIGNMENTS
               </Typography>
               <Typography
-                variant="body2"
+                variant="bodySm"
                 fontWeight="bold"
                 color="primary.main"
               >
