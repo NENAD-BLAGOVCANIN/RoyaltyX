@@ -99,14 +99,12 @@ function Sidebar() {
         paddingRight: "16px",
       }}
     >
-      {/* Logo Section */}
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-start",
           py: 2,
-          minHeight: 64,
         }}
       >
         <Box
@@ -123,14 +121,10 @@ function Sidebar() {
             src={icon}
             alt="Logo"
             style={{
-              width: 38,
-              border: "2px solid white",
-              borderRadius: "4px",
-              padding: "4px 2px",
-              backgroundColor: "white",
+              width: 32,
             }}
           />
-          <Typography variant="h3" sx={{ color: "text.primary", pl: 2 }}>
+          <Typography variant="h3" sx={{ color: "text.primary", pl: 2, mt: .4 }}>
             RoyaltyX
           </Typography>
         </Box>

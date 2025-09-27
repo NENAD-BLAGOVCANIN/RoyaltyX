@@ -1,8 +1,9 @@
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { ArrowRight, Shredder } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import ProductCard from "../../products/components/ProductCard";
+import { MissingProductsPlaceholder } from "../../products/components/MissingProductsPlaceholder";
 
 export const ProductsList = ({ products, loading }) => {
   const navigate = useNavigate();
@@ -37,30 +38,7 @@ export const ProductsList = ({ products, loading }) => {
           ))}
         </Grid>
       ) : (
-        <Grid
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            justifyContent: "center",
-            mt: 4,
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              py: 10,
-            }}
-          >
-            <Shredder size={60} color="var(--color-subtle)" />
-            <Typography sx={{ mt: 1, color: "text.secondary" }}>
-              No products available at the moment.
-            </Typography>
-          </Box>
-        </Grid>
+        <MissingProductsPlaceholder />
       )}
     </>
   );

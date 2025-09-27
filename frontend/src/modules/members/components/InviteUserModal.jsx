@@ -151,7 +151,7 @@ function InviteUserModal({ showInviteModal, setShowInviteModal }) {
     <Dialog
       open={showInviteModal}
       onClose={handleCloseModal}
-      maxWidth="md"
+      maxWidth="sm"
       fullWidth
     >
       <DialogTitle sx={{ pb: 1 }}>
@@ -162,8 +162,8 @@ function InviteUserModal({ showInviteModal, setShowInviteModal }) {
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="h5" sx={{ fontWeight: 600 }}>
-            {inviteCreated ? "Invite Sent!" : "Invite User to Project"}
+          <Typography variant="h3">
+            {inviteCreated ? "Invite Sent!" : "Invite User"}
           </Typography>
           <IconButton
             onClick={handleCloseModal}
