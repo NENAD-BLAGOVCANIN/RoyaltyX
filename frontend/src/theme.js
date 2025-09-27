@@ -89,7 +89,8 @@ const getTheme = (mode) =>
       MuiCard: {
         styleOverrides: {
           root: {
-            borderColor: mode === "light" ? "#e8e8e8" : "#303030",
+            backgroundColor: "transparent",
+            borderColor: THEME[mode].border.primary,
             borderWidth: "1px",
             borderStyle: "solid",
             boxShadow: "none",
