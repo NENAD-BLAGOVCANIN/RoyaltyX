@@ -10,13 +10,13 @@ export const LinkedSourcesSection = ({ sources, loading }) => {
 
   return (
     <Box>
-       <Box
+      <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: 5,
-          mt: 5,
+          mb: 2,
+          mt: 6,
         }}
       >
         <Typography variant="h2" sx={{ fontWeight: 600 }}>

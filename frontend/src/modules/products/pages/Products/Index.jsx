@@ -1,10 +1,17 @@
 import { Spinner } from "react-bootstrap";
 import { useProducts } from "../../contexts/ProductsContext";
-import { Box, Grid, Typography, TextField, InputAdornment } from "@mui/material";
-import { Shredder, Search } from "lucide-react";
+import {
+  Box,
+  Grid,
+  Typography,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
+import { Search } from "lucide-react";
 import PageHeader from "../../../common/components/PageHeader";
 import ProductCard from "../../components/ProductCard";
 import { useState, useMemo } from "react";
+import { MissingProductsPlaceholder } from "../../components/MissingProductsPlaceholder";
 
 const Products = () => {
   const { products, loading } = useProducts();
@@ -13,8 +20,8 @@ const Products = () => {
   const filteredProducts = useMemo(() => {
     if (!products) return [];
     if (!searchTerm.trim()) return products;
-    
-    return products.filter(product =>
+
+    return products.filter((product) =>
       product.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [products, searchTerm]);
@@ -28,28 +35,32 @@ const Products = () => {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <Search size={20} color="var(--color-subtle)" />
+            <Search size={20}/>
           </InputAdornment>
         ),
       }}
       sx={{
         minWidth: 250,
-        '& .MuiOutlinedInput-root': {
-          backgroundColor: 'background.paper',
-        }
+        "& .MuiOutlinedInput-root": {
+          backgroundColor: "background.paper",
+        },
       }}
     />
   );
 
   return (
     <>
+      <PageHeader
+        title="Products"
+        description="View all of your digital assets that were fetched from your data sources or imported manually"
+        appendActions={searchBar}
+      />
       {loading ? (
         <div className="d-flex justify-content-center py-5">
           <Spinner animation="border" />
         </div>
       ) : products?.length > 0 ? (
         <>
-          <PageHeader title="Products" appendActions={searchBar} />
           <Grid container spacing={3}>
             {filteredProducts?.map((product) => (
               <ProductCard product={product} key={product.id} />
@@ -66,7 +77,7 @@ const Products = () => {
                 mt: 4,
               }}
             >
-              <Search size={60} color="var(--color-subtle)" />
+              <Search size={60}/>
               <Typography sx={{ mt: 1, color: "text.secondary" }}>
                 No products found matching "{searchTerm}"
               </Typography>
@@ -74,19 +85,8 @@ const Products = () => {
           )}
         </>
       ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "calc(100vh - 130px)",
-          }}
-        >
-          <Shredder size={60} color="var(--color-subtle)" />
-          <Typography sx={{ mt: 1, color: "text.secondary" }}>
-            No products available at the moment.
-          </Typography>
+        <Box sx={{ mt: 3 }}>
+          <MissingProductsPlaceholder />
         </Box>
       )}
     </>
