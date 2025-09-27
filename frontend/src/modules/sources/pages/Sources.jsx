@@ -66,6 +66,7 @@ export const Sources = () => {
         open={modalOpen}
         onClose={handleCloseModal}
         createSource={handleCreateSource}
+        canAddSources={canAddSources}
       />
     </Box>
   );

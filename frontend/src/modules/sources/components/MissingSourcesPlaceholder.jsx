@@ -4,7 +4,10 @@ import Button from "../../common/components/Button";
 import { useTheme } from "../../common/contexts/ThemeContext";
 import { Plus } from "lucide-react";
 
-export const MissingSourcesPlaceholder = ({ handleOpenModal }) => {
+export const MissingSourcesPlaceholder = ({
+  handleOpenModal,
+  canAddSources,
+}) => {
   const { colors } = useTheme();
 
   return (
@@ -36,7 +39,6 @@ export const MissingSourcesPlaceholder = ({ handleOpenModal }) => {
         sx={{
           color: "text.secondary",
           maxWidth: "500px",
-          mb: SPACING.lg,
           lineHeight: 1.6,
         }}
       >
@@ -44,13 +46,15 @@ export const MissingSourcesPlaceholder = ({ handleOpenModal }) => {
         below to connect your first source.
       </Typography>
 
-      <Button
-        variant="contained"
-        onClick={handleOpenModal}
-        sx={{ whiteSpace: "nowrap", fontWeight: 600 }}
-      >
-        <Plus size={20} style={{ marginRight: 10 }} /> Add source
-      </Button>
+      {canAddSources && (
+        <Button
+          variant="contained"
+          onClick={handleOpenModal}
+          sx={{ whiteSpace: "nowrap", fontWeight: 600, mt: SPACING.lg }}
+        >
+          <Plus size={20} style={{ marginRight: 10 }} /> Add source
+        </Button>
+      )}
     </div>
   );
 };
