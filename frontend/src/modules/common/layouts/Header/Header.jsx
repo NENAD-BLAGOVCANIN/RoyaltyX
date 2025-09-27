@@ -7,6 +7,7 @@ import {
   Avatar,
   AvatarGroup,
   Tooltip,
+  Container,
 } from "@mui/material";
 import { Settings } from "lucide-react";
 import UserDropdown from "./UserDropdown";
@@ -27,13 +28,15 @@ function Header() {
   // Filter users based on visibility settings
   const getVisibleUsers = () => {
     if (!project?.users) return [];
-    
+
     if (canSeeOtherMembers()) {
       return project.users;
     } else {
       // Only show current user
-      const currentUser = JSON.parse(localStorage.getItem('user'));
-      return project.users.filter(user => user.user_details.id === currentUser?.id);
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      return project.users.filter(
+        (user) => user.user_details.id === currentUser?.id
+      );
     }
   };
 
@@ -50,69 +53,79 @@ function Header() {
           color: "text.primary",
         }}
       >
-        <Toolbar sx={{ px: { xs: 2, sm: 4 }, py: 1, height: 66.77 }}>
-          <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
-            <p>Search should go here</p>
-          </Box>
+        <Container
+          sx={{
+            px: { xs: 2, sm: 4, md: 8 },
+            maxWidth: "none !important",
+          }}
+        >
+          <Toolbar sx={{ py: 1, height: 66.77 }} style={{ paddingLeft: 0, paddingRight: 0 }}>
+            <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
+              <p>Search should go here</p>
+            </Box>
 
-          {(() => {
-            const visibleUsers = getVisibleUsers();
-            return visibleUsers.length > 0 && (
-              <Box sx={{ display: "flex", alignItems: "center", mr: 4 }}>
-                <AvatarGroup
-                  max={5}
-                  sx={{
-                    "& .MuiAvatar-root": {
-                      width: 23,
-                      height: 23,
-                      fontSize: "0.875rem",
-                      border: "2px solid",
-                      borderColor: "divider",
-                    },
-                  }}
-                >
-                  {visibleUsers.map((user) => (
-                    <Tooltip
-                      key={user.id}
-                      title={canSeeOtherMembers() 
-                        ? `${user?.user_details?.name || "Unknown"} (${user?.role || "Member"})`
-                        : `${user?.user_details?.name || "Unknown"}`
-                      }
-                      arrow
+            {(() => {
+              const visibleUsers = getVisibleUsers();
+              return (
+                visibleUsers.length > 0 && (
+                  <Box sx={{ display: "flex", alignItems: "center", mr: 4 }}>
+                    <AvatarGroup
+                      max={5}
+                      sx={{
+                        "& .MuiAvatar-root": {
+                          width: 23,
+                          height: 23,
+                          fontSize: "0.875rem",
+                          border: "2px solid",
+                          borderColor: "divider",
+                        },
+                      }}
                     >
-                      <Avatar
-                        src={user?.user_details?.avatar}
-                        sx={{
-                          cursor: "pointer",
-                        }}
-                      />
-                    </Tooltip>
-                  ))}
-                </AvatarGroup>
-              </Box>
-            );
-          })()}
+                      {visibleUsers.map((user) => (
+                        <Tooltip
+                          key={user.id}
+                          title={
+                            canSeeOtherMembers()
+                              ? `${user?.user_details?.name || "Unknown"} (${user?.role || "Member"})`
+                              : `${user?.user_details?.name || "Unknown"}`
+                          }
+                          arrow
+                        >
+                          <Avatar
+                            src={user?.user_details?.avatar}
+                            sx={{
+                              cursor: "pointer",
+                            }}
+                          />
+                        </Tooltip>
+                      ))}
+                    </AvatarGroup>
+                  </Box>
+                )
+              );
+            })()}
 
-          {/* Right side - Actions */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            {/* Settings Icon */}
-            <IconButton
-              onClick={() => setShowSettingsModal(true)}
-              size="small"
-              sx={{
-                color: "text.secondary",
-                "&:hover": {
-                  backgroundColor: "action.hover",
-                },
-              }}
-            >
-              <Settings size={20} strokeWidth={1.5} />
-            </IconButton>
+            {/* Right side - Actions */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              {/* Settings Icon */}
+              <IconButton
+                onClick={() => setShowSettingsModal(true)}
+                size="small"
+                sx={{
+                  color: "text.secondary",
+                  "&:hover": {
+                    backgroundColor: "action.hover",
+                  },
+                }}
+              >
+                <Settings size={20} strokeWidth={1.5} />
+              </IconButton>
 
-            <NotificationsDropdown />
-            <UserDropdown />
-          </Box>
-        </Toolbar>
+              <NotificationsDropdown />
+              <UserDropdown />
+            </Box>
+          </Toolbar>
+        </Container>
       </AppBar>
 
       <SettingsModal
