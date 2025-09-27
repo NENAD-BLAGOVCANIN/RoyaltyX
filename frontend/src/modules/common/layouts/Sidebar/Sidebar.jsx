@@ -146,7 +146,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <LayoutDashboard size={18} color="var(--color-text-lighter)" />
+                <LayoutDashboard size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Dashboard"
@@ -171,7 +171,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Database size={18} color="var(--color-text-lighter)" />
+                <Database size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Sources"
@@ -197,7 +197,7 @@ function Sidebar() {
                 }}
               >
                 <ListItemIcon sx={{ minWidth: 40 }}>
-                  <Users size={18} color="var(--color-text-lighter)" />
+                  <Users size={18} />
                 </ListItemIcon>
                 <ListItemText
                   primary="Members"
@@ -223,7 +223,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Package2 size={18} color="var(--color-text-lighter)" />
+                <Package2 size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Products"
@@ -248,7 +248,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Gauge size={18} color="var(--color-text-lighter)" />
+                <Gauge size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Analytics"
@@ -273,7 +273,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <FileText size={18} color="var(--color-text-lighter)" />
+                <FileText size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Reports"
@@ -298,7 +298,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Landmark size={18} color="var(--color-text-lighter)" />
+                <Landmark size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Expenses"
@@ -323,7 +323,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Settings size={18} color="var(--color-text-lighter)" />
+                <Settings size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Settings"

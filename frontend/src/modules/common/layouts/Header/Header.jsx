@@ -12,7 +12,6 @@ import { Settings } from "lucide-react";
 import UserDropdown from "./UserDropdown";
 import SettingsModal from "../../components/Settings/SettingsModal";
 import NotificationsDropdown from "./NotificationsDropdown";
-import Breadcrumbs from "../../components/Breadcrumbs";
 import { useProject } from "../../contexts/ProjectContext";
 
 function Header() {
@@ -53,7 +52,7 @@ function Header() {
       >
         <Toolbar sx={{ px: { xs: 2, sm: 4 }, py: 1, height: 66.77 }}>
           <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
-            <Breadcrumbs />
+            <p>Search should go here</p>
           </Box>
 
           {(() => {

@@ -40,7 +40,7 @@ export const TopPerfomingContentBySales = () => {
 
   return (
     <Box>
-      <Typography variant="h4" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
+      <Typography variant="h2" fontWeight="bold" sx={{ mt: 4, mb: 2 }}>
         Top Performing Content (by sales)
       </Typography>
       {!products || products.length === 0 ? (

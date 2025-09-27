@@ -5,7 +5,7 @@ const SalesStatsCard = ({ analytics }) => {
     <Grid size={{ md: 6, xs: 12 }}>
       <Card sx={{ borderRadius: 2, boxShadow: 0, mt: 4 }}>
         <CardContent sx={{ p: 3 }}>
-          <Typography variant="h5" sx={{ mb: 4, fontWeight: 600 }}>
+          <Typography variant="h2" sx={{ mb: 4, fontWeight: 600 }}>
             Sales Stats
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>

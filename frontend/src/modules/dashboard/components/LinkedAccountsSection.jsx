@@ -17,7 +17,7 @@ export const LinkedAccountsSection = ({ sources, loading }) => {
           mb: 5,
         }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 600 }}>
+        <Typography variant="h2" sx={{ fontWeight: 600 }}>
           Sources
         </Typography>
         <Button variant="outlined" onClick={() => navigate("/sources")}>
