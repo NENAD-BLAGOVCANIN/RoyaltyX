@@ -8,8 +8,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Typography,
-  useTheme,
+  useTheme as useMuiTheme,
   useMediaQuery,
 } from "@mui/material";
 import {
@@ -26,12 +25,14 @@ import { UpgradePlanButton } from "../../components/UpgradePlanButton";
 import { ProjectSelector } from "../../../global/components/ProjectSelector";
 import SidebarProductList from "../../components/SidebarProductList";
 import { useProject } from "../../contexts/ProjectContext";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const SIDEBAR_WIDTH = 275;
 
 function Sidebar() {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { colors } = useTheme();
+  const muiTheme = useMuiTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down("md"));
   const location = useLocation();
   const { project, currentUserRole } = useProject();
 
@@ -41,7 +42,7 @@ function Sidebar() {
   const shouldShowMembersMenu = () => {
     // Always show for owners
     if (currentUserRole === "owner") return true;
-    
+
     // For non-owners, show only if members_can_see_other_members is true (default)
     return project?.members_can_see_other_members !== false;
   };
@@ -119,19 +120,6 @@ function Sidebar() {
             boxSizing: "border-box",
           }}
         >
-          <Typography
-            variant="caption"
-            sx={{
-              color: "text.secondary",
-              px: 2,
-              pt: 2,
-              pb: 1,
-              display: "block",
-            }}
-          >
-            Project
-          </Typography>
-
           <ListItem disablePadding>
             <ListItemButton
               component={Link}
@@ -354,11 +342,13 @@ function Sidebar() {
           keepMounted: true,
         }}
         sx={{
+          display: { xs: "block", sm: "none" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: SIDEBAR_WIDTH,
-            pb: 0,
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: colors.pageSecondary,
+            border: "none",
+            borderRight: "none",
           },
         }}
       >
@@ -380,9 +370,11 @@ function Sidebar() {
           minWidth: SIDEBAR_WIDTH,
           maxWidth: SIDEBAR_WIDTH,
           boxSizing: "border-box",
-          backgroundColor: theme.palette.background.default,
           overflow: "hidden",
           overflowY: "auto",
+          backgroundColor: colors.pageSecondary,
+          border: "none",
+          borderRight: "none",
         },
       }}
     >

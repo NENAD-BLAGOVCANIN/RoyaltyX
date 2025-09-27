@@ -92,6 +92,7 @@ const getTheme = (mode) =>
             borderColor: mode === "light" ? "#e8e8e8" : "#303030",
             borderWidth: "1px",
             borderStyle: "solid",
+            boxShadow: "none",
           },
         },
       },

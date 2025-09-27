@@ -24,6 +24,7 @@ import { useAuth } from "../../common/contexts/AuthContext";
 import { changeSubscriptionPlan } from "../api/subscription";
 import { createCheckoutSession } from "../api/payments";
 import { verifySession } from "../api/payments";
+import PageHeader from "../../common/components/PageHeader";
 
 function MembershipPage() {
   const { subscriptionPlan, setSubscriptionPlan } = useAuth();
@@ -266,10 +267,8 @@ function MembershipPage() {
   return (
     <Container>
       <Box>
-        <Typography variant="h3" sx={{ mb: 5, fontWeight: "bold" }}>
-          Available Plans
-        </Typography>
-        <Grid container spacing={3}>
+        <PageHeader title="Available Plans" />
+        <Grid container spacing={3} sx={{ mt: 3 }}>
           {plans.map((plan) => (
             <Grid size={{ xs: 12, md: 4 }} key={plan.name}>
               <Card

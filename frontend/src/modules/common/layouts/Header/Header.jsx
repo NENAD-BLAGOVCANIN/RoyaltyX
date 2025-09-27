@@ -14,6 +14,7 @@ import UserDropdown from "./UserDropdown";
 import SettingsModal from "../../components/Settings/SettingsModal";
 import NotificationsDropdown from "./NotificationsDropdown";
 import { useProject } from "../../contexts/ProjectContext";
+import SearchBar from "./SearchBar";
 
 function Header() {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
@@ -59,70 +60,85 @@ function Header() {
             maxWidth: "none !important",
           }}
         >
-          <Toolbar sx={{ py: 1, height: 66.77 }} style={{ paddingLeft: 0, paddingRight: 0 }}>
-            <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
-              <p>Search should go here</p>
+          <Toolbar
+            sx={{
+              py: 1,
+              height: 66.77,
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+            style={{ paddingLeft: 0, paddingRight: 0 }}
+          >
+            <Box
+              sx={{
+                flexGrow: 1,
+                maxWidth: 400,
+                display: { xs: "none", sm: "block" },
+              }}
+            >
+              <SearchBar placeholder="Search" />
             </Box>
 
-            {(() => {
-              const visibleUsers = getVisibleUsers();
-              return (
-                visibleUsers.length > 0 && (
-                  <Box sx={{ display: "flex", alignItems: "center", mr: 4 }}>
-                    <AvatarGroup
-                      max={5}
-                      sx={{
-                        "& .MuiAvatar-root": {
-                          width: 23,
-                          height: 23,
-                          fontSize: "0.875rem",
-                          border: "2px solid",
-                          borderColor: "divider",
-                        },
-                      }}
-                    >
-                      {visibleUsers.map((user) => (
-                        <Tooltip
-                          key={user.id}
-                          title={
-                            canSeeOtherMembers()
-                              ? `${user?.user_details?.name || "Unknown"} (${user?.role || "Member"})`
-                              : `${user?.user_details?.name || "Unknown"}`
-                          }
-                          arrow
-                        >
-                          <Avatar
-                            src={user?.user_details?.avatar}
-                            sx={{
-                              cursor: "pointer",
-                            }}
-                          />
-                        </Tooltip>
-                      ))}
-                    </AvatarGroup>
-                  </Box>
-                )
-              );
-            })()}
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              {(() => {
+                const visibleUsers = getVisibleUsers();
+                return (
+                  visibleUsers.length > 0 && (
+                    <Box sx={{ display: "flex", alignItems: "center", mr: 4 }}>
+                      <AvatarGroup
+                        max={5}
+                        sx={{
+                          "& .MuiAvatar-root": {
+                            width: 23,
+                            height: 23,
+                            fontSize: "0.875rem",
+                            border: "2px solid",
+                            borderColor: "divider",
+                          },
+                        }}
+                      >
+                        {visibleUsers.map((user) => (
+                          <Tooltip
+                            key={user.id}
+                            title={
+                              canSeeOtherMembers()
+                                ? `${user?.user_details?.name || "Unknown"} (${user?.role || "Member"})`
+                                : `${user?.user_details?.name || "Unknown"}`
+                            }
+                            arrow
+                          >
+                            <Avatar
+                              src={user?.user_details?.avatar}
+                              sx={{
+                                cursor: "pointer",
+                              }}
+                            />
+                          </Tooltip>
+                        ))}
+                      </AvatarGroup>
+                    </Box>
+                  )
+                );
+              })()}
+              {/* Right side - Actions */}
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                {/* Settings Icon */}
+                <IconButton
+                  onClick={() => setShowSettingsModal(true)}
+                  size="small"
+                  sx={{
+                    color: "text.secondary",
+                    "&:hover": {
+                      backgroundColor: "action.hover",
+                    },
+                  }}
+                >
+                  <Settings size={20} strokeWidth={1.5} />
+                </IconButton>
 
-            {/* Right side - Actions */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              {/* Settings Icon */}
-              <IconButton
-                onClick={() => setShowSettingsModal(true)}
-                size="small"
-                sx={{
-                  color: "text.secondary",
-                  "&:hover": {
-                    backgroundColor: "action.hover",
-                  },
-                }}
-              >
-                <Settings size={20} strokeWidth={1.5} />
-              </IconButton>
-
-              <NotificationsDropdown />
-              <UserDropdown />
+                <NotificationsDropdown />
+                <UserDropdown />
+              </Box>
             </Box>
           </Toolbar>
         </Container>

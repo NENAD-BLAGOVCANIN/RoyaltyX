@@ -117,7 +117,7 @@ const Expenses = () => {
         </Alert>
       )}
 
-      <TableContainer>
+      <TableContainer sx={{ mt: 3 }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
@@ -168,7 +168,9 @@ const Expenses = () => {
                     />
                   </TableCell>
                   <TableCell>
-                    <Typography variant="bodySm">{expense.user_name}</Typography>
+                    <Typography variant="bodySm">
+                      {expense.user_name}
+                    </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="bodySm">
