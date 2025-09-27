@@ -83,7 +83,6 @@ export const ProjectSelector = () => {
           >
             <Folder
               size={18}
-              color="var(--color-text-lighter)"
               style={{ marginRight: 8, flexShrink: 0 }}
             />
             <Typography

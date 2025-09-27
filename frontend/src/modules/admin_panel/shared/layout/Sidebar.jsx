@@ -96,7 +96,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <LayoutDashboard size={18} color="var(--color-text-lighter)" />
+                <LayoutDashboard size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Dashboard"
@@ -119,7 +119,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <Users size={18} color="var(--color-text-lighter)" />
+                <Users size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Users"
@@ -142,7 +142,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <MessageSquare size={18} color="var(--color-text-lighter)" />
+                <MessageSquare size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Support Tickets"
@@ -167,7 +167,7 @@ function Sidebar() {
               }}
             >
               <ListItemIcon sx={{ minWidth: 40 }}>
-                <HelpCircle size={18} color="var(--color-text-lighter)" />
+                <HelpCircle size={18} />
               </ListItemIcon>
               <ListItemText
                 primary="Help Documentation"

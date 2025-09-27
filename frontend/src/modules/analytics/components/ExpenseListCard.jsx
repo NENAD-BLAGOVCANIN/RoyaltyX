@@ -47,7 +47,7 @@ const ExpenseListCard = ({ productId = null, title = "All Expenses" }) => {
   if (loading) {
     return (
       <Grid size={{ xs: 12 }}>
-        <Card sx={{ mb: 3, borderRadius: 2, boxShadow: 2 }}>
+        <Card sx={{ mb: 3, borderRadius: 2, boxShadow: 0 }}>
           <CardContent sx={{ p: 3 }}>
             <Box
               display="flex"
@@ -82,7 +82,7 @@ const ExpenseListCard = ({ productId = null, title = "All Expenses" }) => {
 
   return (
     <Grid size={{ xs: 12 }}>
-      <Card sx={{ borderRadius: 2, boxShadow: 2, mt: 4 }}>
+      <Card sx={{ borderRadius: 2, boxShadow: 0, mt: 4 }}>
         <CardContent sx={{ p: 3 }}>
           <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
             {title}

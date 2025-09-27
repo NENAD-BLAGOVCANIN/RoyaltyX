@@ -27,7 +27,7 @@ import { ProjectSelector } from "../../../global/components/ProjectSelector";
 import SidebarProductList from "../../components/SidebarProductList";
 import { useProject } from "../../contexts/ProjectContext";
 
-const SIDEBAR_WIDTH = 242;
+const SIDEBAR_WIDTH = 275;
 
 function Sidebar() {
   const theme = useTheme();
