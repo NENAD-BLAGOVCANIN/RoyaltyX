@@ -130,7 +130,7 @@ function Sidebar() {
               backgroundColor: "white",
             }}
           />
-          <Typography variant="h3" sx={{ color: "text.primary", pl: 1 }}>
+          <Typography variant="h3" sx={{ color: "text.primary", pl: 2 }}>
             RoyaltyX
           </Typography>
         </Box>

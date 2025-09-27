@@ -15,10 +15,12 @@ import SettingsModal from "../../components/Settings/SettingsModal";
 import NotificationsDropdown from "./NotificationsDropdown";
 import { useProject } from "../../contexts/ProjectContext";
 import SearchBar from "./SearchBar";
+import { useTheme } from "../../contexts/ThemeContext";
 
 function Header() {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const { project, currentUserRole } = useProject();
+  const { colors } = useTheme();
 
   // Check if current user can see other members
   const canSeeOtherMembers = () => {
@@ -47,11 +49,10 @@ function Header() {
         position="sticky"
         elevation={0}
         sx={{
-          backgroundColor: "background.default",
-          borderBottom: "1px solid",
-          borderLeft: "none",
-          borderColor: "divider",
+          backgroundImage: "none",
+          boxShadow: "none",
           color: "text.primary",
+          backgroundColor: colors.pageSecondary,
         }}
       >
         <Container

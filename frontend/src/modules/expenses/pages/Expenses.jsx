@@ -100,7 +100,7 @@ const Expenses = () => {
       <PageHeader
         title="Expenses"
         description="Manage and track all your expenses, including their values, types, associated members, and products. Add, edit, or delete expenses as needed."
-        action={
+        appendActions={
           <Button
             variant="contained"
             startIcon={<Plus size={20} />}

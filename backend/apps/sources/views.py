@@ -12,7 +12,10 @@ from apps.sources.utils.twitch_sync import fetch_twitch_stats, fetch_twitch_vide
 from apps.sources.utils.vimeo_service import VimeoService
 from apps.sources.utils.vimeo_sync import fetch_vimeo_videos_and_stats
 from apps.sources.utils.instagram_service import InstagramService
-from apps.sources.utils.instagram_sync import fetch_instagram_stats, fetch_instagram_videos
+from apps.sources.utils.instagram_sync import (
+    fetch_instagram_stats,
+    fetch_instagram_videos,
+)
 
 from .models import Source
 from .serializers import SourceSerializer
@@ -44,18 +47,17 @@ class SourceListCreateView(APIView):
     def post(self, request):
         try:
             project_user = ProjectUser.objects.get(
-                user=request.user,
-                project_id=request.user.currently_selected_project_id
+                user=request.user, project_id=request.user.currently_selected_project_id
             )
             if project_user.role == ProjectUser.PROJECT_USER_ROLE_PRODUCER:
                 return Response(
                     {"detail": "Producers are not allowed to add new sources."},
-                    status=status.HTTP_403_FORBIDDEN
+                    status=status.HTTP_403_FORBIDDEN,
                 )
         except ProjectUser.DoesNotExist:
             return Response(
                 {"detail": "You are not a member of this project."},
-                status=status.HTTP_403_FORBIDDEN
+                status=status.HTTP_403_FORBIDDEN,
             )
 
         data = request.data.copy()
@@ -129,11 +131,13 @@ class SourceListCreateView(APIView):
                     service = InstagramService(source.access_token)
                     channel_details = service.fetch_user_info()
                     source.channel_id = channel_details["id"]
-                    source.account_name = channel_details.get("username") or "Instagram User"
+                    source.account_name = (
+                        channel_details.get("username") or "Instagram User"
+                    )
                     source.save(update_fields=["channel_id", "account_name"])
                 except Exception as e:
                     print(f"Failed to fetch Instagram channel details: {e}")
-                
+
                 fetch_instagram_videos(source.id)
                 fetch_instagram_stats(source.id)
 
@@ -154,17 +158,20 @@ class UserProjectRoleView(APIView):
     def get(self, request):
         try:
             project_user = ProjectUser.objects.get(
-                user=request.user,
-                project_id=request.user.currently_selected_project_id
+                user=request.user, project_id=request.user.currently_selected_project_id
             )
-            return Response({
-                "role": project_user.role,
-                "can_add_sources": project_user.role != ProjectUser.PROJECT_USER_ROLE_PRODUCER
-            }, status=status.HTTP_200_OK)
+            return Response(
+                {
+                    "role": project_user.role,
+                    "can_add_sources": project_user.role
+                    != ProjectUser.PROJECT_USER_ROLE_PRODUCER,
+                },
+                status=status.HTTP_200_OK,
+            )
         except ProjectUser.DoesNotExist:
             return Response(
                 {"detail": "You are not a member of this project."},
-                status=status.HTTP_403_FORBIDDEN
+                status=status.HTTP_403_FORBIDDEN,
             )
 
 

@@ -41,7 +41,7 @@ function MyProjects() {
       <PageHeader
         title="My Projects"
         description="Find all your personal and shared projects"
-        action={
+        appendActions={
           <Button
             variant="contained"
             color="primary"

@@ -49,7 +49,7 @@ const Products = () => {
         </div>
       ) : products?.length > 0 ? (
         <>
-          <PageHeader title="Products" action={searchBar} />
+          <PageHeader title="Products" appendActions={searchBar} />
           <Grid container spacing={3}>
             {filteredProducts?.map((product) => (
               <ProductCard product={product} key={product.id} />

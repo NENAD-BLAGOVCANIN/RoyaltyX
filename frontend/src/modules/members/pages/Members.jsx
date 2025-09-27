@@ -98,7 +98,7 @@ function Members() {
       <PageHeader
         title="Members"
         description="Add or remove users who are able to view this project."
-        action={
+        appendActions={
           currentUserRole === "owner" ? (
             <Button
               variant="contained"

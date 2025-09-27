@@ -11,7 +11,7 @@ import { MissingSourcesPlaceholder } from "../components/MissingSourcesPlacehold
 
 export const Sources = () => {
   const { sources, createSource, loading } = useSources();
-  const { canAddSources, loading: roleLoading } = useUserProjectRole();
+  const { canAddSources } = useUserProjectRole();
   const { refetch: refetchProducts } = useProducts();
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -31,8 +31,8 @@ export const Sources = () => {
       <PageHeader
         title="Sources"
         description="Manage your data sources and link your platforms of choice."
-        action={
-          canAddSources && !roleLoading ? (
+        appendActions={
+          canAddSources ? (
             <Box sx={{ display: "flex", gap: 3 }}>
               <Button
                 variant="outlined"
@@ -59,14 +59,18 @@ export const Sources = () => {
           <SourceItem key={source.id} source={source} />
         ))}
 
-        {sources.length === 0 && !loading && <MissingSourcesPlaceholder handleOpenModal={handleOpenModal} />}
+        {sources.length === 0 && !loading && (
+          <MissingSourcesPlaceholder
+            handleOpenModal={handleOpenModal}
+            canAddSources={canAddSources}
+          />
+        )}
       </Grid>
 
       <AddSourceModal
         open={modalOpen}
         onClose={handleCloseModal}
         createSource={handleCreateSource}
-        canAddSources={canAddSources}
       />
     </Box>
   );

@@ -61,7 +61,7 @@ const CreateNewReport = () => {
     <Box>
       <PageHeader
         title="Generate Report"
-        action={<DateRangeSelector />}
+        appendActions={<DateRangeSelector />}
         description="Before submitting this request, make sure to select the time range for
         which the details in the report should apply. If you don't select any
         time range, then the details in the report will be based on data from
@@ -91,8 +91,8 @@ const CreateNewReport = () => {
             <MenuItem
               onClick={() => navigate("/report-templates/create")}
               sx={{
-                borderTop: '1px solid #eee',
-                color: 'primary.main',
+                borderTop: "1px solid #eee",
+                color: "primary.main",
                 fontWeight: 500,
               }}
             >
